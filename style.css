@@ -1,5 +1,10 @@
-#navbarNav > ul > li:nth-child(1) {
-	margin-left: 53rem;
+#navbarNav > ul {
+	margin-left: 40rem;
+}
+#navbarNav > ul  li {
+	white-space: nowrap;
+	margin-left: 1%;
+	/* width: 100%; */
 }
 body > nav > div > img {
 	margin-left: 1%;
