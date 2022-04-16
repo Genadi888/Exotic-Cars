@@ -5,12 +5,28 @@ let clicked = false;
 function collapseButtonClickFunction() {
 	const ul = document.getElementsByClassName('navbar-nav')[0];
 	navbarUlOriginalMarginLeft = ul.style.marginLeft;
-	//TODO: да оправя margin-а
-	console.log(navbarUlOriginalMarginLeft);
+	
 	if (!clicked) {
-		ul.style.marginLeft = '0';
+		ul.style.marginLeft = '0px';
 		clicked = true;
 	} else {
-		
+		getUlBack(ul);
+		clicked = false;
 	}
+}
+
+function getUlBack(ul) {
+	let nav = document.getElementsByTagName('nav')[0];
+	const initialHeight = nav.offsetHeight;
+	
+	setInterval(() => {
+		nav = document.getElementsByTagName('nav')[0];
+
+		if (nav.offsetHeight > 66) {
+			ul.style.marginLeft = '0%'
+			// console.log(ul.style.marginLeft);
+		} else if (nav.offsetHeight === 66) {
+			ul.style.marginLeft = '45%';
+		}
+	}, 10);
 }

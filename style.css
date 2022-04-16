@@ -1,11 +1,12 @@
 #navbarNav > ul {
-	margin-left: 40rem;
+	margin-left: 45%;
 }
+
 #navbarNav > ul  li {
 	white-space: nowrap;
 	margin-left: 1%;
-	/* width: 100%; */
 }
+
 body > nav > div > img {
 	margin-left: 1%;
 	margin-right: 1%;
