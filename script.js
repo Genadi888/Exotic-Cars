@@ -22,11 +22,11 @@ function getUlBack(ul) {
 	setInterval(() => {
 		nav = document.getElementsByTagName('nav')[0];
 
-		if (nav.offsetHeight > 66) {
+		if (nav.offsetHeight > 80) {
 			ul.style.marginLeft = '0%'
 			// console.log(ul.style.marginLeft);
-		} else if (nav.offsetHeight === 66) {
-			ul.style.marginLeft = '45%';
+		} else if (nav.offsetHeight >= 66 && nav.offsetHeight <= 80) {
+			ul.style.marginLeft = '55%';
 		}
 	}, 10);
 }
