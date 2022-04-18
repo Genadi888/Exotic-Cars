@@ -1,12 +1,69 @@
-#navbarNav > ul {
+#navbarNav>ul {
 	margin-left: 55%;
 }
 
-body > nav > div > img {
+body>nav>div>img {
 	margin-left: 1%;
 	margin-right: 1%;
 }
 
 #carouselExampleControls {
 	margin-top: 66px;
+}
+
+main {
+	height: 110vh;
+	width: 100%;
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(images/lamborghini-racing-race-cars-dirt-car-hd-wallpaper-preview.jpg);
+	background-size: cover;
+	/* background-repeat: no-repeat; */
+}
+
+#goal-div {
+	width: 15rem;
+	position: relative;
+	left: 70%;
+	top: 20%;
+	/* right: 5%; */
+	color: aliceblue;
+}
+
+#goal-div>h1 {
+	font-size: 28px;
+	text-align: center;
+	width: 15rem;
+}
+
+#goal-div>p {
+	/* font-size: 28px; */
+	text-align: justify;
+	/* color: aliceblue; */
+	text-shadow: 0px 0px 20px 2px #000000;
+}
+
+#goal-div>hr {
+	height: 2px;
+}
+
+@media only screen and (max-width: 900px) {
+	#goal-div {
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}
+
+@media only screen and (min-width: 1568px) {
+	#goal-div {
+		width: 25rem;
+		top: 10%;
+	}
+
+	#goal-div>p {
+		font-size: 30px;
+	}
+
+	#goal-div>h1 {
+		font-size: 35px;
+		width: 25rem;
+	}
 }
