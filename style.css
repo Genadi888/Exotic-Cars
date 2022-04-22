@@ -19,22 +19,25 @@ main {
 	/* background-repeat: no-repeat; */
 }
 
-#goal-div {
+.goal-div {
 	width: 15rem;
 	position: relative;
 	left: 70%;
 	top: 20%;
 	/* right: 5%; */
 	color: aliceblue;
+
+	opacity: 0;
+	/* transition: opacity 1s; */
 }
 
-#goal-div>h1 {
+.goal-div>h1 {
 	font-size: 28px;
 	text-align: center;
 	width: 15rem;
 }
 
-#goal-div>p {
+.goal-div>p {
 	/* font-size: 28px; */
 	text-align: justify;
 	/* color: aliceblue; */
@@ -42,11 +45,11 @@ main {
 	margin-bottom: 1.5em;
 }
 
-#goal-div>hr {
+.goal-div>hr {
 	height: 2px;
 }
 
-#goal-div>a {
+.goal-div>a {
 	color: white;
 	text-decoration: none;
 	background-color: rgb(10, 140, 221);
@@ -54,24 +57,59 @@ main {
 }
 
 @media only screen and (max-width: 900px) {
-	#goal-div {
+	.goal-div {
 		left: 50%;
 		transform: translateX(-50%);
 	}
 }
 
 @media only screen and (min-width: 1568px) {
-	#goal-div {
+	.goal-div {
 		width: 25rem;
 		top: 10%;
 	}
 
-	#goal-div>p {
+	.goal-div>p {
 		font-size: 30px;
 	}
 
-	#goal-div>h1 {
+	.goal-div>h1 {
 		font-size: 35px;
 		width: 25rem;
+	}
+}
+
+/* ? Below is the code for the "goal-div" scroll fade-in animation */
+
+.goal-div.scrolled {
+	/* ? when the div comes into view, it will fade in */
+	opacity: 1;
+}
+
+.goal-div.fade-out {
+	opacity: 0;
+	animation: fade-out 500ms ease-in-out both;
+}
+
+.scrolled.fade-in {
+	animation: fade-in 500ms ease-in-out both;
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes fade-out {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
 	}
 }
