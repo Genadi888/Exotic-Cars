@@ -24,12 +24,15 @@ main {
 	position: relative;
 	left: 70%;
 	top: 20%;
-	/* right: 5%; */
+
 	color: aliceblue;
 
-	opacity: 0;
-	/* transition: opacity 1s; */
+	transition: opacity 700ms ease-in-out;
 }
+
+/* ? the two end points for the transition */
+.fadeOut { opacity: 0; } 
+.fadeIn { opacity: 1; }
 
 .goal-div>h1 {
 	font-size: 28px;
@@ -76,40 +79,5 @@ main {
 	.goal-div>h1 {
 		font-size: 35px;
 		width: 25rem;
-	}
-}
-
-/* ? Below is the code for the "goal-div" scroll fade-in animation */
-
-.goal-div.scrolled {
-	/* ? when the div comes into view, it will fade in */
-	opacity: 1;
-}
-
-.goal-div.fade-out {
-	opacity: 0;
-	animation: fade-out 500ms ease-in-out both;
-}
-
-.scrolled.fade-in {
-	animation: fade-in 500ms ease-in-out both;
-}
-
-@keyframes fade-in {
-	0% {
-		opacity: 0;
-	}
-
-	100% {
-		opacity: 1;
-	}
-}
-@keyframes fade-out {
-	0% {
-		opacity: 1;
-	}
-
-	100% {
-		opacity: 0;
 	}
 }

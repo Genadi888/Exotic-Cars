@@ -1,3 +1,5 @@
+'use strict'
+
 let clicked = false;
 
 function collapseButtonClickFunction() {
@@ -28,37 +30,25 @@ function getUlBack(ul) {
 //? Below is the code for the "goal-div" scroll fade-in animation
 
 
-const scrollOffset = 100;
-
-const scrollElement = document.querySelectorAll(".goal-div")[0];
-console.log(scrollElement);
-
-const elementInView = (el, offset = 0) => {
-	const elementTop = el.getBoundingClientRect().top;
-
-	return (
-		elementTop <=
-		((window.innerHeight || document.documentElement.clientHeight) - offset)
-	);
+const observerOptions = {
+	root: null,
+	rootMargin: "0px",
+	threshold: 0.8
 };
 
-const displayScrollElement = () => {
-	scrollElement.classList.add('scrolled');
-}
+const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-const hideScrollElement = () => {
-	scrollElement.classList.remove('scrolled');
-	scrollElement.classList.add('fade-out');
-}
+const fadeElms = document.querySelectorAll('.goal-div');
+observer.observe(fadeElms[0]);
 
-const handleScrollAnimation = () => {
-	if (elementInView(scrollElement, scrollOffset)) {
-		displayScrollElement();
+function observerCallback(entries) {
+	const goalDiv = entries[0];
+	
+	if (goalDiv.isIntersecting) {
+		//? fade in observed element that are in view
+		goalDiv.target.classList.replace('fadeOut', 'fadeIn');
 	} else {
-		hideScrollElement();
+		//? fade out observed element that are not in view
+		goalDiv.target.classList.replace('fadeIn', 'fadeOut');
 	}
 }
-
-window.addEventListener('scroll', () => {
-	handleScrollAnimation();
-})
