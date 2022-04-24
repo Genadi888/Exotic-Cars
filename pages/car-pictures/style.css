@@ -1,5 +1,6 @@
-html, section {
-	background-color:darkslategrey;
+html,
+section {
+	background-color: darkslategrey;
 }
 
 #navbarNav>ul {
@@ -35,4 +36,36 @@ section {
 	section {
 		margin-top: 60px;
 	}
+}
+
+.list-group {
+	width: 250px;
+	position: fixed;
+	top: 120px;
+	right: 20px;
+}
+
+body>aside>ul>li:nth-child(1) {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #caad0a;
+	color: rgb(240, 240, 240);
+}
+
+body>aside>ul>li:nth-child(1)>h1 {
+	margin: 0;
+	font-size: 22px;
+}
+
+body>aside>ul>li:nth-child(1)>p {
+	margin: 0;
+	/* font-size: 22px; */
+}
+
+body>aside>ul>li>a {
+	font-size: 14px;
+	text-decoration: none;
+}
+body>aside>ul>li>a:hover {
+	text-decoration: underline;
 }
