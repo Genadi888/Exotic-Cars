@@ -67,11 +67,33 @@ section {
 	writing-mode: vertical-rl;
 	text-orientation: upright;
 	font-size: 13px;
-	/* font-style: italic; */
-	/* font-weight: bold; */
 
 	margin: 0px;
 	padding: 0px;
+}
+
+.offcanvas-header {
+	flex-wrap: wrap;
+}
+
+#list-group-off-canvas {
+	padding: 0px;
+	margin: 0px;
+}
+
+#list-group-off-canvas>li>a {
+	font-size: 16px;
+	text-decoration: none;
+}
+
+#list-group-off-canvas>li>a:hover {
+	text-decoration: underline;
+}
+
+#offcanvasRight>div.offcanvas-header {
+	/* border: none; */
+	background-color: #caad0a;
+	color: rgb(240, 240, 240);
 }
 
 @media only screen and (max-width: 1023px) {
