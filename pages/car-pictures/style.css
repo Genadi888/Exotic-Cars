@@ -140,3 +140,31 @@ body>aside>ul>li>a {
 body>aside>ul>li>a:hover {
 	text-decoration: underline;
 }
+
+/* ? below is the code for the footer and its elements */
+
+footer {
+	display: flex;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	background-color: cadetblue;
+	color: white;
+}
+
+footer>p {
+	margin: 0px;
+	margin-left: 3%;
+	display: inline;
+}
+
+footer>ul>li {
+	display: inline;
+	margin-right: 2px;
+}
+
+footer>ul {
+	display: inline;
+	margin: 0px;
+	margin-left: 60%;
+	padding: 0px;
+}

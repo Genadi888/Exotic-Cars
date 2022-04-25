@@ -4,6 +4,8 @@
 
 let clicked = false;
 
+// TODO: When I added the social media icons a new bug appeared. It triggers when I use the collapse functionality. I need to fix it!
+
 function collapseButtonClickFunction() {
 	const ul = document.getElementsByClassName('navbar-nav')[0];
 

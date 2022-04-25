@@ -1,5 +1,25 @@
 #navbarNav>ul {
-	margin-left: 55%;
+	margin-left: 48%;
+}
+
+#navbarNav>ul>li:nth-child(4)>ul {
+	margin: 0;
+	padding: 8px;
+	padding-top: 5px;
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+#navbarNav>ul>li:nth-child(4)>ul>li {
+	display: inline;
+}
+
+#navbarNav>ul>li:nth-child(4) {
+	margin-left: 20px;
+}
+
+#navbarNav>ul>li:nth-child(4)>ul>li:not(:last-child) {
+	margin-right: 7px;
 }
 
 body>nav>div>img {
@@ -93,4 +113,36 @@ main {
 		font-size: 35px;
 		width: 25rem;
 	}
+
+	footer>p {
+		font-size: 26px;
+	}
+}
+
+/* ? below is the code for the footer and its elements */
+
+footer {
+	display: flex;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	background-color: cadetblue;
+	color: white;
+}
+
+footer>p {
+	margin: 0px;
+	margin-left: 3%;
+	display: inline;
+}
+
+footer>ul>li {
+	display: inline;
+	margin-right: 2px;
+}
+
+footer>ul {
+	display: inline;
+	margin: 0px;
+	margin-left: 60%;
+	padding: 0px;
 }
