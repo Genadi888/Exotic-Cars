@@ -4,13 +4,17 @@
 
 let clicked = false;
 
-// TODO: When I added the social media icons a new bug appeared. It triggers when I use the collapse functionality. I need to fix it!
-
 function collapseButtonClickFunction() {
 	const ul = document.getElementsByClassName('navbar-nav')[0];
+	const socialMediaLi = document.querySelector('#navbarNav>ul>li:nth-child(4)');
 
 	if (!clicked) {
 		ul.style.marginLeft = '0px';
+
+		socialMediaLi.style.marginLeft = '0px';
+		socialMediaLi.style.paddingLeft = '0px';
+		socialMediaLi.style.paddingTop = '8px';
+
 		clicked = true;
 	} else {
 		getUlBack(ul);
@@ -20,12 +24,22 @@ function collapseButtonClickFunction() {
 
 function getUlBack(ul) {
 	const nav = document.getElementsByTagName('nav')[0];
+	const socialMediaLi = document.querySelector('#navbarNav>ul>li:nth-child(4)');
 
 	setInterval(() => {
-		if (nav.offsetHeight > 80) {
-			ul.style.marginLeft = '0%'
+		// console.log(nav.offsetHeight);
+		if (nav.offsetHeight > 128) {
+			ul.style.marginLeft = '0%';
+
+			socialMediaLi.style.marginLeft = '0px';
+			socialMediaLi.style.paddingLeft = '0px';
+			socialMediaLi.style.paddingTop = '8px';
 		} else if (nav.offsetHeight >= 66 && nav.offsetHeight <= 80) {
-			ul.style.marginLeft = '55%';
+			ul.style.marginLeft = '45%';
+
+			socialMediaLi.style.marginLeft = '20px';
+			socialMediaLi.style.paddingLeft = '0px';
+			socialMediaLi.style.paddingTop = '0px';
 		}
 	}, 10);
 }

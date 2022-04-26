@@ -4,7 +4,27 @@ section {
 }
 
 #navbarNav>ul {
-	margin-left: 55%;
+	margin-left: 45%;
+}
+
+#navbarNav>ul>li:nth-child(4)>ul {
+	margin: 0;
+	padding: 0;
+	padding-top: 5px;
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+#navbarNav>ul>li:nth-child(4)>ul>li {
+	display: inline;
+}
+
+#navbarNav>ul>li:nth-child(4) {
+	margin-left: 20px;
+}
+
+#navbarNav>ul>li:nth-child(4)>ul>li:not(:last-child) {
+	margin-right: 7px;
 }
 
 body>nav>div>img {
@@ -162,8 +182,13 @@ footer>ul>li {
 	margin-right: 2px;
 }
 
+footer>ul>li:not(:last-child) {
+	margin-right: 7px;
+}
+
 footer>ul {
-	display: inline;
+	display: flex;
+	flex-wrap: wrap;
 	margin: 0px;
 	margin-left: 60%;
 	padding: 0px;
