@@ -43,8 +43,8 @@
 										alt="facebook"></a>
 							</li>
 							<li>
-								<a href="https://www.instagram.com" target="_blank"><img src="../../images/instagram.svg"
-										alt="instagram"></a>
+								<a href="https://www.instagram.com" target="_blank"><img
+										src="../../images/instagram.svg" alt="instagram"></a>
 							</li>
 							<li>
 								<a href="https://twitter.com" target="_blank"><img src="../../images/twitter.svg"
@@ -62,7 +62,22 @@
 	</nav>
 
 	<main>
-		
+		<h1>
+			Share your photos with the community!
+		</h1>
+
+		<form id="email-and-attached-images">
+			<label for="email">E-mail:</label>
+			<input type="email" name="userEmail" id="input-email">
+			<hr>
+			<input type="file" name="userImages" id="input-file" accept=".jpg,.jpeg,.png," multiple>
+			<div id="drag-and-drop">
+				<p>Drop your files here</p>
+			</div>
+			<hr>
+			<textarea name="additionalText" id="additional-text" cols="30" rows="10" placeholder="Add some optional information about the car/cars"></textarea>
+			<!-- <input type="text" name="additionalText" id="additional-text" placeholder="Add some optional information about the car/cars"> -->
+		</form>
 	</main>
 
 	<footer>
