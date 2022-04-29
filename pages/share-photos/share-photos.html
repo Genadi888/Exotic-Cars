@@ -13,6 +13,7 @@
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
 	<script src="../../navbar-script.js"></script>
+	<script src="drag-and-drop.js" defer></script>
 </head>
 
 <body>
@@ -70,9 +71,11 @@
 			<label for="email">E-mail:</label>
 			<input type="email" name="userEmail" id="input-email">
 			<hr>
-			<input type="file" name="userImages" id="input-file" accept=".jpg,.jpeg,.png," multiple>
-			<div id="drag-and-drop">
-				<p>Drop your files here</p>
+			<div class="drop-zone">
+				<span class="drop-zone__prompt">Drop file here or click to upload</span>
+				<!-- <div class="drop-zone__thumb" data-label="myFile.txt"></div> -->
+				<input type="file" name="userImages" class="drop-zone__input" accept=".jpg,.jpeg,.png," multiple>
+				<!-- <p>Drop your files here</p> -->
 			</div>
 			<hr>
 			<textarea name="additionalText" id="additional-text" cols="30" rows="10" placeholder="Add some optional information about the car/cars"></textarea>
