@@ -1,3 +1,8 @@
+html,
+section {
+	background-color: darkslategrey;
+}
+
 section {
 	margin-top: 90px;
 	display: flex;

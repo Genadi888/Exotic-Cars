@@ -1,10 +1,5 @@
 /* ? we use this file for multiple pages' navbars and footers */
 
-html,
-section {
-	background-color: darkslategrey;
-}
-
 #navbarNav>ul {
 	margin-left: 45%;
 }
