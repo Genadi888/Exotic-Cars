@@ -26,18 +26,14 @@ dropZoneElement.addEventListener('dragover', el => {
 dropZoneElement.addEventListener('drop', el => {
 	el.preventDefault();
 
-	let filesArr = Array.from(el.dataTransfer.files);
-	// for (const file of el.dataTransfer.files) {
-	// 	filesArr.push(file)
-	// }
-	filesArr = filesArr.filter(file => file.type.startsWith('image/'));
-	console.log(filesArr);
-	
+	const filesArr = Array.from(el.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+
+	const dataTransfer = new DataTransfer();
+	filesArr.forEach(file => dataTransfer.items.add(file));
+
 	if (filesArr.length) {
-		console.log(inputElement.files);
-		new FileList()
-		inputElement.files = filesArr;
-		updateThumbnail(dropZoneElement, filesArr);
+		inputElement.files = dataTransfer.files;
+		updateThumbnail(dropZoneElement, inputElement.files);
 	}
 
 	dropZoneElement.classList.remove('drop-zone--over');
@@ -48,8 +44,13 @@ dropZoneElement.addEventListener('drop', el => {
 	* @param {File} firstFile
 */
 
-function updateThumbnail(dropZoneElement, filesArr) {
-	const firstFile = filesArr[0];
+function updateThumbnail(dropZoneElement, files) {
+	const filesArr = [];
+
+	for (const file of files) {
+		filesArr.push(file);
+	}
+
 	let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
 
 	if (dropZoneElement.querySelector('.drop-zone__prompt')) {
@@ -65,18 +66,12 @@ function updateThumbnail(dropZoneElement, filesArr) {
 
 	let label = '';
 	filesArr.forEach(file => label += file.name + ', ');
-	label = label.slice(0, -2);
+	label = label.slice(0, -2);  //? here the last comma and space string is excluded from the final label
 	thumbnailElement.dataset.label = label;
 
-	//? Show thumbnail for image files only
-	if (firstFile.type.startsWith('image/')) {
-		const reader = new FileReader();
-
-		reader.readAsDataURL(firstFile);
-		reader.onload = () => {
-			thumbnailElement.style.backgroundImage = `url(${reader.result})`;
-		}
-	} else {
-		thumbnailElement.style.backgroundImage = null;
+	const reader = new FileReader();
+	reader.readAsDataURL(filesArr[0]);
+	reader.onload = () => {
+		thumbnailElement.style.backgroundImage = `url(${reader.result})`;
 	}
 }
