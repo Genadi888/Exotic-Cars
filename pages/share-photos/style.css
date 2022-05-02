@@ -23,13 +23,13 @@ main>form {
 	padding: 1em;
 }
 
-@media only screen and (max-width: 1024px){
+@media only screen and (max-width: 1024px) {
 	main>form {
 		width: 80%;
 	}
 }
 
-@media only screen and (max-height: 486px){
+@media only screen and (max-height: 486px) {
 	main>h1 {
 		font-size: medium;
 		margin-bottom: 8px;
@@ -63,7 +63,7 @@ main>form>hr {
 	margin-left: 1%;
 }
 
-@media only screen and (max-width: 615px){
+@media only screen and (max-width: 615px) {
 	#input-email {
 		width: 70%;
 	}

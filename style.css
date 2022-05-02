@@ -5,9 +5,8 @@
 main {
 	height: 110vh;
 	width: 100%;
-	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(images/lamborghini-racing-race-cars-dirt-car-hd-wallpaper-preview.jpg);
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(images/dirt-racing.jpg);
 	background-size: cover;
-	/* background-repeat: no-repeat; */
 }
 
 .goal-div {

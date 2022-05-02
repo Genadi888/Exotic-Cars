@@ -1,0 +1,14 @@
+main {
+	height: 110vh;
+	width: 100%;
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.37), rgba(0, 0, 0, 0.37)), url(../../images/Plovdiv.jpg);
+	background-size: cover;
+	padding-top: 90px;
+}
+
+main>h1 {
+	color: white;
+	text-align: center;
+	letter-spacing: 2px;
+	font-size: 40px;
+}
