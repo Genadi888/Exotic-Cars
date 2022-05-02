@@ -68,19 +68,27 @@ iframe {
 
 /* ? screen becomes small */
 @media only screen and (max-width: 799px) {
+	section {
+		align-content: center;
+		margin-top: 30px;
+	}
+	
 	iframe {
 		margin-left: 0px;
+		margin-top: 28px;
 		width: 90%;
 	}
-
+	
 	#text-and-buttons {
 		border-right: none;
 		border-bottom: black 2px solid;
 		height: 210px;
+		justify-content: flex-end;
+		padding-bottom: 28px !important;
 		/* padding-left: 50%; */
 	}
 
 	#text-and-buttons>h1 {
-		font-size: medium;
+		font-size: 20px;
 	}
 }
