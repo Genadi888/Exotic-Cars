@@ -3,8 +3,15 @@ section {
 	flex-wrap: wrap;
 	justify-content: center;
 	margin-top: 113px;
-	margin-bottom: 13.9%;
-	height: 500px;
+	/* margin-bottom: 13.9%; */
+	height: clamp(200px, 70vh, 500px);
+	/* width: 100%; */
+}
+
+main {
+	/* padding-top: 113px; */
+	height: 100vh;
+	width: 100%;
 }
 
 body {
@@ -24,6 +31,9 @@ body {
 	text-align: center;
 	color: white;
 	margin-bottom: 5%;
+	width: 350px;
+	/* padding-left: 1%;
+	padding-right: 1%; */
 }
 
 .btn-primary {
@@ -64,17 +74,20 @@ iframe {
 	width: 100%;
 	height: 100%;
 	margin-left: 6%;
+	margin-right: 6%;
 }
 
 /* ? screen becomes small */
 @media only screen and (max-width: 799px) {
 	section {
 		align-content: center;
-		margin-top: 30px;
+		margin-top: 75px;
+		height: unset;
 	}
 
 	iframe {
 		margin-left: 0px;
+		margin-right: 0px;
 		margin-top: 28px;
 		width: 90%;
 	}
@@ -90,5 +103,12 @@ iframe {
 
 	#text-and-buttons>h1 {
 		font-size: 20px;
+		width: unset;
+	}
+}
+
+@media only screen and (max-height: 320px) and (min-width: 800px) {
+	section {
+		margin-top: 80px;
 	}
 }
