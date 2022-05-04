@@ -5,8 +5,17 @@ section {
 
 section {
 	margin-top: 90px;
+
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
 	flex-direction: column;
+
+	-ms-flex-wrap: nowrap;
 	flex-wrap: nowrap;
 	padding-bottom: 2%;
 }
@@ -37,6 +46,8 @@ section {
 	z-index: 11;
 	visibility: hidden;
 
+	-webkit-transform: translateX(-100%);
+	-ms-transform: translateX(-100%);
 	transform: translateX(-100%);
 
 	padding: 0.7em;
@@ -47,6 +58,7 @@ section {
 	background-color: #caad0a;
 	border-color: #927d07;
 
+	-webkit-box-shadow: 2px 5px 16px 0px #0B325E, 5px 5px 15px 5px rgba(0, 0, 0, 0);
 	box-shadow: 2px 5px 16px 0px #0B325E, 5px 5px 15px 5px rgba(0, 0, 0, 0);
 }
 
@@ -55,6 +67,8 @@ section {
 }
 
 #offcanvas-btn>p {
+	-webkit-writing-mode: vertical-rl;
+	-ms-writing-mode: tb-rl;
 	writing-mode: vertical-rl;
 	text-orientation: upright;
 	font-size: 13px;
@@ -64,6 +78,7 @@ section {
 }
 
 .offcanvas-header {
+	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
 }
 

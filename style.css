@@ -5,6 +5,8 @@
 main {
 	height: 110vh;
 	width: 100%;
+	background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.233)), to(rgba(0, 0, 0, 0.664))), url(images/dirt-racing.jpg);
+	background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(images/dirt-racing.jpg);
 	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(images/dirt-racing.jpg);
 	background-size: cover;
 }
@@ -17,6 +19,8 @@ main {
 
 	color: aliceblue;
 
+	-webkit-transition: opacity 700ms ease-in-out;
+	-o-transition: opacity 700ms ease-in-out;
 	transition: opacity 700ms ease-in-out;
 }
 
@@ -50,7 +54,10 @@ main {
 .goal-div>a {
 	color: white;
 	text-decoration: none;
+
 	background-color: rgb(10, 140, 221);
+	-webkit-transition: background-color 300ms linear;
+	-o-transition: background-color 300ms linear;
 	transition: background-color 300ms linear;
 
 	padding: 3%;
@@ -59,12 +66,16 @@ main {
 .goal-div>a:hover {
 	color: white;
 	background-color: #0B5ED7;
+	-webkit-transition: background-color 300ms linear;
+	-o-transition: background-color 300ms linear;
 	transition: background-color 300ms linear
 }
 
 @media only screen and (max-width: 900px) {
 	.goal-div {
 		left: 50%;
+		-webkit-transform: translateX(-50%);
+		-ms-transform: translateX(-50%);
 		transform: translateX(-50%);
 	}
 }
