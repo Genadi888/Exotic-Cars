@@ -1,8 +1,8 @@
 main {
 	height: 110vh;
 	width: 100%;
-	background-image: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.233)), to(rgba(0, 0, 0, 0.664))), url(../../images/holding-photo.jpg);
 	background-image: -o-linear-gradient(right, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(../../images/holding-photo.jpg);
+	background-image: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.233)), to(rgba(0, 0, 0, 0.664))), url(../../images/holding-photo.jpg);
 	background-image: linear-gradient(to left, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(../../images/holding-photo.jpg);
 	background-size: cover;
 	padding-top: 90px;
@@ -83,15 +83,42 @@ main>form>hr {
 	margin-left: 10px;
 }
 
+#input-email::-webkit-input-placeholder {
+	opacity: 0;
+}
+
+#input-email::-moz-placeholder {
+	opacity: 0;
+}
+
+#input-email:-ms-input-placeholder {
+	opacity: 0;
+}
+
+#input-email::-ms-input-placeholder {
+	opacity: 0;
+}
+
 #input-email::placeholder {
 	opacity: 0;
 }
 
 #form-top-part {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+
+	-webkit-box-pack: start;
+	-ms-flex-pack: start;
 	justify-content: flex-start;
+
 	position: relative;
+
+	-webkit-box-align: center;
+	-ms-flex-align: center;
 	align-items: center;
+
+	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
 }
 
@@ -175,6 +202,22 @@ main>form>hr {
 	#input-email {
 		margin: 0px;
 		width: 100%;
+	}
+
+	#input-email::-webkit-input-placeholder {
+		opacity: 1;
+	}
+
+	#input-email::-moz-placeholder {
+		opacity: 1;
+	}
+
+	#input-email:-ms-input-placeholder {
+		opacity: 1;
+	}
+
+	#input-email::-ms-input-placeholder {
+		opacity: 1;
 	}
 
 	#input-email::placeholder {

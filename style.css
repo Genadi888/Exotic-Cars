@@ -5,6 +5,8 @@
 main {
 	height: 110vh;
 	width: 100%;
+	background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.233)), to(rgba(0, 0, 0, 0.664))), url(images/dirt-racing.jpg) center center/cover no-repeat scroll;
+	background: -o-linear-gradient(left, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(images/dirt-racing.jpg) center center/cover no-repeat scroll;
 	background: linear-gradient(to right, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(images/dirt-racing.jpg) center center/cover no-repeat scroll;
 	background-size: cover;
 }
