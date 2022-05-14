@@ -69,8 +69,11 @@
 		</h1>
 
 		<form id="email-and-attached-images">
-			<label for="email">E-mail:</label>
-			<input type="email" name="userEmail" id="input-email">
+			<span id="form-top-part">
+				<label for="email">E-mail:</label>
+				<input type="email" name="userEmail" placeholder="example@mail.com" id="input-email">
+				<input id="submit-btn" class="btn btn-primary" type="submit" value="Submit form">
+			</span>
 			<hr>
 			<div class="drop-zone">
 				<span class="drop-zone__prompt">Drop file here or click to upload</span>
