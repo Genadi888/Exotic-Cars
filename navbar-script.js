@@ -35,8 +35,6 @@ function getUlBack(ul) {
 			socialMediaLi.style.paddingLeft = '0px';
 			socialMediaLi.style.paddingTop = '8px';
 		} else if (nav.offsetHeight >= 66 && nav.offsetHeight <= 80) {
-			ul.style.marginLeft = '45%';
-
 			socialMediaLi.style.marginLeft = '20px';
 			socialMediaLi.style.paddingLeft = '0px';
 			socialMediaLi.style.paddingTop = '0px';

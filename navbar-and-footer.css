@@ -1,14 +1,19 @@
 /* ? we use this file for multiple pages' navbars and footers */
 
-#navbarNav>ul {
-	margin-left: 45%;
+@media only screen and (min-width: 992px) {
+	#navbarNav>ul {
+		/* margin-left: 45%; */
+		position: absolute;
+		right: 30px;
+		/* top: 0; */
+	}
 }
 
 #navbarNav>ul>li:nth-child(4)>ul {
 	margin: 0;
 	padding: 0;
 	padding-top: 5px;
-	
+
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -40,8 +45,8 @@ footer {
 	display: -ms-flexbox;
 	display: flex;
 
-	padding-top: 2%;
-	padding-bottom: 2%;
+	padding-top: min(2%, 35px);
+	padding-bottom: min(2%, 35px);
 
 	background-color: cadetblue;
 	color: white;
@@ -71,6 +76,15 @@ footer>ul {
 	flex-wrap: wrap;
 
 	margin: 0px;
-	margin-left: 60%;
+	/* margin-left: 60%; */
+	position: absolute;
+	right: 30px;
 	padding: 0px;
+}
+
+@media only screen and (max-width: 460px) {
+	footer>ul {
+		position: unset;
+		margin-left: 20%;
+	}
 }
