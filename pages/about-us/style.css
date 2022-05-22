@@ -2,8 +2,8 @@ main {
 	height: 110vh;
 	width: 100%;
 	background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.37)), to(rgba(0, 0, 0, 0.37))), url(../../images/Plovdiv.jpg);
-	background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.37), rgba(0, 0, 0, 0.37)), url(../../images/Plovdiv.jpg);
-	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.37), rgba(0, 0, 0, 0.37)), url(../../images/Plovdiv.jpg);
+	background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.37), rgba(0, 0, 0, 0.37)), url(../../images/Plovdiv.webp);
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.37), rgba(0, 0, 0, 0.37)), url(../../images/Plovdiv.webp);
 	background-size: cover;
 	padding-top: 90px;
 }
