@@ -83,6 +83,10 @@ main>form>hr {
 	margin-left: 10px;
 }
 
+#form-top-part > label {
+	font-size: 13px;
+}
+
 #input-email::-webkit-input-placeholder {
 	opacity: 0;
 }
@@ -128,7 +132,7 @@ main>form>hr {
 }
 
 /* ? here the submit button goes down */
-@media only screen and (max-width: 709px) {
+@media only screen and (max-width: 759px) {
 	#input-email {
 		width: 70%;
 		margin-right: 0px;
@@ -186,7 +190,7 @@ main>form>hr {
 	font-size: 20px;
 }
 
-@media only screen and (max-height: 614px) and (max-width: 709px) {
+@media only screen and (max-height: 614px) and (max-width: 759px) {
 	.drop-zone {
 		height: 35% !important;
 		padding: 5px !important;
@@ -194,7 +198,7 @@ main>form>hr {
 }
 
 /* ? screen becomes too small, label is removed and input placeholder is shown */
-@media only screen and (max-width: 280px) {
+@media only screen and (max-width: 364px) {
 	#form-top-part>label {
 		display: none;
 	}
