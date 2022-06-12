@@ -83,7 +83,7 @@ iframe {
 	}
 
 	#text-and-buttons > h1 {
-		text-shadow: -3px -2px 8px rgb(0, 0, 0);
+		text-shadow: -3px 0px 8px rgb(0, 0, 0);
 	}
 
 	iframe {
