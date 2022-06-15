@@ -11,7 +11,7 @@ main {
 	background-size: cover;
 }
 
-.goal-div {
+#goal-div {
 	width: 15rem;
 	position: relative;
 	left: 70%;
@@ -33,13 +33,13 @@ main {
 	opacity: 1;
 }
 
-.goal-div>h1 {
+#goal-div>h1 {
 	font-size: 28px;
 	text-align: center;
 	width: 15rem;
 }
 
-.goal-div>p {
+#goal-div>p {
 	/* font-size: 28px; */
 	text-align: justify;
 	/* color: aliceblue; */
@@ -47,11 +47,11 @@ main {
 	margin-bottom: 1.5em;
 }
 
-.goal-div>hr {
+#goal-div>hr {
 	height: 2px;
 }
 
-.goal-div>a {
+#goal-div>a {
 	color: white;
 	text-decoration: none;
 
@@ -63,7 +63,7 @@ main {
 	padding: 3%;
 }
 
-.goal-div>a:hover {
+#goal-div>a:hover {
 	color: white;
 	background-color: #0B5ED7;
 	-webkit-transition: background-color 300ms linear;
@@ -72,7 +72,7 @@ main {
 }
 
 @media only screen and (max-width: 900px) {
-	.goal-div {
+	#goal-div {
 		left: 50%;
 		-webkit-transform: translateX(-50%);
 		-ms-transform: translateX(-50%);
@@ -81,16 +81,16 @@ main {
 }
 
 @media only screen and (min-width: 1568px) {
-	.goal-div {
+	#goal-div {
 		width: 25rem;
 		top: 10%;
 	}
 
-	.goal-div>p {
+	#goal-div>p {
 		font-size: 30px;
 	}
 
-	.goal-div>h1 {
+	#goal-div>h1 {
 		font-size: 35px;
 		width: 25rem;
 	}
