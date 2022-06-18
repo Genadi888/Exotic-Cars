@@ -1,8 +1,8 @@
 main {
 	height: 110vh;
 	width: 100%;
-	background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.37)), to(rgba(0, 0, 0, 0.37))), url(../../images/Plovdiv.jpg);
-	background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.37), rgba(0, 0, 0, 0.37)), url(../../images/Plovdiv.webp);
+	background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5))), url(../../images/Plovdiv.jpg);
+	background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/Plovdiv.webp);
 	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/Plovdiv.webp);
 	background-size: cover;
 	padding-top: 85px;
@@ -12,11 +12,11 @@ main>h1 {
 	color: white;
 	text-align: center;
 	letter-spacing: 2px;
-	font-size: 40px;
+	font-size: max(40px, 2vw);
 }
 
 #picture-and-text {
-	margin-top: 25px;
+	margin-top: max(25px, 1.5vw);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -24,20 +24,49 @@ main>h1 {
 
 #picture-and-text>img {
 	border-radius: 2px;
+	width: max(25%, 270px);
+	height: max(25%, 373px);
 }
 
 #text-div {
 	color: white;
-	width: 500px;
-	margin-left: min(30px, 10%);
+	width: max(500px, 30%);
+	margin-left: min(20px, 10%);
 	margin-bottom: 50px;
 }
 
 #text-div>p {
-	font-size: 1.5vw;
+	text-shadow: 0px 0px 5px black;
 }
 
-#text-div > p:nth-child(3) {
+@media only screen and (max-width: 650px) {
+	#picture-and-text>img {
+		display: none;
+	}
+
+	#text-div {
+		margin-left: 0px;
+		padding-left: 1%;
+	}
+}
+
+@media only screen and (max-width: 1240px) {
+	#text-div {
+		margin-bottom: 0px;
+	}
+}
+
+#text-div>p {
+	font-size: max(1.3vw, 20px);
+}
+
+@media only screen and (max-width: 303px) {
+	#text-div>p {
+		font-size: 18px;
+	}
+}
+
+#text-div>p:nth-child(3) {
 	margin-bottom: 25px;
 }
 
@@ -52,6 +81,7 @@ main>h1 {
 	transition: background-color 300ms linear;
 
 	padding: 2% 4% 2% 4%;
+	font-size: max(1vw, 14px);
 }
 
 #text-div>a:hover {
@@ -60,4 +90,28 @@ main>h1 {
 	-webkit-transition: background-color 300ms linear;
 	-o-transition: background-color 300ms linear;
 	transition: background-color 300ms linear
+}
+
+@media only screen and (max-height: 550px) {
+	main>h1 {
+		display: none;
+	}
+
+	#text-div>p {
+		font-size: small;
+	}
+
+	#picture-and-text {
+		margin-top: 0px;
+	}
+
+	#picture-and-text>img {
+		height: max(50vh, 200px);
+	}
+}
+
+@media only screen and (max-height: 290px) {
+	main {
+		padding-top: 70px;
+	}
 }
