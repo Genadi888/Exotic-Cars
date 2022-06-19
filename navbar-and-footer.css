@@ -33,9 +33,9 @@
 	margin-right: 7px;
 }
 
-body>nav>div>img {
-	margin-left: 1%;
-	margin-right: 1%;
+body > nav > div > a {
+	margin-left: 0.5%;
+	margin-right: 0.5%;
 }
 
 /* ? below is the code for the footer and its elements */
