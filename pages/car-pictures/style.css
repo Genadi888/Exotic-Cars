@@ -235,20 +235,9 @@ body>aside>ul>li>a:hover {
 	right: 0px;
 	bottom: 30px;
 
-	/* transform: translateX(100%); */
-
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 
-	cursor: pointer;
-
-	/* transition: all 2s ease-in-out; */
 	opacity: 0;
 	transition: opacity 1.2s ease-in-out;
-}
-
-/* TODO */
-.top-link-slide-left {
-	/* opacity: 1; */
-	right: 5px;
 }
