@@ -1,0 +1,29 @@
+{
+	"name": "exotic-cars",
+	"version": "1.5.0",
+	"description": "Exotic Cars is my first website with a responsive and good-looking design. It was my final project for a web programming course. The current version will transform the website into a SPA, which will let the users post their car pictures.",
+	"main": "app.js",
+	"scripts": {
+		"test": "run test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Genadi888/Exotic-Cars.git"
+	},
+	"keywords": [
+		"cars",
+		"pictures",
+		"SPA",
+		"CSR"
+	],
+	"author": "Genadi",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Genadi888/Exotic-Cars/issues"
+	},
+	"homepage": "https://github.com/Genadi888/Exotic-Cars#readme",
+	"dependencies": {
+		"lit-html": "^2.3.1",
+		"page": "^1.11.6"
+	}
+}
