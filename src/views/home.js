@@ -1,35 +1,11 @@
-import { html } from "../lib/lit-html.js"
-import { startObserving } from "../util.js";
+import { html, render as litRender } from "../lib/lit-html.js"
 
 const homeTemplate = () => html`
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-	</script>
 	<link rel="stylesheet" href="/css/style.css">
 	
-	<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-touch="true">
-		<div class="carousel-inner">
-			<div class="carousel-item active" data-bs-interval="5000">
-				<img src="/images/dodge-challenger.webp" class="d-block w-100" alt="...">
-			</div>
-			<div class="carousel-item" data-bs-interval="5000">
-				<img src="/images/ford-gt.webp" class="d-block w-100" alt="...">
-			</div>
-			<div class="carousel-item" data-bs-interval="5000">
-				<img src="/images/toyota-hilux.webp" class="d-block w-100" alt="...">
-			</div>
-		</div>
-		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Previous</span>
-		</button>
-		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Next</span>
-		</button>
-	</div>
+	<image-carousel></image-carousel>
 	
 	<article>
 		<div id="goal-div" class="fade-in fadeOut">
@@ -46,5 +22,224 @@ const homeTemplate = () => html`
 
 export function homeView(ctx) {
 	ctx.render(homeTemplate());
+
 	startObserving(ctx.topShadowRoot.querySelector('main').shadowRoot);
+	defineCarousel(ctx);
+}
+
+function startObserving(nestedShadowRoot) {
+	const observer = new IntersectionObserver(observerCallback, {
+		root: null,
+		rootMargin: "0px",
+		threshold: 0.8
+	});
+
+	const fadeEl = nestedShadowRoot.querySelector('#goal-div');
+	// console.log(fadeEl)
+	observer.observe(fadeEl);
+
+	function observerCallback(entries) {
+		const goalDiv = entries[0];
+
+		if (goalDiv.isIntersecting) {
+			//? fade in observed element that are in view
+			goalDiv.target.classList.replace('fadeOut', 'fadeIn');
+		} else {
+			//? fade out observed element that are not in view
+			goalDiv.target.classList.replace('fadeIn', 'fadeOut');
+		}
+	}
+}
+
+function defineCarousel(ctx) {
+	class Carousel extends HTMLElement {
+		#carouselContainer = null;
+		#carouselSlide = null;
+		#carouselImages = null;
+
+		#prevBtn = null;
+		#nextBtn = null;
+
+		#counter = 1;
+		#autoNextAllowed = true;
+		#swipeAllowed = true;
+
+		#_size = null;
+
+		get #size() {
+			return this.#_size == null ? this.#carouselImages[0].clientWidth : this.#_size;
+		}
+
+		set #size(val) {
+			this.#_size = val;
+		}
+
+		#timeoutId_next = null; 
+		#timeoutId_prev = null;
+		#intervalId_autoNext = null;
+
+		#initialX = null;
+
+		constructor() {
+			super();
+
+			this.attachShadow({ mode: 'open' });
+
+			litRender(html`
+				<link rel="stylesheet" href="/css/home-carousel.css">
+				
+				<div class="carousel-container">
+					<div class="carousel-slide">
+						<img src="/images/bmw-i8-roadster.webp" id="lastClone" alt="bmw">
+						<img src="/images/mercedes-benz.webp" alt="mercedes">
+						<img src="/images/Lamborghini-Huracan-Tecnica-facelift-2022_2.webp" alt="lambo">
+						<img src="/images/bmw-i8-roadster.webp" alt="dodge">
+						<img src="/images/mercedes-benz.webp" id="firstClone" alt="mercedes">
+					</div>
+				
+					<button id="prevBtn">&#8656;</button>
+					<button id="nextBtn">&#8658;</button>
+				</div>
+			`, this.shadowRoot);
+
+			
+
+			this.#intervalId_autoNext = setInterval(() => {
+				if (this.#autoNextAllowed) {
+					this.#onNext();
+				}
+			}, 3000);
+		}
+
+		#windowFocus() {
+			this.#autoNextAllowed = true;
+		}
+
+		#windowBlur() {
+			this.#autoNextAllowed = false;
+			clearTimeout(this.#timeoutId_prev);
+			clearTimeout(this.#timeoutId_next);
+		}
+
+		#windowResize() {
+			this.#carouselSlide.style.transition = 'none';
+			this.#size = this.#carouselImages[0].clientWidth;
+			this.#carouselSlide.style.transform = `translateX(${(-this.#size * this.#counter)}px)`;
+		}
+
+		#onNext() {
+			if (this.#counter >= this.#carouselImages.length - 1) {
+				return;
+			}
+			this.#counter++;
+			this.#carouselSlide.style.transition = 'transform 0.4s ease-in-out';
+			this.#carouselSlide.style.transform = `translateX(${(-this.#size * this.#counter)}px)`;
+		}
+		
+		#onPrev() {
+			if (this.#counter <= 0) {
+				return;
+			}
+			this.#counter--;
+			this.#carouselSlide.style.transition = 'transform 0.4s ease-in-out';
+			this.#carouselSlide.style.transform = `translateX(${(-this.#size * this.#counter)}px)`;
+		}
+
+		#disableActionsAndControlAutoNext(btn, timeoutId) {
+			btn.disabled = true;
+			setTimeout(() => {
+				btn.removeAttribute('disabled');
+			}, 500);
+		
+			clearTimeout(timeoutId);
+		
+			if (!this.#autoNextAllowed) {
+				return;
+			}
+		
+			timeoutId = setTimeout(() => {
+				this.#autoNextAllowed = true;
+			}, 5000);
+		
+			this.#autoNextAllowed = false;
+		}
+
+
+
+		//? below are the lifecycle events
+
+		connectedCallback() {
+			if (!this.isConnected) { //? just to be sure :)
+				return;
+			}
+
+			this.#carouselContainer = this.shadowRoot.querySelector('.carousel-container');
+			this.#carouselSlide = this.shadowRoot.querySelector('.carousel-slide');
+			this.#carouselImages = this.shadowRoot.querySelectorAll('.carousel-slide img');
+
+			this.#prevBtn = this.shadowRoot.querySelector('#prevBtn');
+			this.#nextBtn = this.shadowRoot.querySelector('#nextBtn');
+
+			window.addEventListener('focus', this.#windowFocus.bind(this));
+			window.addEventListener('blur', this.#windowBlur.bind(this));
+
+			window.addEventListener('resize', this.#windowResize.bind(this))
+			
+			this.#prevBtn.addEventListener('click', () => {
+				this.#disableActionsAndControlAutoNext(this.#prevBtn, this.#timeoutId_prev);
+				this.#onPrev();
+			});
+			
+			this.#nextBtn.addEventListener('click', () => {
+				this.#disableActionsAndControlAutoNext(this.#nextBtn, this.#timeoutId_next);
+				this.#onNext();
+			});
+			
+			this.#carouselSlide.addEventListener('transitionend', () => {
+				if (this.#carouselImages[this.#counter].id == 'lastClone') {
+					this.#carouselSlide.style.transition = 'none';
+					this.#counter = this.#carouselImages.length - 2;
+					this.#carouselSlide.style.transform = `translateX(${(-this.#size * this.#counter)}px)`;
+				} else if (this.#carouselImages[this.#counter].id == 'firstClone') {
+					this.#carouselSlide.style.transition = 'none';
+					this.#counter = this.#carouselImages.length - this.#counter;
+					this.#carouselSlide.style.transform = `translateX(${(-this.#size * this.#counter)}px)`;
+				}
+			})
+			
+			this.#carouselContainer.addEventListener('touchstart', ev => {
+				this.#initialX = ev.targetTouches['0'].clientX;
+			})
+			
+			this.#carouselContainer.addEventListener('touchend', ev => {
+				if (!this.#swipeAllowed) {
+					return;
+				}
+			
+				const lastX = ev.changedTouches['0'].clientX;
+			
+				if (lastX - this.#initialX >= 20) {
+					this.#disableActionsAndControlAutoNext(this.#prevBtn, this.#timeoutId_prev);
+					this.#onPrev();
+				} else if (lastX - this.#initialX <= -20) {
+					this.#disableActionsAndControlAutoNext(this.#nextBtn, this.#timeoutId_next);
+					this.#onNext();
+				}
+			
+				this.#swipeAllowed = false;
+				setTimeout(() => {
+					this.#swipeAllowed = true;
+				}, 500);
+			})
+		}
+
+		disconnectedCallback() {
+			window.removeEventListener('focus', this.#windowFocus);
+			window.removeEventListener('blur', this.#windowBlur);
+			window.removeEventListener('resize', this.#windowResize);
+			this.#windowBlur(); //? we use this to clear some timeouts
+		}
+	}
+
+	window.customElements.define('image-carousel', Carousel);
 }
