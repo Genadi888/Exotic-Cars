@@ -1,18 +1,46 @@
 /* ? we use this file for multiple pages' navbars and footers */
 
-@media only screen and (min-width: 992px) {
-	#navbarNav>ul {
-		/* margin-left: 45%; */
-		position: absolute;
-		right: 30px;
-		/* top: 0; */
+.navbar-nav {
+	position: absolute;
+	right: 30px;
+}
+
+@media only screen and (max-width: 992px) {
+	.navbar-nav {
+		position: relative;
+		left: 20px;
+		display: block;
+	}
+
+	.navbar-nav .nav-link {
+		padding-left: 5px;
+		color: grey;
+		transition: color 0.5s ease;
+	}
+
+	.navbar-nav .nav-link:hover {
+		color: black;
+	}
+
+	#drop-down-menu-container > ul > li:nth-child(4) {
+		margin: 0;
+	}
+
+	#drop-down-menu-container {
+		width: 100%;
+		position: fixed;
+		top: -90px;
+		background-color: white;
+		transition: transform 1.5s ease-in-out;
+		z-index: 11;
 	}
 }
 
-#navbarNav>ul>li:nth-child(4)>ul {
+.navbar-nav>li:nth-child(4)>ul {
 	margin: 0;
 	padding: 0;
 	padding-top: 5px;
+	padding-bottom: 5px;
 
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -21,19 +49,19 @@
 	flex-wrap: nowrap;
 }
 
-#navbarNav>ul>li:nth-child(4)>ul>li {
+.navbar-nav>li:nth-child(4)>ul>li {
 	display: inline;
 }
 
-#navbarNav>ul>li:nth-child(4) {
+.navbar-nav>li:nth-child(4) {
 	margin-left: 20px;
 }
 
-#navbarNav>ul>li:nth-child(4)>ul>li:not(:last-child) {
+.navbar-nav>li:nth-child(4)>ul>li:not(:last-child) {
 	margin-right: 7px;
 }
 
-nav > div > a {
+nav > .container-fluid > a {
 	margin-left: 0.5%;
 	margin-right: 0.5%;
 }
