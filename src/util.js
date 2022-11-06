@@ -11,7 +11,7 @@ export function collapseButtonClickFunction(topShadowRoot, ev) {
 
 		button.disabled = true;
 	} else {
-		menuContainer.style.transform = 'translateY(-100%)';
+		menuContainer.style.transform = 'translateY(0px)';
 		clickedNavBtn = false;
 
 		button.disabled = true;

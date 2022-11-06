@@ -5,7 +5,7 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/navbar-and-footer.css">
-
+	
 	<div id="drop-down-menu-container">
 		<ul class="navbar-nav">
 			<li class="nav-item">
@@ -20,7 +20,8 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 			<li class="nav-item">
 				<ul class="social-media-links">
 					<li>
-						<a href="https://www.facebook.com" target="_blank"><img src="/images/facebook.svg" alt="facebook"></a>
+						<a href="https://www.facebook.com" target="_blank"><img src="/images/facebook.svg"
+								alt="facebook"></a>
 					</li>
 					<li>
 						<a href="https://www.instagram.com" target="_blank"><img src="/images/instagram.svg"
@@ -42,7 +43,8 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 				<img width="50px" height="50px" src="/images/site-logo.png" alt="sports car">
 			</a>
 			<a class="navbar-brand" href="/">Exotic Cars</a>
-			<button @click=${ev => collapseButtonClickFunction(topShadowRoot, ev)} id="collapse-button" class="navbar-toggler" type="button"
+			<button @click=${ev=> collapseButtonClickFunction(topShadowRoot, ev)} id="collapse-button"
+				class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
 				aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -82,14 +84,14 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 			</div>
 		</div>
 	</nav>
-
+	
 	<main>
 		${body}
 	</main>
-
+	
 	<footer>
-		<p>&copy; &emsp; Copyright Genadi Fidanov 2022</p>
-
+		<p>&copy; Genadi Fidanov ${new Date().getFullYear()}</p>
+	
 		<ul>
 			<li>
 				<a href="https://www.facebook.com" target="_blank"><img src="/images/facebook.svg" alt="facebook"></a>

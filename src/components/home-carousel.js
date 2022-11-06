@@ -200,5 +200,7 @@ export function defineCarousel() {
 		}
 	}
 
-	window.customElements.define('image-carousel', Carousel);
+	if (window.customElements.get('image-carousel') == undefined) {
+		window.customElements.define('image-carousel', Carousel);
+	}
 }
