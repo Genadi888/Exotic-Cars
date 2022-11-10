@@ -15,6 +15,17 @@ export function defineCarousel() {
 
 		#_size = null;
 
+		// #allListenersShouldBeDisabled = false;
+		#controller = new AbortController();
+
+		get #bindedListeners() {
+			return {
+				focus: this.#windowFocus.bind(this),
+				blur: this.#windowBlur.bind(this),
+				resize: this.#windowResize.bind(this)
+			}
+		}
+
 		get #imageSize() {
 			if (this.#_size == null) {
 				return new Promise(resolve => {
@@ -40,31 +51,11 @@ export function defineCarousel() {
 
 		constructor() {
 			super();
-
 			this.attachShadow({ mode: 'open' });
 
-			litRender(html`
-				<link rel="stylesheet" href="/css/home-carousel.css">
-				
-				<div class="carousel-container">
-					<div class="carousel-slide">
-						<img src="/images/bmw-i8-roadster.webp" id="lastClone" alt="bmw">
-						<img src="/images/mercedes-benz.webp" alt="mercedes">
-						<img src="/images/Lamborghini-Huracan-Tecnica-facelift-2022_2.webp" alt="lambo">
-						<img src="/images/bmw-i8-roadster.webp" alt="dodge">
-						<img src="/images/mercedes-benz.webp" id="firstClone" alt="mercedes">
-					</div>
-				
-					<button id="prevBtn">&#8656;</button>
-					<button id="nextBtn">&#8658;</button>
-				</div>
-			`, this.shadowRoot);
-
-			this.#intervalId_autoNext = setInterval(() => {
-				if (this.#autoNextAllowed) {
-					this.#onNext();
-				}
-			}, 3000);
+			window.addEventListener('focus', this.#bindedListeners.focus, { signal: this.#controller.signal });
+			window.addEventListener('blur', this.#bindedListeners.blur, { signal: this.#controller.signal });
+			window.addEventListener('resize', this.#bindedListeners.resize, { signal: this.#controller.signal })
 		}
 
 		#windowFocus() {
@@ -87,7 +78,6 @@ export function defineCarousel() {
 			if (this.#counter >= this.#carouselImages.length - 1) {
 				return;
 			}
-			this.#imageSize
 			this.#counter++;
 			this.#carouselSlide.style.transition = 'transform 0.4s ease-in-out';
 			this.#carouselSlide.style.transform = `translateX(${(-(await this.#imageSize) * this.#counter)}px)`;
@@ -129,6 +119,23 @@ export function defineCarousel() {
 				return;
 			}
 
+			litRender(html`
+				<link rel="stylesheet" href="/css/home-carousel.css">
+				
+				<div class="carousel-container">
+					<div class="carousel-slide">
+						<img src="/images/bmw-i8-roadster.webp" id="lastClone" alt="bmw">
+						<img src="/images/mercedes-benz.webp" alt="mercedes">
+						<img src="/images/Lamborghini-Huracan-Tecnica-facelift-2022_2.webp" alt="lambo">
+						<img src="/images/bmw-i8-roadster.webp" alt="dodge">
+						<img src="/images/mercedes-benz.webp" id="firstClone" alt="mercedes">
+					</div>
+				
+					<button id="prevBtn">&#8656;</button>
+					<button id="nextBtn">&#8658;</button>
+				</div>
+			`, this.shadowRoot);
+
 			this.#carouselContainer = this.shadowRoot.querySelector('.carousel-container');
 			this.#carouselSlide = this.shadowRoot.querySelector('.carousel-slide');
 			this.#carouselImages = this.shadowRoot.querySelectorAll('.carousel-slide img');
@@ -136,10 +143,7 @@ export function defineCarousel() {
 			this.#prevBtn = this.shadowRoot.querySelector('#prevBtn');
 			this.#nextBtn = this.shadowRoot.querySelector('#nextBtn');
 
-			window.addEventListener('focus', this.#windowFocus.bind(this));
-			window.addEventListener('blur', this.#windowBlur.bind(this));
-
-			window.addEventListener('resize', this.#windowResize.bind(this))
+			this.#windowResize();
 
 			this.#prevBtn.addEventListener('click', () => {
 				this.#disableActionsAndControlAutoNext(this.#prevBtn, this.#timeoutId_prev);
@@ -188,13 +192,25 @@ export function defineCarousel() {
 				}, 500);
 			})
 
-			this.#carouselSlide.style.transform = `translateX(${(-(await this.#imageSize) * this.#counter)}px)`;
+			const autoResizeIntervalId = setInterval(async () => {
+				if (await this.#imageSize === this.#carouselImages[0].naturalWidth) {
+					this.#windowResize();
+					clearInterval(autoResizeIntervalId);
+				} else if (await this.#imageSize == 0) {
+					this.#windowResize();
+					clearInterval(autoResizeIntervalId);
+				}
+			}, 100);
+
+			this.#intervalId_autoNext = setInterval(() => {
+				if (this.#autoNextAllowed) {
+					this.#onNext();
+				}
+			}, 3000);
 		}
 
 		disconnectedCallback() {
-			window.removeEventListener('focus', this.#windowFocus);
-			window.removeEventListener('blur', this.#windowBlur);
-			window.removeEventListener('resize', this.#windowResize);
+			this.#controller.abort();
 			this.#windowBlur(); //? we use this to clear some timeouts
 			clearInterval(this.#intervalId_autoNext);
 		}

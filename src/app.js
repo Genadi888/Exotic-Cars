@@ -1,5 +1,6 @@
 import page from "./lib/page.mjs";
 import { addRender } from "./middlewares/render.js";
+import { aboutUsView } from "./views/about-us.js";
 import { carPicturesView } from "./views/car-pictures.js";
 import { homeView } from "./views/home.js";
 
@@ -15,4 +16,5 @@ page(addRender(root));
 page('/index.html', '/');
 page('/', homeView);
 page('/car-pictures', carPicturesView);
+page('/about-us', aboutUsView);
 page.start();
