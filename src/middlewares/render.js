@@ -4,11 +4,11 @@ import { layoutTemplate } from "../views/layout.js";
 export function addRender() {
 	let nestedShadowRoot = null;
 	return (ctx, next) => {
+		litRender(layoutTemplate(null, ctx.topShadowRoot), ctx.topShadowRoot); //? layout initialization
 		ctx.render = (templateResult) => {
-			litRender(layoutTemplate(null, ctx.topShadowRoot), ctx.topShadowRoot);
-
 			if (nestedShadowRoot == null) {
 				nestedShadowRoot = ctx.topShadowRoot.querySelector('main').attachShadow({ mode: 'open' });
+				ctx.nestedShadowRoot = nestedShadowRoot;
 			}
 			
 			litRender(templateResult, nestedShadowRoot);
