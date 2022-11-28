@@ -24,7 +24,7 @@ const homeTemplate = () => html`
 export function homeView(ctx) {
 	ctx.render(homeTemplate());
 
-	startObserving(ctx.topShadowRoot.querySelector('main').shadowRoot);
+	startObserving(ctx.nestedShadowRoot);
 	defineCarousel();
 }
 

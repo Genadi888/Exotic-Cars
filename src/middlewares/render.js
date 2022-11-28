@@ -5,11 +5,14 @@ export function addRender() {
 	let nestedShadowRoot = null;
 	return (ctx, next) => {
 		litRender(layoutTemplate(null, ctx.topShadowRoot), ctx.topShadowRoot); //? layout initialization
+
 		ctx.render = (templateResult) => {
 			if (nestedShadowRoot == null) {
 				nestedShadowRoot = ctx.topShadowRoot.querySelector('main').attachShadow({ mode: 'open' });
-				ctx.nestedShadowRoot = nestedShadowRoot;
 			}
+
+			//! a new context object is created for every page load, so we always add the following property
+			ctx.nestedShadowRoot = nestedShadowRoot;
 			
 			litRender(templateResult, nestedShadowRoot);
 		}

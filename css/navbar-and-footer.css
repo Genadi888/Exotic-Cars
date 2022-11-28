@@ -84,8 +84,8 @@ footer {
 	display: -ms-flexbox;
 	display: flex;
 
-	padding-top: min(2%, 35px);
-	padding-bottom: min(2%, 35px);
+	padding-top: min(2%, 25px);
+	padding-bottom: min(2%, 25px);
 
 	background-color: cadetblue;
 	color: white;

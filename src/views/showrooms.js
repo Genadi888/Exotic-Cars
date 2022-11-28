@@ -10,9 +10,9 @@ const showroomsTemplate = (buttonsFunc) => html`
 			<div id="text-and-buttons">
 				<h1>Check out our showrooms in Bulgaria:</h1>
 				<div class="btn-group-vertical" role="group" aria-label="Basic example">
-					<button type="button" class="btn btn-primary" @click="${() => buttonsFunc('Sofia')}">Sofia</button>
-					<button type="button" class="btn btn-primary" @click="${() => buttonsFunc('Plovdiv')}">Plovdiv</button>
-					<button type="button" class="btn btn-primary" @click="${() => buttonsFunc('Varna')}">Varna</button>
+					<button disabled type="button" class="town-btn btn btn-primary" @click="${() => buttonsFunc('Sofia')}">Sofia</button>
+					<button disabled type="button" class="town-btn btn btn-primary" @click="${() => buttonsFunc('Plovdiv')}">Plovdiv</button>
+					<button disabled type="button" class="town-btn btn btn-primary" @click="${() => buttonsFunc('Varna')}">Varna</button>
 				</div>
 			</div>
 			<div id="map-div">
@@ -28,8 +28,16 @@ const showroomsTemplate = (buttonsFunc) => html`
 export function showroomsView(ctx) {
 	ctx.render(showroomsTemplate(buttonsFunc));
 	
+	const map = ctx.nestedShadowRoot.getElementById('map');
+	const townButtons = [...ctx.nestedShadowRoot.querySelectorAll('.town-btn')];
+	
+	map.addEventListener('load', () => {
+		for (const button of townButtons) {
+			button.removeAttribute('disabled');
+		}
+	})
+	
 	function buttonsFunc(town) {
-		const map = ctx.nestedShadowRoot.getElementById('map');
 		const towns = {
 			Sofia: () => map.setAttribute('src', "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2509.1555944710685!2d23.31670058700197!3d42.68091421645368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa85869e9a7c6d%3A0x322670168124451d!2z0JDQstGC0L7QutGK0YnQsCAi0JXQktCg0J7QkNCj0KLQniI!5e1!3m2!1sbg!2sbg!4v1651431666389!5m2!1sbg!2sbg"),
 			Plovdiv: () => map.setAttribute('src', "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4382.515728703805!2d24.772159616827473!3d42.12028224106309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14acd1d5bd03ea15%3A0x5749bf53701a3424!2z0JDQstGC0L7QutC-0LzQv9C70LXQutGBIEF1dG9IYXVzLmJn!5e1!3m2!1sbg!2sbg!4v1651415852804!5m2!1sbg!2sbg"),

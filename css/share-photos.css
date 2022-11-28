@@ -1,9 +1,15 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
 main {
 	height: 110vh;
 	width: 100%;
-	background-image: -o-linear-gradient(right, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(../../images/holding-photo.webp);
-	background-image: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.233)), to(rgba(0, 0, 0, 0.664))), url(../../images/holding-photo.webp);
-	background-image: linear-gradient(to left, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(../../images/holding-photo.webp);
+	background-image: -o-linear-gradient(right, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(/images/holding-photo.webp);
+	background-image: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.233)), to(rgba(0, 0, 0, 0.664))), url(/images/holding-photo.webp);
+	background-image: linear-gradient(to left, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(/images/holding-photo.webp);
 	background-size: cover;
 	padding-top: 90px;
 	color: white;
@@ -12,6 +18,8 @@ main {
 main>h1 {
 	text-align: center;
 	margin-bottom: 30px;
+	font-size: calc(26px + 1vw);
+	line-height: calc(1.1em + 0.5vw);
 }
 
 main>form {

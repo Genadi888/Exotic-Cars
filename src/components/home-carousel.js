@@ -1,4 +1,4 @@
-import { html, render as litRender } from "../lib/lit-html.js"
+import { html, render as litRender } from "../lib/lit-html.js";
 
 export function defineCarousel() {
 	class Carousel extends HTMLElement {
