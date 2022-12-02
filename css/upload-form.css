@@ -123,12 +123,17 @@ input[name="weight"] {
 
 .form-floating {
 	height: 85% !important;
+	color: black;
+}
+
+.form-floating > label {
+	color: #6C757D;
 }
 
 .extra-info:active,
 .extra-info:focus,
 .extra-info {
-	/* color: black !important; */
+	color: black !important;
 	height: 100% !important;
 	outline: 0px !important;
 	-webkit-appearance: none;
@@ -145,11 +150,10 @@ input[name="weight"] {
 /* ? portrait orientation (for mobile devices)*/
 @media only screen and (max-width: 520px) {
 	.grid-container {
-		grid-template-columns: clamp(301px, 35vw, 390px);
+		grid-template-columns: clamp(280px, 80vw, 324px);
 		grid-template-rows: 0.1fr clamp(160px, 30vh, 241px) 0.1fr;
-		min-width: unset;
 		height: unset;
-		width: 301px;
+		width: clamp(280px, 80vw, 324px);
 		top: 3vh;
 		transform: translateY(0);
 	}

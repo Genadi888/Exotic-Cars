@@ -5,7 +5,8 @@
 }
 
 main {
-	height: 110vh;
+	min-height: 371px;
+	height: 100vh;
 	width: 100%;
 	background-image: -o-linear-gradient(right, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(/images/holding-photo.webp);
 	background-image: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.233)), to(rgba(0, 0, 0, 0.664))), url(/images/holding-photo.webp);
@@ -20,6 +21,7 @@ main>h1 {
 	margin-bottom: 30px;
 	font-size: calc(26px + 1vw);
 	line-height: calc(1.1em + 0.5vw);
+	font-weight: 500;
 }
 
 main>form {
@@ -73,6 +75,19 @@ main>form {
 
 	}
 }
+
+/* ? portrait orientation (for mobile devices)*/
+@media only screen and ((max-width: 520px) or ((min-width: 521px) and (max-height: 520px))) {
+	main>h1{
+		display: none;
+	}
+
+	main {
+		padding-top: 55px;
+	}
+}
+
+/* TODO: I need to improve the positioning of the upload form in the page */
 
 main>form>hr {
 	margin-top: min(2vh, 17px);
