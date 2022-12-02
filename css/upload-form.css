@@ -123,12 +123,17 @@ input[name="weight"] {
 
 .form-floating {
 	height: 85% !important;
+	color: black;
+}
+
+.form-floating > label {
+	color: #6C757D;
 }
 
 .extra-info:active,
 .extra-info:focus,
 .extra-info {
-	/* color: black !important; */
+	color: black !important;
 	height: 100% !important;
 	outline: 0px !important;
 	-webkit-appearance: none;
@@ -145,11 +150,10 @@ input[name="weight"] {
 /* ? portrait orientation (for mobile devices)*/
 @media only screen and (max-width: 520px) {
 	.grid-container {
-		grid-template-columns: clamp(301px, 35vw, 390px);
+		grid-template-columns: clamp(280px, 80vw, 324px);
 		grid-template-rows: 0.1fr clamp(160px, 30vh, 241px) 0.1fr;
-		min-width: unset;
 		height: unset;
-		width: 301px;
+		width: clamp(280px, 80vw, 324px);
 		top: 3vh;
 		transform: translateY(0);
 	}
@@ -187,9 +191,9 @@ input[name="weight"] {
 		top: 3vh;
 		transform: translateY(0);
 		width: clamp(500px, 70vw, 790px);
-		height: clamp(350px, 60vh, 456px);
+		height: clamp(352px, 60vh, 456px);
 		grid-template-columns: clamp(301px, 35vw, 390px) 1fr;
-		grid-template-rows: clamp(135px, 20vh, 235px) clamp(215px, 50vh, 215px);
+		grid-template-rows: clamp(135px, 20vh, 235px) clamp(219px, 50vh, 215px);
 	}
 
 	.grid-item-3>input {
@@ -201,8 +205,8 @@ input[name="weight"] {
 @media only screen and (min-width: 1441px) and (min-height: 801px) {
 	.grid-container {
 		/* top: max(50vh, 500px); */
-		width: max(500px, 80vw);
-		height: max(800px, 75vh);
+		width: max(500px, 60vw);
+		height: max(690px, 75vh);
 		grid-template-columns: max(301px, 35vw) 1fr;
 		grid-template-rows: max(312px, 30vh) 1.4fr;
 	}
