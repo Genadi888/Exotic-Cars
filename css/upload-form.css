@@ -191,9 +191,9 @@ input[name="weight"] {
 		top: 3vh;
 		transform: translateY(0);
 		width: clamp(500px, 70vw, 790px);
-		height: clamp(352px, 60vh, 456px);
+		height: clamp(304px, 67.5vh, 336px);
 		grid-template-columns: clamp(301px, 35vw, 390px) 1fr;
-		grid-template-rows: clamp(135px, 20vh, 235px) clamp(219px, 50vh, 215px);
+		grid-template-rows: clamp(135px, 20vh, 235px) clamp(170px, calc(67.5vh - 133px), 201px);
 	}
 
 	.grid-item-3>input {
