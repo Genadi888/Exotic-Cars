@@ -239,6 +239,8 @@ body>aside>ul>li>a:hover {
 	right: 0px;
 	bottom: 30px;
 
+	z-index: 1;
+
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 
