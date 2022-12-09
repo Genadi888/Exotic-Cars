@@ -6,7 +6,7 @@ export function defineUploadForm() {
 			super();
 			this.attachShadow({ mode: 'open' });
 		}
-		
+
 		connectedCallback() {
 			litRender(html`
 				<link rel="stylesheet" href="/css/upload-form.css">
@@ -14,7 +14,14 @@ export function defineUploadForm() {
 					integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 				
 				<form class="grid-container">
-					<div class="grid-item grid-item-1"><img src="/images/Jaguar-E-Type.jpg" alt="Jaguar-E-Type"></div>
+					<div class="grid-item grid-item-1">
+						<div class="drop-zone">
+							<span class="drop-zone__prompt">Drop file here or click to upload</span>
+							<!-- <div class="drop-zone__thumb" data-label="myFile.txt"></div> -->
+							<input type="file" name="userImages" class="drop-zone__input" accept=".jpg,.jpeg,.png," multiple>
+							<!-- <p>Drop your files here</p> -->
+						</div>
+					</div>
 					<div class="grid-item grid-item-2">
 						<input class="form-control" type="text" placeholder="Car name" aria-label="default input example" type="text"
 							name="car-name" placeholder="Car name">
