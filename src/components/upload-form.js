@@ -19,7 +19,6 @@ export function defineUploadForm() {
 							<span class="drop-zone__prompt">Drop file here or click to upload</span>
 							<!-- <div class="drop-zone__thumb" data-label="myFile.txt"></div> -->
 							<input type="file" name="userImages" class="drop-zone__input" accept=".jpg,.jpeg,.png," multiple>
-							<!-- <p>Drop your files here</p> -->
 						</div>
 					</div>
 					<div class="grid-item grid-item-2">
