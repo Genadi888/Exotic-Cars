@@ -22,12 +22,15 @@ export function defineUploadForm() {
 						</div>
 					</div>
 					<div class="grid-item grid-item-2">
-						<input class="form-control" type="text" placeholder="Car name" aria-label="default input example" type="text"
-							name="car-name" placeholder="Car name">
-						<input class="form-control" type="text" placeholder="Engine info" aria-label="default input example" type="text"
-							name="engine-info" placeholder="Engine info">
-						<input class="form-control" type="text" placeholder="Power" aria-label="default input example" type="text"
-							name="power" placeholder="Power">
+						<label for="top-speed">Car name:</label>
+						<input class="form-control" type="text" placeholder="Mitsubishi Lancer Evolution X"
+							aria-label="default input example" type="text" name="car-name" placeholder="Car name">
+						<label for="top-speed">Engine info:</label>
+						<input class="form-control" type="text" placeholder="2.0 MIVEC FQ-360" aria-label="default input example"
+							type="text" name="engine-info" placeholder="Engine info">
+						<label for="top-speed">Power:</label>
+						<input class="form-control" type="text" placeholder="359 Hp @ 6500 rpm" aria-label="default input example"
+							type="text" name="power" placeholder="Power">
 						<span id="top-speed-and-weight">
 							<input class="form-control" type="number" placeholder="Top speed" aria-label="default input example"
 								type="number" name="top-speed" placeholder="Top speed">
