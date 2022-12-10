@@ -74,6 +74,80 @@ export function defineUploadForm() {
 					</div>
 				</form>
 			`, this.shadowRoot);
+
+			this.#addDragAndDrop();
+		}
+
+		#addDragAndDrop() {
+			const inputElement = this.shadowRoot.querySelector('.drop-zone__input');
+			const dropZoneElement = inputElement.closest('.drop-zone');
+
+			dropZoneElement.addEventListener('click', () => {
+				inputElement.click();
+			});
+
+			inputElement.addEventListener('change', () => {
+				if (inputElement.files.length) {
+					updateThumbnail(dropZoneElement, inputElement.files);
+				}
+			});
+
+			dropZoneElement.addEventListener('dragover', ev => {
+				ev.preventDefault();
+				dropZoneElement.classList.add('drop-zone--over');
+			});
+
+			//? here I am adding event listeners for the "dragleave" and "dragend" events
+			['dragleave', 'dragend'].forEach(type => {
+				dropZoneElement.addEventListener(type, () => {
+					dropZoneElement.classList.remove('drop-zone--over');
+				});
+			});
+
+			dropZoneElement.addEventListener('drop', ev => {
+				ev.preventDefault();
+				const filesArr = [...ev.dataTransfer.files].filter(file => file.type.startsWith('image/'));
+
+				if (filesArr.length) {
+					const dataTransfer = new DataTransfer();
+					filesArr.forEach(file => dataTransfer.items.add(file));
+					inputElement.files = dataTransfer.files;
+					updateThumbnail(dropZoneElement, inputElement.files);
+				}
+
+				dropZoneElement.classList.remove('drop-zone--over');
+			});
+
+			/** 
+				* @param {HTMLElement} dropZoneElement
+			*/
+
+			function updateThumbnail(dropZoneElement, fileList) {
+				const filesArr = [...fileList];
+				let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
+
+				if (dropZoneElement.querySelector('.drop-zone__prompt')) {
+					dropZoneElement.querySelector('.drop-zone__prompt').remove();
+				}
+
+				//? If there's no a thumbnail element, It needs to be created
+				if (!thumbnailElement) {
+					thumbnailElement = document.createElement('div');
+					thumbnailElement.classList.add('drop-zone__thumb');
+					dropZoneElement.appendChild(thumbnailElement)
+				}
+
+				let label = '';
+				filesArr.forEach(file => label += file.name + ', ');
+				label = label.slice(0, -2);  //? here the last comma and space are excluded from the final label
+				thumbnailElement.dataset.label = label;
+
+				const reader = new FileReader();
+				reader.readAsDataURL(filesArr[0]);
+				reader.addEventListener('load', () => {
+					thumbnailElement.style.backgroundImage = `url(${reader.result})`;
+				});
+			}
 		}
 	}
 
