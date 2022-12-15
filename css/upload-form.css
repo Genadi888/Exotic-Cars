@@ -36,6 +36,9 @@
 	grid-template-columns: 0.3fr 1.2fr;
 	grid-template-rows: 1fr 1fr 1fr 1fr;
 	gap: 0px 0px;
+
+	/* ! this rule is for the invalid spans */
+	position: relative;
 }
 
 .grid-item-2>input,
@@ -219,8 +222,41 @@ input[type=number] {
 	text-align: center;
 }
 
-.is-invalid {
-	border-width: 2px !important;
+.is-invalid,
+.is-invalid:active,
+.is-invalid:focus {
+	border: solid 2px #dc3545 !important;
+}
+
+.invalid-span {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	width: max-content;
+	height: max-content;
+
+	grid-column: 2 / 3;
+
+	color: red;
+	font-size: 12px;
+	display: none;
+
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	pointer-events: none;
+}
+
+#first-invalid-span {
+	grid-row: 1 / 2;
+}
+
+#second-invalid-span {
+	grid-row: 2 / 3;
+}
+
+#third-invalid-span {
+	grid-row: 3 / 4;
 }
 
 /* ? portrait orientation (for mobile devices)*/

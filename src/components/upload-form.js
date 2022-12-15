@@ -15,13 +15,63 @@ export function defineUploadForm() {
 				}
 			},
 
-			//? check for at least 3 words
 			carNameInputHandler(ev) {
-				if (ev.target.value.match(/\S+/gm).length < 3) {
-					ev.target.classList.add('is-invalid');
-					console.log('write at least 3 words')
+				const inputEl = ev.target;
+				const span = ev.target.parentElement.querySelector('#first-invalid-span');
+
+				//? check for at least 3 words
+				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 3 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
+					inputEl.classList.add('is-invalid');
+					span.style.display = 'unset';
+					span.textContent = 'write at least 3 words';
 				} else {
-					ev.target.classList.remove('is-invalid');
+					inputEl.classList.remove('is-invalid');
+					span.style.display = 'none';
+				}
+			},
+
+			engineInfoInputHandler(ev) {
+				const inputEl = ev.target;
+				const span = ev.target.parentElement.querySelector('#second-invalid-span');
+
+				//? check for at least 3 words
+				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 2 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
+					inputEl.classList.add('is-invalid');
+					span.style.display = 'unset';
+					span.textContent = 'write at least 2 words';
+				} else {
+					inputEl.classList.remove('is-invalid');
+					span.style.display = 'none';
+				}
+			},
+
+			powerInfoInputHandler(ev) {
+				const inputEl = ev.target;
+				const span = ev.target.parentElement.querySelector('#third-invalid-span');
+
+				//? check for at least 3 words
+				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 2 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
+					inputEl.classList.add('is-invalid');
+					span.style.display = 'unset';
+					span.textContent = 'write at least 2 words';
+				} else {
+					inputEl.classList.remove('is-invalid');
+					span.style.display = 'none';
+				}
+			},
+
+			extraInfoInputHandler(ev) {
+				const inputEl = ev.target;
+				const span = ev.target.parentElement.querySelector('#textarea-invalid-span');
+
+				//? check for at least 3 words
+				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 4 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
+					inputEl.classList.add('is-invalid');
+					span.style.display = 'unset';
+					span.textContent = 'write at least 4 words';
+				} else {
+					inputEl.classList.remove('is-invalid');
+					span.style.display = 'none';
 				}
 			},
 		};
@@ -47,17 +97,23 @@ export function defineUploadForm() {
 						</div>
 					</div>
 					<div class="grid-item grid-item-2">
-						<label for="top-speed">Car name:</label>
+						<label for="car-name">Car name:</label>
 						<input @change=${changeEventHandlers.carNameInputHandler} class="form-control" type="text"
 							placeholder="Mitsubishi Lancer Evolution X" aria-label="default input example" type="text" name="car-name"
 							maxlength="40">
+						<span class="invalid-span" id="first-invalid-span">Invalid name</span>
 				
-						<label for="top-speed">Engine info:</label>
-						<input class="form-control" type="text" placeholder="2.0 MIVEC FQ-360" aria-label="default input example"
-							type="text" name="engine-info" maxlength="30">
-						<label for="top-speed">Power:</label>
-						<input class="form-control" type="text" placeholder="359 Hp @ 6500 rpm" aria-label="default input example"
-							type="text" name="power" maxlength="30">
+						<label for="engine-info">Engine info:</label>
+						<input @change=${changeEventHandlers.engineInfoInputHandler} class="form-control" type="text"
+							placeholder="2.0 MIVEC FQ-360" aria-label="default input example" type="text" name="engine-info"
+							maxlength="30">
+						<span class="invalid-span" id="second-invalid-span">Invalid engine info</span>
+				
+						<label for="power">Power:</label>
+						<input @change=${changeEventHandlers.powerInfoInputHandler} class="form-control" type="text"
+							placeholder="359 Hp @ 6500 rpm" aria-label="default input example" type="text" name="power" maxlength="30">
+						<span class="invalid-span" id="third-invalid-span">Invalid power info</span>
+				
 						<span id="top-speed-and-weight">
 							<input class="form-control" type="number" placeholder="Top speed" aria-label="default input example"
 								type="number" name="top-speed">
@@ -65,14 +121,14 @@ export function defineUploadForm() {
 								<span>
 									<input checked class="form-check-input speed-unit-radios" type="radio" name="speed-unit"
 										id="flexRadioDefault1">
-									<label class="form-check-label" for="defaultCheck1">
+									<label class="form-check-label" for="speed-unit">
 										km/h
 									</label>
 								</span>
 								<span>
 									<input class="form-check-input speed-unit-radios" type="radio" name="speed-unit"
 										id="flexRadioDefault1">
-									<label class="form-check-label" for="defaultCheck1">
+									<label class="form-check-label" for="speed-unit">
 										mph
 									</label>
 								</span>
@@ -83,14 +139,14 @@ export function defineUploadForm() {
 								<span>
 									<input checked class="form-check-input weight-radios" type="radio" name="weight-unit"
 										id="flexRadioDefault1">
-									<label class="form-check-label" for="defaultCheck1">
+									<label class="form-check-label" for="weight-unit">
 										kgs
 									</label>
 								</span>
 								<span>
 									<input class="form-check-input weight-radios" type="radio" name="weight-unit"
 										id="flexRadioDefault1">
-									<label class="form-check-label" for="defaultCheck1">
+									<label class="form-check-label" for="weight-unit">
 										lbs
 									</label>
 								</span>
@@ -99,9 +155,10 @@ export function defineUploadForm() {
 					</div>
 					<div class="grid-item grid-item-3">
 						<div class="form-floating">
-							<textarea class="form-control extra-info" placeholder="Leave a comment here"
-								id="floatingTextarea"></textarea>
+							<textarea @change=${changeEventHandlers.extraInfoInputHandler} class="form-control extra-info"
+								name="extra-info" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
 							<label for="floatingTextarea">Extra info (optional)</label>
+							<span class="invalid-span" id="textarea-invalid-span">Invalid extra info</span>
 						</div>
 						<input disabled class="btn btn-primary" type="submit" value="Submit">
 					</div>
