@@ -44,13 +44,13 @@
 .grid-item-2>input,
 .grid-item-2>input:focus,
 .grid-item-2>input:active,
-#top-speed-and-weight>input,
-#top-speed-and-weight>input:focus,
-#top-speed-and-weight>input:active {
+input[type="number"],
+input[type="number"]:focus,
+input[type="number"]:active {
 	height: 85% !important;
+	width: 100% !important;
 	outline: none !important;
 	border-radius: 3px !important;
-	/* border: none !important; */
 	box-shadow: none !important;
 }
 
@@ -65,7 +65,9 @@
 
 input[name="top-speed"],
 input[name="weight"] {
-	width: 30%;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .radio-divs {
@@ -257,6 +259,20 @@ input[type=number] {
 
 #third-invalid-span {
 	grid-row: 3 / 4;
+}
+
+#fourth-invalid-span,
+#fifth-invalid-span {
+	right: 4px;
+	bottom: 1px;
+}
+
+#top-speed-div,
+#weight-div {
+	/* ! this rule is for the invalid spans and to center inputs */
+	position: relative;
+	height: 85%;
+	width: 30%;
 }
 
 /* ? portrait orientation (for mobile devices)*/

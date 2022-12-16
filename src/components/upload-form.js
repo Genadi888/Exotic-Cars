@@ -19,7 +19,6 @@ export function defineUploadForm() {
 				const inputEl = ev.target;
 				const span = ev.target.parentElement.querySelector('#first-invalid-span');
 
-				//? check for at least 3 words
 				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 3 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
 					inputEl.classList.add('is-invalid');
 					span.style.display = 'unset';
@@ -34,7 +33,6 @@ export function defineUploadForm() {
 				const inputEl = ev.target;
 				const span = ev.target.parentElement.querySelector('#second-invalid-span');
 
-				//? check for at least 3 words
 				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 2 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
 					inputEl.classList.add('is-invalid');
 					span.style.display = 'unset';
@@ -49,7 +47,6 @@ export function defineUploadForm() {
 				const inputEl = ev.target;
 				const span = ev.target.parentElement.querySelector('#third-invalid-span');
 
-				//? check for at least 3 words
 				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 2 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
 					inputEl.classList.add('is-invalid');
 					span.style.display = 'unset';
@@ -64,11 +61,36 @@ export function defineUploadForm() {
 				const inputEl = ev.target;
 				const span = ev.target.parentElement.querySelector('#textarea-invalid-span');
 
-				//? check for at least 3 words
 				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 4 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
 					inputEl.classList.add('is-invalid');
 					span.style.display = 'unset';
 					span.textContent = 'write at least 4 words';
+				} else {
+					inputEl.classList.remove('is-invalid');
+					span.style.display = 'none';
+				}
+			},
+
+			topSpeedInputHandler(ev) {
+				const inputEl = ev.target;
+				const span = ev.target.parentElement.querySelector('#fourth-invalid-span');
+
+				if (+inputEl.value < 1) {
+					inputEl.classList.add('is-invalid');
+					span.style.display = 'unset';
+				} else {
+					inputEl.classList.remove('is-invalid');
+					span.style.display = 'none';
+				}
+			},
+
+			weightInputHandler(ev) {
+				const inputEl = ev.target;
+				const span = ev.target.parentElement.querySelector('#fifth-invalid-span');
+
+				if (+inputEl.value < 1) {
+					inputEl.classList.add('is-invalid');
+					span.style.display = 'unset';
 				} else {
 					inputEl.classList.remove('is-invalid');
 					span.style.display = 'none';
@@ -115,8 +137,12 @@ export function defineUploadForm() {
 						<span class="invalid-span" id="third-invalid-span">Invalid power info</span>
 				
 						<span id="top-speed-and-weight">
-							<input class="form-control" type="number" placeholder="Top speed" aria-label="default input example"
-								type="number" name="top-speed">
+							<div id="top-speed-div">
+								<input @change=${changeEventHandlers.topSpeedInputHandler} class="form-control" type="number"
+									placeholder="Top speed" aria-label="default input example" type="number" name="top-speed">
+								<span class="invalid-span" id="fourth-invalid-span">invalid speed</span>
+							</div>
+
 							<div class="radio-divs">
 								<span>
 									<input checked class="form-check-input speed-unit-radios" type="radio" name="speed-unit"
@@ -133,8 +159,13 @@ export function defineUploadForm() {
 									</label>
 								</span>
 							</div>
-							<input class="form-control" type="number" placeholder="Weight" aria-label="default input example"
-								type="number" name="weight">
+							
+							<div id="weight-div">
+								<input @change=${changeEventHandlers.weightInputHandler} class="form-control" type="number" placeholder="Weight" aria-label="default input example"
+									type="number" name="weight">
+								<span class="invalid-span" id="fifth-invalid-span">invalid weight</span>
+							</div>
+				
 							<div class="radio-divs">
 								<span>
 									<input checked class="form-check-input weight-radios" type="radio" name="weight-unit"
