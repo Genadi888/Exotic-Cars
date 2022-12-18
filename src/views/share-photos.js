@@ -1,4 +1,4 @@
-import { defineUploadForm } from "../components/upload-form.js";
+import { defineUploadForm } from "../components/upload-form/upload-form.js";
 import { html } from "../lib/lit-html.js";
 
 const sharePhotosTemplate = () => html`
