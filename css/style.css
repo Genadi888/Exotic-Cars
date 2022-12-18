@@ -20,6 +20,12 @@ article {
 	transition: opacity 700ms ease-in-out;
 }
 
+@media (prefers-reduced-motion) {
+	#goal-div {
+		transition: none;
+	}
+}
+
 /* ? the two end points for the transition */
 .fadeOut {
 	opacity: 0;

@@ -47,6 +47,12 @@
 	}
 }
 
+@media (prefers-reduced-motion) {
+	#drop-down-menu-container {
+		transition: transform 1ms ease-in-out;
+	}
+}
+
 .navbar-nav>li:nth-child(4)>ul {
 	margin: 0;
 	padding: 0;

@@ -171,7 +171,18 @@ body>aside>ul>li>a:hover {
 
 	opacity: 0;
 	transition: opacity 0.5s ease-in-out;
-	/* transition-delay: 2s; */
+}
+
+@supports not ((backdrop-filter: blur(15px)) or (-webkit-backdrop-filter: blur(15px))) {
+	#more-info-window {
+		background-color: rgba(0, 97, 0, 1);
+	}
+}
+
+@media (prefers-reduced-motion) {
+	#more-info-window {
+		transition: opacity 1ms ease-in-out;
+	}
 }
 
 @media only screen and (min-width: 1024px) {

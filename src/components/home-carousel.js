@@ -15,7 +15,6 @@ export function defineCarousel() {
 
 		#_size = null;
 
-		// #allListenersShouldBeDisabled = false;
 		#controller = new AbortController();
 
 		get #bindedListeners() {
@@ -49,6 +48,8 @@ export function defineCarousel() {
 
 		#initialX = null;
 
+		#transitionDelay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '0.4s';
+
 		constructor() {
 			super();
 			this.attachShadow({ mode: 'open' });
@@ -79,7 +80,7 @@ export function defineCarousel() {
 				return;
 			}
 			this.#counter++;
-			this.#carouselSlide.style.transition = 'transform 0.4s ease-in-out';
+			this.#carouselSlide.style.transition = `transform ${this.#transitionDelay} ease-in-out`;
 			this.#carouselSlide.style.transform = `translateX(${(-(await this.#imageSize) * this.#counter)}px)`;
 		}
 
@@ -88,7 +89,7 @@ export function defineCarousel() {
 				return;
 			}
 			this.#counter--;
-			this.#carouselSlide.style.transition = 'transform 0.4s ease-in-out';
+			this.#carouselSlide.style.transition = `transform ${this.#transitionDelay} ease-in-out`;
 			this.#carouselSlide.style.transform = `translateX(${(-(await this.#imageSize) * this.#counter)}px)`;
 		}
 
