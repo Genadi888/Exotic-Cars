@@ -11,15 +11,15 @@ export function defineUploadForm() {
 
 			return ev => {
 				clearTimeout(timeout);
-
+				
 				const form = ev.currentTarget;
-				const imagesInput = form.querySelector('input[name="images"]');
-				const fieldsAreNotEmpty = [...form.querySelectorAll('input.form-control')].every(el => el.value != '');
 				const submitBtn = form.querySelector('input[type="submit"]');
 				submitBtn.disabled = true;
 				
-
 				timeout = setTimeout(() => {
+					const imagesInput = form.querySelector('input[name="images"]');
+					const fieldsAreNotEmpty = [...form.querySelectorAll('input.form-control')].every(el => el.value != '');
+					
 					if (!form.querySelector('.is-invalid') && fieldsAreNotEmpty && imagesInput.files.length != 0) {
 						submitBtn.removeAttribute('disabled');
 					}
@@ -95,6 +95,8 @@ export function defineUploadForm() {
 					filesArr.forEach(file => dataTransfer.items.add(file));
 					inputElement.files = dataTransfer.files;
 					updateThumbnail(dropZoneElement, inputElement.files);
+
+					inputElement.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
 				}
 
 				dropZoneElement.classList.remove('drop-zone--over');
