@@ -2,101 +2,185 @@ import { html, render as litRender } from "../lib/lit-html.js";
 
 export function defineUploadForm() {
 	class UploadForm extends HTMLElement {
-		#changeEventHandlers = {
-			//TODO: continue the sanitization
-
-			imagesInputHandler(ev) {
+		#inputEventHandlers = {
+			getImagesInputHandler(ev) {
 				if (ev.target.files.length > 4) {
 					const filesArr = [...ev.target.files].slice(0, 4);
 					const dataTransfer = new DataTransfer();
 					filesArr.forEach(file => dataTransfer.items.add(file));
 					ev.target.files = dataTransfer.files;
-					console.log(ev.target.files)
+				}
+				// console.log(ev.target.files)
+			},
+
+			getCarNameInputHandler(ev) {
+				let timeout;
+
+				return (ev) => {
+					clearTimeout(timeout);
+					timeout = setTimeout(() => {
+						const inputEl = ev.path[0];
+						const span = inputEl.parentElement.querySelector('#first-invalid-span');
+
+						if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 3 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
+							inputEl.classList.add('is-invalid');
+							span.style.display = 'unset';
+							span.textContent = 'write at least 3 words';
+						} else {
+							inputEl.classList.remove('is-invalid');
+							span.style.display = 'none';
+						}
+					}, 1000);
 				}
 			},
 
-			carNameInputHandler(ev) {
-				const inputEl = ev.target;
-				const span = ev.target.parentElement.querySelector('#first-invalid-span');
+			getEngineInfoInputHandler(ev) {
+				let timeout;
 
-				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 3 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
-					inputEl.classList.add('is-invalid');
-					span.style.display = 'unset';
-					span.textContent = 'write at least 3 words';
-				} else {
-					inputEl.classList.remove('is-invalid');
-					span.style.display = 'none';
+				return (ev) => {
+					clearTimeout(timeout);
+					timeout = setTimeout(() => {
+						const inputEl = ev.path[0];
+						const span = inputEl.parentElement.querySelector('#second-invalid-span');
+
+						if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 2 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
+							inputEl.classList.add('is-invalid');
+							span.style.display = 'unset';
+							span.textContent = 'write at least 2 words';
+						} else {
+							inputEl.classList.remove('is-invalid');
+							span.style.display = 'none';
+						}
+					}, 1000);
 				}
 			},
 
-			engineInfoInputHandler(ev) {
-				const inputEl = ev.target;
-				const span = ev.target.parentElement.querySelector('#second-invalid-span');
+			getPowerInfoInputHandler(ev) {
+				let timeout;
 
-				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 2 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
-					inputEl.classList.add('is-invalid');
-					span.style.display = 'unset';
-					span.textContent = 'write at least 2 words';
-				} else {
-					inputEl.classList.remove('is-invalid');
-					span.style.display = 'none';
+				return (ev) => {
+					clearTimeout(timeout);
+					timeout = setTimeout(() => {
+						const inputEl = ev.path[0];
+						const span = inputEl.parentElement.querySelector('#third-invalid-span');
+
+						if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 2 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
+							inputEl.classList.add('is-invalid');
+							span.style.display = 'unset';
+							span.textContent = 'write at least 2 words';
+						} else {
+							inputEl.classList.remove('is-invalid');
+							span.style.display = 'none';
+						}
+					}, 1000);
 				}
 			},
 
-			powerInfoInputHandler(ev) {
-				const inputEl = ev.target;
-				const span = ev.target.parentElement.querySelector('#third-invalid-span');
+			getTopSpeedInputHandler(ev) {
+				let timeout;
 
-				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 2 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
-					inputEl.classList.add('is-invalid');
-					span.style.display = 'unset';
-					span.textContent = 'write at least 2 words';
-				} else {
-					inputEl.classList.remove('is-invalid');
-					span.style.display = 'none';
+				return (ev) => {
+					clearTimeout(timeout);
+					timeout = setTimeout(() => {
+						const inputEl = ev.path[0];
+						const span = inputEl.parentElement.querySelector('#fourth-invalid-span');
+
+						if (+inputEl.value < 1) {
+							inputEl.classList.add('is-invalid');
+							span.style.display = 'unset';
+						} else {
+							inputEl.classList.remove('is-invalid');
+							span.style.display = 'none';
+						}
+					}, 1000);
 				}
 			},
 
-			extraInfoInputHandler(ev) {
-				const inputEl = ev.target;
-				const span = ev.target.parentElement.querySelector('#textarea-invalid-span');
+			getWeightInputHandler(ev) {
+				let timeout;
 
-				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 4 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
-					inputEl.classList.add('is-invalid');
-					span.style.display = 'unset';
-					span.textContent = 'write at least 4 words';
-				} else {
-					inputEl.classList.remove('is-invalid');
-					span.style.display = 'none';
+				return (ev) => {
+					clearTimeout(timeout);
+					timeout = setTimeout(() => {
+						const inputEl = ev.path[0];
+						const span = inputEl.parentElement.querySelector('#fifth-invalid-span');
+
+						if (+inputEl.value < 1) {
+							inputEl.classList.add('is-invalid');
+							span.style.display = 'unset';
+						} else {
+							inputEl.classList.remove('is-invalid');
+							span.style.display = 'none';
+						}
+					}, 1000);
 				}
 			},
 
-			topSpeedInputHandler(ev) {
-				const inputEl = ev.target;
-				const span = ev.target.parentElement.querySelector('#fourth-invalid-span');
+			getExtraInfoInputHandler() {
+				let timeout;
 
-				if (+inputEl.value < 1) {
-					inputEl.classList.add('is-invalid');
-					span.style.display = 'unset';
-				} else {
-					inputEl.classList.remove('is-invalid');
-					span.style.display = 'none';
-				}
-			},
+				return (ev) => {
+					clearTimeout(timeout);
+					timeout = setTimeout(() => {
+						const inputEl = ev.path[0];
+						const span = inputEl.parentElement.querySelector('#textarea-invalid-span');
 
-			weightInputHandler(ev) {
-				const inputEl = ev.target;
-				const span = ev.target.parentElement.querySelector('#fifth-invalid-span');
-
-				if (+inputEl.value < 1) {
-					inputEl.classList.add('is-invalid');
-					span.style.display = 'unset';
-				} else {
-					inputEl.classList.remove('is-invalid');
-					span.style.display = 'none';
+						if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 4 || (!inputEl.value.match(/[\w'".-]{2,}/g) && inputEl.value != '')) {
+							inputEl.classList.add('is-invalid');
+							span.style.display = 'unset';
+							span.textContent = 'write at least 4 words';
+						} else {
+							inputEl.classList.remove('is-invalid');
+							span.style.display = 'none';
+						}
+					}, 1000);
 				}
 			},
 		};
+
+		#getFormInputEventHandler() {
+			let timeout;
+
+			return ev => {
+				clearTimeout(timeout);
+
+				const form = ev.currentTarget;
+				const imagesInput = form.querySelector('input[name="images"]');
+				const fieldsAreNotEmpty = [...form.querySelectorAll('input.form-control')].every(el => el.value != '');
+				const submitBtn = form.querySelector('input[type="submit"]');
+				submitBtn.disabled = true;
+				
+
+				timeout = setTimeout(() => {
+					if (!form.querySelector('.is-invalid') && fieldsAreNotEmpty && imagesInput.files.length != 0) {
+						submitBtn.removeAttribute('disabled');
+					}
+					else {
+						submitBtn.disabled = true;
+					}
+				}, 1000)
+			}
+		}
+
+		#formSubmitEventHandler(ev) {
+			ev.preventDefault();
+			const form = ev.currentTarget;
+
+			const formData = new FormData(form);
+			const speedUnit = [...form.querySelectorAll('.speed-unit-radios')].find(el => el.checked).value;
+			const weightUnit = [...form.querySelectorAll('.weight-radios')].find(el => el.checked).value;
+
+			const objToSubmit = {
+				images: formData.getAll('images'),
+				carName: formData.get('car-name'),
+				engineInfo: formData.get('engine-info'),
+				power: formData.get('power'),
+				topSpeed: `${formData.get('top-speed')} ${speedUnit}`,
+				weight: `${formData.get('weight')} ${weightUnit}`,
+				extraInfo: formData.get('extra-info')
+			}
+			// console.log(objToSubmit)
+		}
 
 		constructor() {
 			super();
@@ -104,79 +188,79 @@ export function defineUploadForm() {
 		}
 
 		connectedCallback() {
-			const htmlTemplate = (changeEventHandlers) => html`
+			const htmlTemplate = (inputEventHandlers, getFormInputEventHandler, formSubmitEventHandler) => html`
 				<link rel="stylesheet" href="/css/upload-form.css">
 				<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
 					integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 				
-				<form class="grid-container">
+				<form @submit=${formSubmitEventHandler} @input=${getFormInputEventHandler()} class="grid-container">
 					<div class="grid-item grid-item-1">
 						<div class="drop-zone">
 							<span class="drop-zone__prompt">Drop images here or click to upload<br>(4 maximum)</span>
 							<!-- <div class="drop-zone__thumb" data-label="myFile.txt"></div> -->
-							<input @change=${changeEventHandlers.imagesInputHandler} type="file" name="images" class="drop-zone__input"
+							<input @change=${inputEventHandlers.imagesInputHandler} type="file" name="images" class="drop-zone__input"
 								accept=".jpg,.jpeg,.png," multiple>
 						</div>
 					</div>
 					<div class="grid-item grid-item-2">
 						<label for="car-name">Car name:</label>
-						<input @change=${changeEventHandlers.carNameInputHandler} class="form-control" type="text"
+						<input @input=${inputEventHandlers.getCarNameInputHandler()} class="form-control" type="text"
 							placeholder="Mitsubishi Lancer Evolution X" aria-label="default input example" type="text" name="car-name"
 							maxlength="40">
 						<span class="invalid-span" id="first-invalid-span">Invalid name</span>
 				
 						<label for="engine-info">Engine info:</label>
-						<input @change=${changeEventHandlers.engineInfoInputHandler} class="form-control" type="text"
+						<input @input=${inputEventHandlers.getEngineInfoInputHandler()} class="form-control" type="text"
 							placeholder="2.0 MIVEC FQ-360" aria-label="default input example" type="text" name="engine-info"
 							maxlength="30">
 						<span class="invalid-span" id="second-invalid-span">Invalid engine info</span>
 				
 						<label for="power">Power:</label>
-						<input @change=${changeEventHandlers.powerInfoInputHandler} class="form-control" type="text"
+						<input @input=${inputEventHandlers.getPowerInfoInputHandler()} class="form-control" type="text"
 							placeholder="359 Hp @ 6500 rpm" aria-label="default input example" type="text" name="power" maxlength="30">
 						<span class="invalid-span" id="third-invalid-span">Invalid power info</span>
 				
 						<span id="top-speed-and-weight">
 							<div id="top-speed-div">
-								<input @change=${changeEventHandlers.topSpeedInputHandler} class="form-control" type="number"
-									placeholder="Top speed" aria-label="default input example" type="number" name="top-speed">
+								<input @input=${inputEventHandlers.getTopSpeedInputHandler()} class="form-control" type="number"
+									placeholder="Top speed" aria-label="default input example" name="top-speed">
 								<span class="invalid-span" id="fourth-invalid-span">invalid speed</span>
 							</div>
-
+				
 							<div class="radio-divs">
 								<span>
 									<input checked class="form-check-input speed-unit-radios" type="radio" name="speed-unit"
-										id="flexRadioDefault1">
+										id="flexRadioDefault1" value="km/h">
 									<label class="form-check-label" for="speed-unit">
 										km/h
 									</label>
 								</span>
 								<span>
 									<input class="form-check-input speed-unit-radios" type="radio" name="speed-unit"
-										id="flexRadioDefault1">
+										id="flexRadioDefault1" value="mph">
 									<label class="form-check-label" for="speed-unit">
 										mph
 									</label>
 								</span>
 							</div>
-							
+				
 							<div id="weight-div">
-								<input @change=${changeEventHandlers.weightInputHandler} class="form-control" type="number" placeholder="Weight" aria-label="default input example"
-									type="number" name="weight">
+								<input @input=${inputEventHandlers.getWeightInputHandler()} class="form-control" type="number"
+									placeholder="Weight" aria-label="default input example" name="weight">
 								<span class="invalid-span" id="fifth-invalid-span">invalid weight</span>
 							</div>
 				
 							<div class="radio-divs">
 								<span>
 									<input checked class="form-check-input weight-radios" type="radio" name="weight-unit"
-										id="flexRadioDefault1">
+										id="flexRadioDefault1" value="kgs">
 									<label class="form-check-label" for="weight-unit">
 										kgs
 									</label>
 								</span>
 								<span>
-									<input class="form-check-input weight-radios" type="radio" name="weight-unit"
-										id="flexRadioDefault1">
+									<input class="form-check-input weight-radios" type="radio" name="weight-unit" id="flexRadioDefault1"
+										value="lbs">
 									<label class="form-check-label" for="weight-unit">
 										lbs
 									</label>
@@ -186,7 +270,7 @@ export function defineUploadForm() {
 					</div>
 					<div class="grid-item grid-item-3">
 						<div class="form-floating">
-							<textarea @change=${changeEventHandlers.extraInfoInputHandler} class="form-control extra-info"
+							<textarea @input=${inputEventHandlers.getExtraInfoInputHandler()} class="form-control extra-info"
 								name="extra-info" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
 							<label for="floatingTextarea">Extra info (optional)</label>
 							<span class="invalid-span" id="textarea-invalid-span">Invalid extra info</span>
@@ -196,35 +280,9 @@ export function defineUploadForm() {
 				</form>
 			`;
 
-			litRender(htmlTemplate(this.#changeEventHandlers), this.shadowRoot);
+			litRender(htmlTemplate(this.#inputEventHandlers, this.#getFormInputEventHandler, this.#formSubmitEventHandler), this.shadowRoot);
 
 			this.#addDragAndDrop();
-			this.handleSubmit();
-		}
-
-		handleSubmit() {
-			const form = this.shadowRoot.querySelector('form');
-
-			const imagesInput = form.querySelector('input[name="images"]');
-			const carNameInput = form.querySelector('input[name="car-name"]');
-			const engineInfoInput = form.querySelector('input[name="engine-info"]');
-			const powerInput = form.querySelector('input[name="power"]');
-			const topSpeedInput = form.querySelector('input[name="top-speed"]');
-			const weightInput = form.querySelector('input[name="weight"]');
-
-			const speedUnit = [...form.querySelectorAll('.speed-unit-radios')]
-				.find(el => el.checked)
-				.parentElement
-				.querySelector('label')
-				.textContent
-				.trim();
-			const weightUnit = [...form.querySelectorAll('.weight-radios')]
-				.find(el => el.checked)
-				.parentElement
-				.querySelector('label')
-				.textContent
-				.trim();
-			//
 		}
 
 		#addDragAndDrop() {
