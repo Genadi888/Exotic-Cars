@@ -14,6 +14,10 @@ page((ctx, next) => {
 	next();
 });
 page(addRender());
+page((ctx, next) => {
+	window.scrollTo({ top: 0 });
+	next();
+});
 
 page('/index.html', '/');
 page('/', homeView);
