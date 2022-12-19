@@ -11,14 +11,14 @@ main {
 
 form {
 	position: relative;
-	top: 40%;
+	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	/* margin: 14% auto; */
 
 	width: 30%;
 	min-width: 400px;
-	height: clamp(204px, 40%, 300px);
+	height: clamp(304px, 40%, 300px);
 	padding: 1%;
 
 	border: rgba(0, 0, 0, 0.7) transparent 3px;
