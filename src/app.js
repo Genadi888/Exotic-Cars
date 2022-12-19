@@ -3,6 +3,7 @@ import { addRender } from "./middlewares/render.js";
 import { aboutUsView } from "./views/about-us.js";
 import { carPicturesView } from "./views/car-pictures.js";
 import { homeView } from "./views/home.js";
+import { loginView } from "./views/login.js";
 import { sharePhotosView } from "./views/share-photos.js";
 import { showroomsView } from "./views/showrooms.js";
 
@@ -25,4 +26,5 @@ page('/car-pictures', carPicturesView);
 page('/about-us', aboutUsView);
 page('/showrooms', showroomsView);
 page('/share-photos', sharePhotosView);
+page('/login', loginView);
 page.start();

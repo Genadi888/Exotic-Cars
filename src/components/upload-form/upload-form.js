@@ -39,13 +39,13 @@ export function defineUploadForm() {
 			const weightUnit = [...form.querySelectorAll('.weight-radios')].find(el => el.checked).value;
 
 			const objToSubmit = {
-				images: formData.getAll('images'),
-				carName: formData.get('car-name'),
-				engineInfo: formData.get('engine-info'),
-				power: formData.get('power'),
-				topSpeed: `${formData.get('top-speed')} ${speedUnit}`,
-				weight: `${formData.get('weight')} ${weightUnit}`,
-				extraInfo: formData.get('extra-info')
+				images: formData.getAll('images').trim(),
+				carName: formData.get('car-name').trim(),
+				engineInfo: formData.get('engine-info').trim(),
+				power: formData.get('power').trim(),
+				topSpeed: `${formData.get('top-speed')} ${speedUnit}`.trim(),
+				weight: `${formData.get('weight')} ${weightUnit}`.trim(),
+				extraInfo: formData.get('extra-info').trim()
 			}
 			// console.log(objToSubmit)
 		}

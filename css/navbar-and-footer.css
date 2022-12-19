@@ -59,10 +59,7 @@
 	padding-top: 5px;
 	padding-bottom: 5px;
 
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-wrap: nowrap;
 	flex-wrap: nowrap;
 }
 
@@ -86,12 +83,10 @@ nav > .container-fluid > a {
 /* ? below is the code for the footer and its elements */
 
 footer {
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
 
-	padding-top: min(2%, 25px);
-	padding-bottom: min(2%, 25px);
+	padding-top: min(3vh, 25px);
+	padding-bottom: min(3vh, 25px);
 
 	background-color: cadetblue;
 	color: white;
@@ -113,11 +108,7 @@ footer>ul>li:not(:last-child) {
 }
 
 footer>ul {
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-
-	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
 
 	margin: 0px;

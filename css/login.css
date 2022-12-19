@@ -1,0 +1,59 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+main {
+	height: 90.4vh;
+	background-color: #2F4F4F;
+}
+
+form {
+	position: relative;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	/* margin: 14% auto; */
+
+	width: 30%;
+	min-width: 400px;
+	height: clamp(204px, 40%, 300px);
+	padding: 1%;
+
+	border: rgba(0, 0, 0, 0.7) transparent 3px;
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, 0.7);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+
+	color: white;
+}
+
+@supports not ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
+	form {
+		background-color: black;
+		border-color: black;
+	}
+}
+
+@media only screen and (max-width: 410px) {
+	form {
+		min-width: 280px;
+	}
+}
+
+form>h1 {
+	text-align: center;
+}
+
+input,
+input:active,
+input:focus {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.form-check {
+	margin-top: 10px;
+}
