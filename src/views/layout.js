@@ -7,10 +7,13 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 	<link rel="stylesheet" href="/css/navbar-and-footer.css">
 	
 	<div id="drop-down-menu-container">
-		<ul class="navbar-nav">
-			<li class="nav-item">
-				<a class="nav-link" href="/share-photos">SHARE YOUR CAR PHOTOS!</a>
-			</li>
+		<div class="navbar-nav">
+			${user ? html`
+				<li class="nav-item">
+					<a class="nav-link" href="/share-photos">SHARE YOUR CAR PHOTOS!</a>
+				</li>
+			` : null
+			}
 			<li class="nav-item">
 				<a class="nav-link" href="/about-us">ABOUT US</a>
 			</li>
@@ -18,7 +21,7 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 				<a class="nav-link" href="/showrooms">SHOWROOMS</a>
 			</li>
 			<li class="nav-item">
-				<ul class="social-media-links">
+				<ul class="social-media-list">
 					<li>
 						<a href="https://www.facebook.com" target="_blank"><img src="/images/facebook.svg"
 								alt="facebook"></a>
@@ -35,7 +38,7 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 					</li>
 				</ul>
 			</li>
-		</ul>
+		</div>
 	</div>
 	<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
@@ -43,17 +46,21 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 				<img width="50px" height="50px" src="/images/site-logo.png" alt="sports car">
 			</a>
 			<a class="navbar-brand" href="/">Exotic Cars</a>
-			<button @click=${ev=> collapseButtonClickFunction(topShadowRoot, ev)} id="collapse-button"
+			<button @click=${ev => collapseButtonClickFunction(topShadowRoot, ev)} id="collapse-button"
 				class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
 				aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
+	
 			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link" href="/share-photos">SHARE YOUR CAR PHOTOS!</a>
-					</li>
+				<div class="navbar-nav">
+					${user ? html`
+						<li class="nav-item">
+							<a class="nav-link" href="/share-photos">SHARE YOUR CAR PHOTOS!</a>
+						</li>
+					` : null
+					}
 					<li class="nav-item">
 						<a class="nav-link" href="/about-us">ABOUT US</a>
 					</li>
@@ -61,7 +68,7 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 						<a class="nav-link" href="/showrooms">SHOWROOMS</a>
 					</li>
 					<li class="nav-item">
-						<ul>
+						<ul class="social-media-list">
 							<li>
 								<a href="https://www.facebook.com" target="_blank"><img src="/images/facebook.svg"
 										alt="facebook"></a>
@@ -80,7 +87,7 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 							</li>
 						</ul>
 					</li>
-				</ul>
+				</div>
 			</div>
 		</div>
 	</nav>
