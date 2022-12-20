@@ -12,14 +12,25 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 				<li class="nav-item">
 					<a class="nav-link" href="/share-photos">SHARE YOUR CAR PHOTOS!</a>
 				</li>
-			` : null
-			}
+			` : null}
 			<li class="nav-item">
 				<a class="nav-link" href="/about-us">ABOUT US</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="/showrooms">SHOWROOMS</a>
 			</li>
+			${user ? html`
+				<li class="nav-item">
+					<a class="nav-link" href="/login">LOG OUT</a>
+				</li>
+			` : html`
+				<li class="nav-item">
+					<a class="nav-link" href="/login">LOG IN</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/register">REGISTER</a>
+				</li>
+			`}
 			<li class="nav-item">
 				<ul class="social-media-list">
 					<li>
@@ -54,19 +65,30 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 			</button>
 	
 			<div class="collapse navbar-collapse" id="navbarNav">
-				<div class="navbar-nav">
+				<div class="navbar-nav" id="inline-navbar-nav">
 					${user ? html`
 						<li class="nav-item">
 							<a class="nav-link" href="/share-photos">SHARE YOUR CAR PHOTOS!</a>
 						</li>
-					` : null
-					}
+					`: null}
 					<li class="nav-item">
 						<a class="nav-link" href="/about-us">ABOUT US</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/showrooms">SHOWROOMS</a>
 					</li>
+					${user ? html`
+						<li class="nav-item">
+							<a class="nav-link" href="/login">LOG OUT</a>
+						</li>
+					` : html`
+						<li class="nav-item">
+							<a class="nav-link" href="/login">LOG IN</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/register">REGISTER</a>
+						</li>
+					`}
 					<li class="nav-item">
 						<ul class="social-media-list">
 							<li>

@@ -67,7 +67,7 @@
 	display: inline;
 }
 
-.navbar-nav>li:nth-child(4) {
+#inline-navbar-nav>li:last-child {
 	margin-left: 20px;
 }
 
