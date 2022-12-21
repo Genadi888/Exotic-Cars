@@ -70,12 +70,6 @@ input:focus {
 }
 
 .invalid-span {
-	/* position: absolute;
-	right: 5px;
-	bottom: 5px;
-	width: max-content;
-	height: max-content; */
-
 	color: red;
 	font-size: 12px;
 	display: none;

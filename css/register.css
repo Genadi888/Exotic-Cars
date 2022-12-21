@@ -62,3 +62,14 @@ input:focus {
 	margin-top: 10px !important;
 	width: 100% !important;
 }
+
+.invalid-span {
+	color: red;
+	font-size: 12px;
+	display: none;
+
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	pointer-events: none;
+}

@@ -1,5 +1,5 @@
 import { html } from "../lib/lit-html.js";
-import { collapseButtonClickFunction } from "../util.js";
+import { getCollapseClickHandler } from "../util.js";
 
 export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -57,7 +57,7 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 				<img width="50px" height="50px" src="/images/site-logo.png" alt="sports car">
 			</a>
 			<a class="navbar-brand" href="/">Exotic Cars</a>
-			<button @click=${ev => collapseButtonClickFunction(topShadowRoot, ev)} id="collapse-button"
+			<button @click=${getCollapseClickHandler(topShadowRoot)} id="collapse-button"
 				class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
 				aria-label="Toggle navigation">
