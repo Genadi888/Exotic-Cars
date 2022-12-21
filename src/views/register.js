@@ -21,6 +21,7 @@ const registerTemplate = () => html`
 						Remember me
 					</label>
 				</div>
+				<input disabled class="btn btn-primary" type="submit" value="Register">
 			</div>
 		</form>
 	</main>

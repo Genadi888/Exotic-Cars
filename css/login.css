@@ -11,15 +11,15 @@ main {
 
 form {
 	position: relative;
-	top: 40%;
+	top: max(220px, 40%);
 	left: 50%;
 	transform: translate(-50%, -50%);
 	/* margin: 14% auto; */
 
 	width: 30%;
 	min-width: 400px;
-	height: clamp(204px, 40%, 300px);
-	padding: 1%;
+	height: fit-content;
+	padding: 10px;
 
 	border: rgba(0, 0, 0, 0.7) transparent 3px;
 	border-radius: 5px;
@@ -56,4 +56,32 @@ input:focus {
 
 .form-check {
 	margin-top: 10px;
+}
+
+.inputs > input[type="submit"] {
+	margin-top: 10px !important;
+	width: 100% !important;
+}
+
+.is-invalid,
+.is-invalid:active,
+.is-invalid:focus {
+	border: solid 2px #dc3545 !important;
+}
+
+.invalid-span {
+	/* position: absolute;
+	right: 5px;
+	bottom: 5px;
+	width: max-content;
+	height: max-content; */
+
+	color: red;
+	font-size: 12px;
+	display: none;
+
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	pointer-events: none;
 }
