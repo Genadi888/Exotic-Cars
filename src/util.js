@@ -86,3 +86,26 @@ export function getPasswordInputHandler() {
 		}, 1000)
 	}
 }
+
+export function getLoginOrRegisterFormInputHandler() {
+	let timeout;
+
+	return ev => {
+		clearTimeout(timeout);
+		
+		const form = ev.currentTarget;
+		const submitBtn = form.querySelector('input[type="submit"]');
+		submitBtn.disabled = true;
+		
+		timeout = setTimeout(() => {
+			const fieldsAreNotEmpty = [...form.querySelectorAll('input.form-control')].every(el => el.value != '');
+			
+			if (!form.querySelector('.is-invalid') && fieldsAreNotEmpty) {
+				submitBtn.removeAttribute('disabled');
+			}
+			else {
+				submitBtn.disabled = true;
+			}
+		}, 1000)
+	}
+}

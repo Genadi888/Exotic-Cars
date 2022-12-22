@@ -1,13 +1,13 @@
 import { html } from "../lib/lit-html.js";
-import { getPasswordInputHandler, getUsernameInputHandler } from "../util.js";
+import { getPasswordInputHandler, getUsernameInputHandler, getLoginOrRegisterFormInputHandler } from "../util.js";
 
-const loginTemplate = (getUsernameInputHandler, getPasswordInputHandler) => html`
+const loginTemplate = (getUsernameInputHandler, getPasswordInputHandler, getLoginOrRegisterFormInputHandler) => html`
 	<link rel="stylesheet" href="/css/login.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
 	<main>
-		<form>
+		<form @input=${getLoginOrRegisterFormInputHandler()}>
 			<h1>Log in</h1>
 			<div class="inputs">
 				<label for="username">Username:</label>
@@ -31,5 +31,5 @@ const loginTemplate = (getUsernameInputHandler, getPasswordInputHandler) => html
 `
 
 export function loginView(ctx) {
-	ctx.render(loginTemplate(getUsernameInputHandler, getPasswordInputHandler));
+	ctx.render(loginTemplate(getUsernameInputHandler, getPasswordInputHandler, getLoginOrRegisterFormInputHandler));
 }
