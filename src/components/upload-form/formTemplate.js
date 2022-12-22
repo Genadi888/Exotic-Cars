@@ -17,19 +17,19 @@ export const formTemplate = (inputEventHandlers, getFormInputEventHandler, formS
 		<div class="grid-item grid-item-2">
 			<label for="car-name">Car name:</label>
 			<input @input=${inputEventHandlers.getCarNameInputHandler()} class="form-control" type="text"
-				placeholder="Mitsubishi Lancer Evolution X" aria-label="default input example" type="text" name="car-name"
+				placeholder="Mitsubishi Lancer Evolution X" aria-label="default input example" id="car-name" name="car-name"
 				maxlength="40">
 			<span class="invalid-span" id="first-invalid-span">Invalid name</span>
 	
 			<label for="engine-info">Engine info:</label>
 			<input @input=${inputEventHandlers.getEngineInfoInputHandler()} class="form-control" type="text"
-				placeholder="2.0 MIVEC FQ-360" aria-label="default input example" type="text" name="engine-info"
+				placeholder="2.0 MIVEC FQ-360" aria-label="default input example" id="engine-info" name="engine-info"
 				maxlength="30">
 			<span class="invalid-span" id="second-invalid-span">Invalid engine info</span>
 	
 			<label for="power">Power:</label>
 			<input @input=${inputEventHandlers.getPowerInfoInputHandler()} class="form-control" type="text"
-				placeholder="359 Hp @ 6500 rpm" aria-label="default input example" type="text" name="power" maxlength="30">
+				placeholder="359 Hp @ 6500 rpm" aria-label="default input example" id="power" name="power" maxlength="30">
 			<span class="invalid-span" id="third-invalid-span">Invalid power info</span>
 	
 			<span id="top-speed-and-weight">
