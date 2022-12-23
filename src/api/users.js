@@ -10,24 +10,13 @@ export async function login(username, password, remember) {
 		sessionToken: result.sessionToken
 	}
 
-	console.log(userData)
-
 	setUserData(userData, remember);
 
 	return result;
 }
 
-export async function register(username, password, email, remember) {
+export async function register(username, password, email) {
 	const result = await api.post('/users', { username, password, email });
-	
-	const userData = {
-		username: username,
-		id: result.objectId,
-		sessionToken: result.sessionToken
-	}
-
-	setUserData(userData, remember);
-
 	return result;
 }
 

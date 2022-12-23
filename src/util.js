@@ -130,7 +130,7 @@ export function bindForm(callback) {
 		const formData = new FormData(event.target);
 		const asObject = Object.fromEntries([...formData.entries()].map(([k, v]) => [k, v.trim()]));
 
-		if (event.target.querySelector('.remember-me').checked) {
+		if (event.target.querySelector('.remember-me')?.checked) {
 			asObject.remember = true;
 		}
 		const inputs = [...event.target.querySelectorAll('input, button, textarea, select')];

@@ -54,10 +54,6 @@ input:focus {
 	border-radius: 3px !important;
 }
 
-.form-check {
-	margin-top: 10px;
-}
-
 .inputs > input[type="submit"] {
 	margin-top: 10px !important;
 	width: 100% !important;
@@ -79,4 +75,13 @@ input:focus {
     text-align: center;
     background-color: #dc3545;
     border-radius: 2px;
+}
+
+.redirect-div {
+	margin-top: 4px;
+}
+
+.redirect-div > a, .redirect-div > a:hover {
+	color: aquamarine;
+	text-decoration: none;
 }

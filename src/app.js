@@ -9,6 +9,7 @@ import { loginView } from "./views/login.js";
 import { registerView } from "./views/register.js";
 import { sharePhotosView } from "./views/share-photos.js";
 import { showroomsView } from "./views/showrooms.js";
+import { verifyView } from "./views/verify.js";
 
 const main = document.querySelector('#main');
 const root = main.attachShadow({ mode: 'open' });
@@ -34,4 +35,5 @@ page('/showrooms', showroomsView);
 page('/share-photos', sharePhotosView);
 page('/login', loginView);
 page('/register', registerView);
+page('/verify', verifyView);
 page.start();

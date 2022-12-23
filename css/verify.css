@@ -1,0 +1,41 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+main {
+	height: 100vh;
+	background: linear-gradient(to right, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(/images/email-clients.webp) center center/cover no-repeat scroll;
+	background-size: cover;
+}
+
+#verify-info {
+	position: relative;
+	top: max(220px, 40%);
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#verify-info>h1 {
+	text-align: center;
+	color: white;
+	text-shadow: 0px 3px 13px #000000;
+}
+
+.instructions {
+	text-align: center;
+	display: block;
+	color: white;
+	text-shadow: 0px 3px 13px #000000;
+}
+
+.instructions>a {
+	font-style: italic;
+	color: cyan;
+	text-shadow: 0px 3px 13px #000000;
+}
+
+.instructions>a:hover {
+	color: darkcyan;
+}

@@ -14,7 +14,6 @@ form {
 	top: max(220px, 40%);
 	left: 50%;
 	transform: translate(-50%, -50%);
-	/* margin: 14% auto; */
 
 	width: 30%;
 	min-width: 400px;
@@ -86,4 +85,9 @@ input:focus {
     text-align: center;
     background-color: #dc3545;
     border-radius: 2px;
+}
+
+.redirect-span > a, .redirect-span > a:hover {
+	color: aquamarine;
+	text-decoration: none;
 }

@@ -25,12 +25,7 @@ const registerTemplate = (getUsernameInputHandler, getPasswordInputHandler, getE
 				<input @input=${getEmailInputHandler()} class="form-control" type="email" name="email" id="email">
 				<span class="invalid-span" id="third-invalid-span"></span>
 	
-				<div class="form-check">
-					<input class="form-check-input remember-me" type="checkbox" value="" id="flexCheckChecked">
-					<label class="form-check-label" for="flexCheckChecked">
-						Remember me
-					</label>
-				</div>
+				<div class="redirect-div">Have an account? <a href="/login">Log in!</a></div>
 				<input disabled class="btn btn-primary" type="submit" value="Register">
 			</div>
 		</form>
@@ -48,11 +43,11 @@ export function registerView(ctx) {
 		)
 	);
 
-	async function onSubmit({ username, password, email, remember }, form) {
+	async function onSubmit({ username, password, email }, form) {
 		try {
-			await register(username, password, email, remember);
+			await register(username, password, email);
 			form.reset();
-			ctx.page.redirect('/');
+			ctx.page.redirect('/verify');
 		} catch (error) {
 			ctx.render(
 				registerTemplate(

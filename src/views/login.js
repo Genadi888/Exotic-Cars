@@ -26,6 +26,8 @@ const loginTemplate = (getUsernameInputHandler, getPasswordInputHandler, getLogi
 						Remember me
 					</label>
 				</div>
+
+				<span class="redirect-span">Don't have an account? <a href="/register">Register!</a></span>
 				<input disabled class="btn btn-primary" type="submit" value="Log in">
 			</div>
 		</form>
@@ -48,16 +50,16 @@ export function loginView(ctx) {
 			form.reset();
 			ctx.page.redirect('/');
 		} catch (error) {
-			if (error.code == 101) {
-				ctx.render(
-					loginTemplate(
-						getUsernameInputHandler,
-						getPasswordInputHandler,
-						getLoginOrRegisterFormInputHandler,
-						bindForm(onSubmit),
-						error.message
-					)
-				);
+			ctx.render(
+				loginTemplate(
+					getUsernameInputHandler,
+					getPasswordInputHandler,
+					getLoginOrRegisterFormInputHandler,
+					bindForm(onSubmit),
+					error.message
+				)
+			);
+			if (error.code == 101 || error.code == 400) {
 			}
 		}
 	}
