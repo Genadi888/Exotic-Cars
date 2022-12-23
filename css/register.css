@@ -11,10 +11,9 @@ main {
 
 form {
 	position: relative;
-	top: max(250px, 40%);
+	top: max(280px, 40%);
 	left: 50%;
 	transform: translate(-50%, -50%);
-	/* margin: 14% auto; */
 
 	width: 30%;
 	min-width: 400px;
@@ -52,6 +51,7 @@ input:active,
 input:focus {
 	outline: none !important;
 	box-shadow: none !important;
+	border-radius: 3px !important;
 }
 
 .form-check {
@@ -72,4 +72,11 @@ input:focus {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	pointer-events: none;
+}
+
+.server-error-msg {
+	display: block;
+    text-align: center;
+    background-color: #dc3545;
+    border-radius: 2px;
 }

@@ -1,14 +1,16 @@
+import { register } from "../api/users.js";
 import { html } from "../lib/lit-html.js";
-import { getPasswordInputHandler, getUsernameInputHandler, getLoginOrRegisterFormInputHandler } from "../util.js";
+import { getPasswordInputHandler, getUsernameInputHandler, getLoginOrRegisterFormInputHandler, bindForm } from "../util.js";
 
-const registerTemplate = (getUsernameInputHandler, getPasswordInputHandler, getEmailInputHandler, getLoginOrRegisterFormInputHandler) => html`
+const registerTemplate = (getUsernameInputHandler, getPasswordInputHandler, getEmailInputHandler, getLoginOrRegisterFormInputHandler, onSubmit, error) => html`
 	<link rel="stylesheet" href="/css/register.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	
 	<main>
-		<form @input=${getLoginOrRegisterFormInputHandler()}>
+		<form @submit=${onSubmit} @input=${getLoginOrRegisterFormInputHandler()}>
 			<h1>Register</h1>
+			${error ? html`<span class="server-error-msg">${error}</span>` : null}
 			<div class="inputs">
 				<label for="username">Username:</label>
 				<input @input=${getUsernameInputHandler()} class="form-control" type="text" name="username" id="username">
@@ -24,7 +26,7 @@ const registerTemplate = (getUsernameInputHandler, getPasswordInputHandler, getE
 				<span class="invalid-span" id="third-invalid-span"></span>
 	
 				<div class="form-check">
-					<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+					<input class="form-check-input remember-me" type="checkbox" value="" id="flexCheckChecked">
 					<label class="form-check-label" for="flexCheckChecked">
 						Remember me
 					</label>
@@ -41,9 +43,29 @@ export function registerView(ctx) {
 			getUsernameInputHandler,
 			getPasswordInputHandler,
 			getEmailInputHandler,
-			getLoginOrRegisterFormInputHandler
+			getLoginOrRegisterFormInputHandler,
+			bindForm(onSubmit)
 		)
 	);
+
+	async function onSubmit({ username, password, email, remember }, form) {
+		try {
+			await register(username, password, email, remember);
+			form.reset();
+			ctx.page.redirect('/');
+		} catch (error) {
+			ctx.render(
+				registerTemplate(
+					getUsernameInputHandler,
+					getPasswordInputHandler,
+					getEmailInputHandler,
+					getLoginOrRegisterFormInputHandler,
+					bindForm(onSubmit),
+					error.message
+				)
+			);
+		}
+	}
 
 	function getEmailInputHandler() {
 		let timeout;

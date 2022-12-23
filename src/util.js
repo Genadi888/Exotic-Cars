@@ -1,3 +1,17 @@
+export function getUserData() {
+	return JSON.parse(sessionStorage.getItem('userData') || localStorage.getItem('userData'));
+}
+export function setUserData(data, remember) {
+	sessionStorage.setItem('userData', JSON.stringify(data));
+	if (remember) {
+		localStorage.setItem('userData', JSON.stringify(data));
+	}
+}
+export function deleteUserData() {
+	sessionStorage.removeItem('userData');
+	localStorage.removeItem('userData');
+}
+
 export function getCollapseClickHandler(topShadowRoot) {
 	let clickedNavBtn = false;
 	const transitionDelay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '1s';
@@ -92,14 +106,14 @@ export function getLoginOrRegisterFormInputHandler() {
 
 	return ev => {
 		clearTimeout(timeout);
-		
+
 		const form = ev.currentTarget;
 		const submitBtn = form.querySelector('input[type="submit"]');
 		submitBtn.disabled = true;
-		
+
 		timeout = setTimeout(() => {
 			const fieldsAreNotEmpty = [...form.querySelectorAll('input.form-control')].every(el => el.value != '');
-			
+
 			if (!form.querySelector('.is-invalid') && fieldsAreNotEmpty) {
 				submitBtn.removeAttribute('disabled');
 			}
@@ -107,5 +121,27 @@ export function getLoginOrRegisterFormInputHandler() {
 				submitBtn.disabled = true;
 			}
 		}, 1000)
+	}
+}
+
+export function bindForm(callback) {
+	return async function (event) {
+		event.preventDefault();
+		const formData = new FormData(event.target);
+		const asObject = Object.fromEntries([...formData.entries()].map(([k, v]) => [k, v.trim()]));
+
+		if (event.target.querySelector('.remember-me').checked) {
+			asObject.remember = true;
+		}
+		const inputs = [...event.target.querySelectorAll('input, button, textarea, select')];
+		inputs.forEach(i => i.disabled = true);
+
+		try {
+			await callback(asObject, event.target);
+		} catch (error) {
+			console.log(error.message);
+		} finally {
+			inputs.forEach(i => i.removeAttribute('disabled'));
+		}
 	}
 }

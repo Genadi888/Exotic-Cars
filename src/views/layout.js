@@ -1,7 +1,7 @@
 import { html } from "../lib/lit-html.js";
 import { getCollapseClickHandler } from "../util.js";
 
-export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
+export const layoutTemplate = (topShadowRoot, onLogout, user) => html`
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/navbar-and-footer.css">
@@ -21,7 +21,7 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 			</li>
 			${user ? html`
 				<li class="nav-item">
-					<a class="nav-link" href="/login">LOG OUT</a>
+					<a class="nav-link" @click=${onLogout} href="javascript:void(0)">LOG OUT</a>
 				</li>
 			` : html`
 				<li class="nav-item">
@@ -79,7 +79,7 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 					</li>
 					${user ? html`
 						<li class="nav-item">
-							<a class="nav-link" href="/login">LOG OUT</a>
+							<a class="nav-link" @click=${onLogout} href="javascript:void(0)">LOG OUT</a>
 						</li>
 					` : html`
 						<li class="nav-item">
@@ -114,9 +114,7 @@ export const layoutTemplate = (body, topShadowRoot, onLogout, user) => html`
 		</div>
 	</nav>
 	
-	<main>
-		${body}
-	</main>
+	<main></main>
 	
 	<footer>
 		<p>&copy; Genadi Fidanov ${new Date().getFullYear()}</p>

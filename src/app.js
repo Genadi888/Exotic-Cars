@@ -1,5 +1,7 @@
 import page from "./lib/page.mjs";
+import { addLogout } from "./middlewares/logout.js";
 import { addRender } from "./middlewares/render.js";
+import { addSession } from "./middlewares/session.js";
 import { aboutUsView } from "./views/about-us.js";
 import { carPicturesView } from "./views/car-pictures.js";
 import { homeView } from "./views/home.js";
@@ -15,6 +17,9 @@ page((ctx, next) => {
 	ctx.topShadowRoot = root;
 	next();
 });
+
+page(addSession())
+page(addLogout())
 page(addRender());
 page((ctx, next) => {
 	window.scrollTo({ top: 0 });
