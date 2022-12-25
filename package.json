@@ -23,7 +23,12 @@
 	},
 	"homepage": "https://github.com/Genadi888/Exotic-Cars#readme",
 	"dependencies": {
+		"chai": "^4.3.7",
 		"lit-html": "^2.3.1",
 		"page": "^1.11.6"
+	},
+	"devDependencies": {
+		"@types/jest": "^29.2.4",
+		"playwright-chromium": "^1.29.1"
 	}
 }

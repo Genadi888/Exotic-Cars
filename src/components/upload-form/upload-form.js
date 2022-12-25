@@ -1,6 +1,8 @@
 import { render as litRender } from "/src/lib/lit-html.js";
 import { inputEventHandlers } from "./inputEventHandlers.js";
 import { formTemplate } from "./formTemplate.js";
+import { createPost, getAllPosts } from "../../api/posts.js";
+import { encodeImages } from "./encodeImages.js";
 
 export function defineUploadForm() {
 	class UploadForm extends HTMLElement {
@@ -30,7 +32,7 @@ export function defineUploadForm() {
 			}
 		}
 
-		#formSubmitEventHandler(ev) {
+		async #formSubmitEventHandler(ev) {
 			ev.preventDefault();
 			const form = ev.currentTarget;
 
@@ -39,15 +41,19 @@ export function defineUploadForm() {
 			const weightUnit = [...form.querySelectorAll('.weight-radios')].find(el => el.checked).value;
 
 			const objToSubmit = {
-				images: formData.getAll('images').trim(),
+				images: await encodeImages([...formData.getAll('images')]),
 				carName: formData.get('car-name').trim(),
 				engineInfo: formData.get('engine-info').trim(),
 				power: formData.get('power').trim(),
-				topSpeed: `${formData.get('top-speed')} ${speedUnit}`.trim(),
-				weight: `${formData.get('weight')} ${weightUnit}`.trim(),
+				topSpeed: `${formData.get('top-speed')} ${speedUnit}`,
+				weight: `${formData.get('weight')} ${weightUnit}`,
 				extraInfo: formData.get('extra-info').trim()
 			}
-			// console.log(objToSubmit)
+
+			console.log(objToSubmit)
+			const post = await createPost(objToSubmit);
+			// await Promise.all([...formData.getAll('images')].map(image => createImage(image, post)))
+			// console.log(await getAllPosts());
 		}
 
 		constructor() {
@@ -94,6 +100,7 @@ export function defineUploadForm() {
 					const dataTransfer = new DataTransfer();
 					filesArr.forEach(file => dataTransfer.items.add(file));
 					inputElement.files = dataTransfer.files;
+					// console.log((inputElement.files[0]));
 					updateThumbnail(dropZoneElement, inputElement.files);
 
 					inputElement.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));

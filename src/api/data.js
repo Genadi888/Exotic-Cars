@@ -12,3 +12,7 @@ export function addOwner(item) {
 	const userData = getUserData();
 	item.owner = createPointer('_User', userData.id);
 }
+
+// export function linkPost(image, postObjectId) {
+// 	image.post = createPointer('Posts', postObjectId);
+// }
