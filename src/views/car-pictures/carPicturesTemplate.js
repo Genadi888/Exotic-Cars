@@ -1,3 +1,5 @@
+import { html } from "../../lib/lit-html.js";
+
 export const carPicturesTemplate = (scrollFunc, sectionClickHandler, postsTemplate) => html`
 	<link rel="stylesheet" href="/css/car-pictures.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
