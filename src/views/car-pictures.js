@@ -1,7 +1,7 @@
-import { html, render as litRender } from "../../lib/lit-html.js";
-import { repeat } from "../../lib/directives/repeat.js";
-import { until } from "../../lib/directives/until.js";
-import { getAllPosts } from "../../api/posts.js";
+import { html, render as litRender } from "../lib/lit-html.js";
+import { repeat } from "../lib/directives/repeat.js";
+import { until } from "../lib/directives/until.js";
+import { getAllPosts } from "../api/posts.js";
 
 const carPicturesTemplate = (scrollFunc, sectionClickHandler, postsTemplate, cardTemplate, noPostsTemplate) => html`
 	<link rel="stylesheet" href="/css/car-pictures.css">
@@ -75,8 +75,12 @@ export async function carPicturesView(ctx) {
 		`
 	}
 
-	const getSectionContentTemplate = async () => {
+	const getSectionContentTemplate = async (noPostsTemplate) => {
 		const posts = await getAllPosts();
+
+		if (posts.length == 0) {
+			ctx.nestedShadowRoot.querySelector('section').style['justifyContent'] = 'flex-start';
+		}
 
 		return html`
 			${
@@ -91,13 +95,8 @@ export async function carPicturesView(ctx) {
 		<h1 id="loading">Loading posts<div class="loader">Loading...</div></h1>
 	`
 
-	ctx.render(carPicturesTemplate(scrollToTop, sectionClickHandler, until(getSectionContentTemplate(), loadingTemplate()), cardTemplate, noPostsTemplate()));
+	ctx.render(carPicturesTemplate(scrollToTop, sectionClickHandler, until(getSectionContentTemplate(noPostsTemplate()), loadingTemplate()), cardTemplate, noPostsTemplate()));
 	
-	const posts = await getAllPosts();
-	if (posts.length == 0) {
-		ctx.nestedShadowRoot.querySelector('section').style['justifyContent'] = 'flex-start';
-	}
-
 	const scrollToTopBtn = ctx.nestedShadowRoot.getElementById('go-to-top-link');
 	let allowedToScroll = false;
 
