@@ -87,15 +87,14 @@ describe('E2E tests', function () {
             await page.waitForSelector('#inline-navbar-nav > li:nth-child(1) > a[href="/share-photos"]');
             await page.click('#inline-navbar-nav > li:nth-child(1) > a[href="/share-photos"]');
 
-            await page.fill('text=Car name:', 'Dodge Challenger III SRT Hellcat Redeye');
+            await page.fill('text=Car name:', 'Lexus LS 400');
             await page.fill('text=Engine info:', '2.0L v8');
-            await page.fill('text=Power:', '400 Hp 3400rpm');
-            await page.fill('#top-speed-div > input', '220');
-            await page.fill('#weight-div > input', '1500');
+            await page.fill('text=Power:', '245 Hp @ 5400 rpm.');
+            await page.fill('#top-speed-div > input', '250');
+            await page.fill('#weight-div > input', '1785');
 
             await page.setInputFiles('input[type="file"]', [
-                'C:/Users/Генади/Desktop/big_truck.jpg',
-                'C:/Users/Генади/Desktop/css_trick.jpg',
+                'C:/Users/Генади/Desktop/lexus.jpg',
             ])
 
             await page.click('input[type="submit"]');

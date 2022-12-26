@@ -14,6 +14,6 @@ const sharePhotosTemplate = () => html`
 `
 
 export function sharePhotosView(ctx) {
-	defineUploadForm();
+	defineUploadForm(ctx);
 	ctx.render(sharePhotosTemplate());
 }

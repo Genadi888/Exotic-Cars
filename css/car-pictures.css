@@ -4,25 +4,21 @@ section {
 }
 
 section {
-	margin-top: 55px;
-
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-ms-flex-direction: column;
 	flex-direction: column;
-
-	-ms-flex-wrap: nowrap;
 	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: space-around;
+
+	margin-top: 55px;
 	padding-bottom: 2%;
+	height: auto;
+	min-height: 100vh;
+
+	overflow: hidden;
 }
 
 .card {
-	margin-left: auto;
-	margin-right: auto;
 	margin-top: 30px;
 	width: 55vw;
 	border: none;
@@ -50,8 +46,6 @@ section {
 	z-index: 11;
 	visibility: hidden;
 
-	-webkit-transform: translateX(-100%);
-	-ms-transform: translateX(-100%);
 	transform: translateX(-100%);
 
 	padding: 0.7em;
@@ -71,8 +65,6 @@ section {
 }
 
 #offcanvas-btn>p {
-	-webkit-writing-mode: vertical-rl;
-	-ms-writing-mode: tb-rl;
 	writing-mode: vertical-rl;
 	text-orientation: upright;
 	font-size: 13px;
@@ -101,7 +93,6 @@ section {
 }
 
 #offcanvasRight>div.offcanvas-header {
-	/* border: none; */
 	background-color: #caad0a;
 	color: rgb(240, 240, 240);
 }
@@ -258,4 +249,75 @@ body>aside>ul>li>a:hover {
 
 	opacity: 0;
 	transition: opacity 1.2s ease-in-out;
+}
+
+#no-posts {
+	margin-top: 70px;
+	text-align: center;
+	font-size: calc(15px + 3vmin) !important;
+}
+
+#loading {
+	color: white !important;
+	font-size: calc(15px + 3vmin) !important;
+}
+
+.loader {
+	font-size: 10px;
+	margin: 50px auto;
+	text-indent: -9999em;
+	width: 11em;
+	height: 11em;
+	border-radius: 50%;
+	background: #ffffff;
+	background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+	position: relative;
+	bottom: 23px;
+	animation: load3 1.4s infinite linear;
+	transform: translateZ(0);
+}
+
+.loader:before {
+	width: 50%;
+	height: 50%;
+	background: #ffffff;
+	border-radius: 100% 0 0 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: '';
+}
+
+.loader:after {
+	background: darkslategrey;
+	width: 75%;
+	height: 75%;
+	border-radius: 50%;
+	content: '';
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+@-webkit-keyframes load3 {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes load3 {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
 }

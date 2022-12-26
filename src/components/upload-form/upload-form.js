@@ -4,7 +4,7 @@ import { formTemplate } from "./formTemplate.js";
 import { createPost, getAllPosts } from "../../api/posts.js";
 import { encodeImages } from "./encodeImages.js";
 
-export function defineUploadForm() {
+export function defineUploadForm(ctx) {
 	class UploadForm extends HTMLElement {
 		#inputEventHandlers = inputEventHandlers;
 
@@ -35,6 +35,9 @@ export function defineUploadForm() {
 		async #formSubmitEventHandler(ev) {
 			ev.preventDefault();
 			const form = ev.currentTarget;
+			const submitBtn = form.querySelector('input[type="submit"]');
+			submitBtn.disabled = true;
+			submitBtn.value = "Posting...";
 
 			const formData = new FormData(form);
 			const speedUnit = [...form.querySelectorAll('.speed-unit-radios')].find(el => el.checked).value;
@@ -50,10 +53,14 @@ export function defineUploadForm() {
 				extraInfo: formData.get('extra-info').trim()
 			}
 
-			console.log(objToSubmit)
-			const post = await createPost(objToSubmit);
-			// await Promise.all([...formData.getAll('images')].map(image => createImage(image, post)))
-			// console.log(await getAllPosts());
+			try {
+				console.log(await createPost(objToSubmit));
+				ctx.page.redirect('/car-pictures');
+			} catch (error) {
+				alert(error.message);
+				submitBtn.removeAttribute('disabled');
+				submitBtn.value = "Post";
+			}
 		}
 
 		constructor() {

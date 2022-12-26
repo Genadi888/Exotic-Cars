@@ -14,7 +14,12 @@ export function encodeImages(filesArr) {
 		
 		for (const file of filesArr) {
 			reader.readAsDataURL(file);
-			encodedFiles.push(await readedFile);
+
+			try {
+				encodedFiles.push(await readedFile);
+			} catch (error) {
+				reject(error.message)
+			}
 
 			if (encodedFiles.length == filesArr.length) {
 				resolve(encodedFiles);

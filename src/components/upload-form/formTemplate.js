@@ -87,7 +87,7 @@ export const formTemplate = (inputEventHandlers, getFormInputEventHandler, formS
 				<label for="floatingTextarea">Extra info (optional)</label>
 				<span class="invalid-span" id="textarea-invalid-span">Invalid extra info</span>
 			</div>
-			<input disabled class="btn btn-primary" type="submit" value="Submit">
+			<input disabled class="btn btn-primary" type="submit" value="Post">
 		</div>
 	</form>
 `;
