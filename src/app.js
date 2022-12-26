@@ -3,7 +3,7 @@ import { addLogout } from "./middlewares/logout.js";
 import { addRender } from "./middlewares/render.js";
 import { addSession } from "./middlewares/session.js";
 import { aboutUsView } from "./views/about-us.js";
-import { carPicturesView } from "./views/car-pictures.js";
+import { carPicturesView } from "./views/car-pictures/car-pictures.js";
 import { homeView } from "./views/home.js";
 import { loginView } from "./views/login.js";
 import { registerView } from "./views/register.js";

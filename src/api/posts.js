@@ -2,7 +2,7 @@ import * as api from './api.js';
 import { addOwner } from './data.js';
 
 export async function getAllPosts() {
-	return (await api.get('/Posts')).results
+	return (await api.get('/Posts')).results;
 }
 
 export async function getPostById(id) {
