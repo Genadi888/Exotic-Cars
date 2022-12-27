@@ -3,6 +3,10 @@ section {
 	background-color: darkslategrey;
 }
 
+* {
+	font-size: calc(15px + 1vmin) !important;
+}
+
 section {
 	display: flex;
 	flex-direction: column;
@@ -247,7 +251,7 @@ body>aside>ul>li>a:hover {
 }
 
 .loader {
-	font-size: 10px;
+	font-size: 10px !important;
 	margin: 50px auto;
 	text-indent: -9999em;
 	width: 11em;
