@@ -224,6 +224,29 @@ body>aside>ul>li>a:hover {
 	margin-top: 10px;
 }
 
+
+/* Firefox */
+* {
+	scrollbar-width: auto;
+	scrollbar-color: #dc3545 rgb(0, 97, 0, 0.27);
+}
+
+/* Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: rgb(0, 97, 0, 0.27);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #dc3545;
+	border-radius: 10px;
+	border: 0px solid #ffffff;
+}
+
+
 #go-to-top-link {
 	background-color: white;
 	position: fixed;
