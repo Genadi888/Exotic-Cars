@@ -14,7 +14,7 @@ export async function carPicturesView(ctx) {
 				<h5 class="card-title">${carObj.carName}</h5>
 				<p class="card-text"><b>Engine:</b> ${carObj.engineInfo} <b>|</b> <b>Power:</b> ${carObj.power} <b>|</b>
 					<b>Top speed:</b> ${carObj.topSpeed} <b>|</b> <b>Weight:</b> ${carObj.weight}</p>
-				<a href="#" class="btn btn-primary show-more-info-btn">Show more info</a>
+				<a data-object-Id=${carObj.objectId} href="#" class="btn btn-primary show-more-info-btn">Show more info</a>
 			</div>
 		</div>
 	`
@@ -29,8 +29,10 @@ export async function carPicturesView(ctx) {
 		`
 	}
 
+	let posts = null;
+
 	const getSectionContentTemplate = async (noPostsTemplate) => {
-		const posts = await getAllPosts();
+		posts = await getAllPosts();
 
 		if (posts.length == 0) {
 			ctx.nestedShadowRoot.querySelector('section').style['justifyContent'] = 'flex-start';
@@ -51,9 +53,8 @@ export async function carPicturesView(ctx) {
 
 	ctx.render(carPicturesTemplate(
 		setUpScrollToTop(ctx),
-		sectionClickHandler,
-		until(getSectionContentTemplate(noPostsTemplate()),
-		loadingTemplate()),
+		ev => sectionClickHandler(ev, posts, ctx),
+		until(getSectionContentTemplate(noPostsTemplate()), loadingTemplate()),
 		cardTemplate,
 		noPostsTemplate()
 	));
