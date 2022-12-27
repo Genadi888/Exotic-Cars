@@ -221,7 +221,7 @@ body>aside>ul>li>a:hover {
 	overflow: auto;
 
 	padding: 0px 10px 0px 10px;
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 #go-to-top-link {
@@ -265,7 +265,7 @@ body>aside>ul>li>a:hover {
 	transform: translateZ(0);
 }
 
-.loader:before {
+.loader::before {
 	width: 50%;
 	height: 50%;
 	background: #ffffff;
@@ -276,7 +276,7 @@ body>aside>ul>li>a:hover {
 	content: '';
 }
 
-.loader:after {
+.loader::after {
 	background: darkslategrey;
 	width: 75%;
 	height: 75%;
@@ -308,4 +308,26 @@ body>aside>ul>li>a:hover {
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+/* ? Custom scrollbar */
+/* Firefox */
+* {
+	scrollbar-width: auto;
+	scrollbar-color: #dc3545 rgb(0, 97, 0, 0.27);
+}
+
+/* Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: rgb(0, 97, 0, 0.27);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #dc3545;
+	border-radius: 10px;
+	border: 0px solid #ffffff;
 }
