@@ -1,12 +1,12 @@
 import { html } from "../lib/lit-html.js";
 import { getCollapseClickHandler } from "../util.js";
 
-export const layoutTemplate = (topShadowRoot, onLogout, user) => html`
+export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandler) => html`
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/navbar-and-footer.css">
 	
-	<div id="drop-down-menu-container">
+	<div @click=${collapseClickHandler} id="drop-down-menu-container">
 		<div class="navbar-nav">
 			${user ? html`
 				<li class="nav-item">
@@ -53,11 +53,11 @@ export const layoutTemplate = (topShadowRoot, onLogout, user) => html`
 	</div>
 	<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
-			<a href="/">
+			<a @click=${collapseClickHandler} href="/">
 				<img width="50px" height="50px" src="/images/site-logo.png" alt="sports car">
 			</a>
-			<a class="navbar-brand" href="/">Exotic Cars</a>
-			<button @click=${getCollapseClickHandler(topShadowRoot)} id="collapse-button"
+			<a @click=${collapseClickHandler} class="navbar-brand" href="/">Exotic Cars</a>
+			<button @click=${collapseClickHandler} id="collapse-button"
 				class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
 				aria-label="Toggle navigation">

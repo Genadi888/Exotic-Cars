@@ -1,10 +1,11 @@
 import { render as litRender } from "../lib/lit-html.js";
+import { getCollapseClickHandler } from "../util.js";
 import { layoutTemplate } from "../views/layout.js";
 
 export function addRender() {
 	let nestedShadowRoot = null;
 	return (ctx, next) => {
-		litRender(layoutTemplate(ctx.topShadowRoot, ctx.onLogout, ctx.user?.sessionToken), ctx.topShadowRoot); //? layout initialization
+		litRender(layoutTemplate(ctx.topShadowRoot, ctx.onLogout, ctx.user?.sessionToken, getCollapseClickHandler(ctx.topShadowRoot)), ctx.topShadowRoot); //? layout initialization
 
 		ctx.render = (templateResult) => {
 			if (nestedShadowRoot == null) {

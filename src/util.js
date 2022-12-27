@@ -17,22 +17,27 @@ export function getCollapseClickHandler(topShadowRoot) {
 	const transitionDelay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '1s';
 
 	return (ev) => {
-		ev.stopPropagation();
 		const menuContainer = topShadowRoot.querySelector('#drop-down-menu-container');
-		const button = ev.currentTarget;
+		const button = topShadowRoot.querySelector('#collapse-button');
 		menuContainer.style.transition = `transform ${transitionDelay} ease-in-out`;
 
-		if (!clickedNavBtn) {
+		if (!clickedNavBtn && ev.currentTarget.tagName !== 'A') {
 			menuContainer.style.transform = 'translateY(0%)';
 			clickedNavBtn = true;
 			button.disabled = true;
 		} else {
 			menuContainer.style.transform = 'translateY(-100%)';
 			clickedNavBtn = false;
-			button.disabled = true;
+
+			if (ev.currentTarget.tagName !== 'A') {
+				button.disabled = true;
+			}
 		}
 
-		menuContainer.addEventListener('transitionend', () => {
+		menuContainer.addEventListener('transitionend', ev => {
+			if (ev.propertyName != 'transform') {
+				return;
+			}
 			button.removeAttribute('disabled');
 		})
 	}
