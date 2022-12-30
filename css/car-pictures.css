@@ -3,8 +3,10 @@ section {
 	background-color: darkslategrey;
 }
 
-* {
-	font-size: calc(15px + 1vmin) !important;
+@media only screen and (min-width: 1440px) {
+	* {
+		font-size: calc(15px + 1vmin) !important;
+	}
 }
 
 section {
@@ -30,6 +32,57 @@ section {
 
 .card:last-child {
 	margin-bottom: 30px;
+}
+
+.card-body {
+	position: relative;
+}
+
+.post-actions {
+	display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.show-more-info-btn {
+	width: 49%;
+}
+
+.post-icons {
+	width: 50%;
+	display: flex;
+	justify-content: space-around;
+}
+
+@media only screen and (max-width: 420px) {
+	.post-actions {
+		flex-direction: column;
+	}
+
+	.show-more-info-btn {
+		width: 100%;
+	}
+
+	.post-icons {
+		width: 100%;
+		margin-top: 10px;
+	}
+}
+
+.post-icons > img {
+	width: 2em;
+	height: 2em;
+	color: black;
+}
+
+#like {
+	width: 2.2em;
+	height: 2.2em;
+}
+
+#bin {
+	width: 2em;
+	height: 1.9em;
 }
 
 @media only screen and (max-width: 600px) {
@@ -259,7 +312,7 @@ body>aside>ul>li>a:hover {
 	border-bottom-left-radius: 5px;
 
 	opacity: 0;
-	transition: opacity 1.2s ease-in-out;
+	/* transition: opacity 1.2s ease-in-out; */
 }
 
 #no-posts {

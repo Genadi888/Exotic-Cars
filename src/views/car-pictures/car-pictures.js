@@ -14,7 +14,15 @@ export async function carPicturesView(ctx) {
 				<h5 class="card-title">${carObj.carName}</h5>
 				<p class="card-text"><b>Engine:</b> ${carObj.engineInfo} <b>|</b> <b>Power:</b> ${carObj.power} <b>|</b>
 					<b>Top speed:</b> ${carObj.topSpeed} <b>|</b> <b>Weight:</b> ${carObj.weight}</p>
-				<a data-object-Id=${carObj.objectId} href="#" class="btn btn-primary show-more-info-btn">Show more info</a>
+				<span class="post-actions">
+					<a data-object-Id=${carObj.objectId} href="#" class="btn btn-primary show-more-info-btn">Show more info</a>
+					<span class="post-icons">
+						<img id="like" alt="like" src="/images/like.svg">
+						<img id="edit" alt="edit" src="/images/edit.svg">
+						<img id="flag" alt="flag" src="/images/flag.svg">
+						<img id="bin" alt="delete" src="/images/bin.svg">
+					</span>
+				</span>
 			</div>
 		</div>
 	`
@@ -52,10 +60,11 @@ export async function carPicturesView(ctx) {
 	`
 
 	ctx.render(carPicturesTemplate(
-		setUpScrollToTop(ctx),
 		ev => sectionClickHandler(ev, posts, ctx),
 		until(getSectionContentTemplate(noPostsTemplate()), loadingTemplate()),
 		cardTemplate,
 		noPostsTemplate()
 	));
+
+	setUpScrollToTop(ctx);
 }
