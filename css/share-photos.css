@@ -77,7 +77,17 @@ main>form {
 }
 
 /* ? portrait orientation (for mobile devices)*/
-@media only screen and ((max-width: 520px) or ((min-width: 521px) and (max-height: 520px))) {
+@media only screen and (max-width: 520px) {
+	main>h1{
+		display: none;
+	}
+
+	main {
+		padding-top: 55px;
+	}
+}
+
+@media only screen and (min-width: 521px) and (max-height: 520px) {
 	main>h1{
 		display: none;
 	}
