@@ -7,13 +7,14 @@
 main {
 	height: 100vh;
 	background-color: #2F4F4F;
+	overflow: auto;
 }
 
 form {
 	position: relative;
-	top: max(220px, 40%);
+	top: max(120px, 18%);
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, 0%);
 
 	width: 30%;
 	min-width: 400px;
