@@ -1,0 +1,409 @@
+html,
+section {
+	background-color: darkslategrey;
+}
+
+@media only screen and (min-width: 1440px) {
+	* {
+		font-size: calc(15px + 1vmin) !important;
+	}
+}
+
+section {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: space-around;
+
+	margin-top: 55px;
+	padding-bottom: 2%;
+	height: auto;
+	min-height: 100vh;
+
+	overflow: hidden;
+}
+
+.card {
+	margin-top: 30px;
+	width: 55vw;
+	border: none;
+}
+
+.card:last-child {
+	margin-bottom: 30px;
+}
+
+.card-body {
+	position: relative;
+}
+
+.post-actions {
+	display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.show-more-info-btn {
+	width: 49%;
+}
+
+.post-icons {
+	width: 50%;
+	display: flex;
+	justify-content: space-around;
+}
+
+@media only screen and (max-width: 420px) {
+	.post-actions {
+		flex-direction: column;
+	}
+
+	.show-more-info-btn {
+		width: 100%;
+	}
+
+	.post-icons {
+		width: 100%;
+		margin-top: 10px;
+	}
+}
+
+.post-icons > img {
+	width: 2em;
+	height: 2em;
+	color: black;
+}
+
+#like {
+	width: 2.2em;
+	height: 2.2em;
+}
+
+#bin {
+	width: 2em;
+	height: 1.9em;
+}
+
+@media only screen and (max-width: 600px) {
+	.card {
+		width: 80vw;
+	}
+
+	section {
+		margin-top: 60px;
+	}
+}
+
+#offcanvas-btn {
+	position: fixed;
+	top: 120px;
+	left: 100%;
+
+	z-index: 11;
+	visibility: hidden;
+
+	transform: translateX(-100%);
+
+	padding: 0.7em;
+
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+
+	background-color: #caad0a;
+	border-color: #927d07;
+
+	-webkit-box-shadow: 2px 5px 16px 0px #0B325E, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+	box-shadow: 2px 5px 16px 0px #0B325E, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+}
+
+#offcanvas-btn:hover {
+	background-color: #927d07;
+}
+
+#offcanvas-btn>p {
+	writing-mode: vertical-rl;
+	text-orientation: upright;
+	font-size: 13px;
+
+	margin: 0px;
+	padding: 0px;
+}
+
+.offcanvas-header {
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+
+#list-group-off-canvas {
+	padding: 0px;
+	margin: 0px;
+}
+
+#list-group-off-canvas>li>a {
+	font-size: 16px;
+	text-decoration: none;
+}
+
+#list-group-off-canvas>li>a:hover {
+	text-decoration: underline;
+}
+
+#offcanvasRight>div.offcanvas-header {
+	background-color: #caad0a;
+	color: rgb(240, 240, 240);
+}
+
+@media only screen and (max-width: 1023px) {
+	.list-group {
+		display: none;
+		visibility: hidden;
+	}
+
+	#offcanvas-btn {
+		visibility: visible;
+	}
+}
+
+.list-group {
+	z-index: 10;
+	width: 20vw;
+	position: fixed;
+	top: 120px;
+	right: 1%;
+}
+
+body>aside>ul>li:nth-child(1) {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #caad0a;
+	color: rgb(240, 240, 240);
+}
+
+body>aside>ul>li:nth-child(1)>h1 {
+	margin: 0;
+	font-size: 22px;
+}
+
+body>aside>ul>li:nth-child(1)>p {
+	margin: 0;
+	/* font-size: 22px; */
+}
+
+body>aside>ul>li>a {
+	font-size: 14px;
+	text-decoration: none;
+}
+
+body>aside>ul>li>a:hover {
+	text-decoration: underline;
+}
+
+#more-info-window {
+	width: 70vw;
+	min-width: 270px;
+	height: clamp(231px, 50vh, 463px);
+
+	position: fixed;
+	transform: translateX(-50%) translateY(-50%);
+	left: 50%;
+	top: max(50%, 190px);
+	z-index: -1;
+
+	border-radius: 5px;
+	box-shadow: 1px 1px 14px 2px rgba(0, 0, 0, 0.75);
+
+	-webkit-backdrop-filter: blur(15px);
+	backdrop-filter: blur(15px);
+	background-color: rgba(0, 97, 0, 0.274);
+
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
+}
+
+@supports not ((backdrop-filter: blur(15px)) or (-webkit-backdrop-filter: blur(15px))) {
+	#more-info-window {
+		background-color: rgba(0, 97, 0, 1);
+	}
+}
+
+@media (prefers-reduced-motion) {
+	#more-info-window {
+		transition: opacity 1ms ease-in-out;
+	}
+}
+
+@media only screen and (min-width: 1024px) {
+	#more-info-window {
+		width: 50vw;
+	}
+}
+
+#more-info-window>button {
+	display: inline;
+
+	outline: 0px !important;
+	box-shadow: none !important;
+
+	margin: 0;
+	background-color: rgb(255, 255, 255);
+}
+
+#more-info-window>h4 {
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 80%;
+
+	position: fixed;
+	transform: translateX(-50%);
+	left: 50%;
+	top: 0;
+
+	color: rgb(255, 49, 93);
+	text-shadow: 0px 0px 2px #000000;
+}
+
+#more-info-window>p#extra-info {
+	color: white;
+	word-break: break-word;
+	font-size: calc(15px + 1vmin);
+	text-shadow: 0px 0px 2px #000000;
+	height: 80%;
+	overflow: auto;
+
+	padding: 0px 10px 0px 10px;
+	margin-top: 10px;
+}
+
+
+/* Firefox */
+* {
+	scrollbar-width: auto;
+	scrollbar-color: #dc3545 rgb(0, 97, 0, 0.27);
+}
+
+/* Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: rgb(0, 97, 0, 0.27);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #dc3545;
+	border-radius: 10px;
+	border: 0px solid #ffffff;
+}
+
+
+#go-to-top-link {
+	background-color: white;
+	position: fixed;
+	right: 0px;
+	bottom: 30px;
+
+	z-index: 1;
+
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+
+	opacity: 0;
+	/* transition: opacity 1.2s ease-in-out; */
+}
+
+#no-posts {
+	margin-top: 70px;
+	text-align: center;
+	font-size: calc(15px + 3vmin) !important;
+}
+
+#loading {
+	color: white !important;
+	font-size: calc(15px + 3vmin) !important;
+}
+
+.loader {
+	font-size: 10px !important;
+	margin: 50px auto;
+	text-indent: -9999em;
+	width: 11em;
+	height: 11em;
+	border-radius: 50%;
+	background: #ffffff;
+	background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+	position: relative;
+	bottom: 23px;
+	animation: load3 1.4s infinite linear;
+	transform: translateZ(0);
+}
+
+.loader::before {
+	width: 50%;
+	height: 50%;
+	background: #ffffff;
+	border-radius: 100% 0 0 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: '';
+}
+
+.loader::after {
+	background: darkslategrey;
+	width: 75%;
+	height: 75%;
+	border-radius: 50%;
+	content: '';
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+@-webkit-keyframes load3 {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes load3 {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* ? Custom scrollbar */
+/* Firefox */
+* {
+	scrollbar-width: auto;
+	scrollbar-color: #dc3545 rgb(0, 97, 0, 0.27);
+}
+
+/* Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: rgb(0, 97, 0, 0.27);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #dc3545;
+	border-radius: 10px;
+	border: 0px solid #ffffff;
+}

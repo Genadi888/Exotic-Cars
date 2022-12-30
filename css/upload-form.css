@@ -1,0 +1,352 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.grid-container {
+	position: relative;
+	margin: auto;
+	width: clamp(500px, 70vw, 790px);
+	height: clamp(411px, 60vh, 456px);
+
+	background-color: rgba(0, 0, 0, 0.856);
+
+	display: grid;
+	grid-template-columns: clamp(301px, 35vw, 390px) 1fr;
+	grid-template-rows: clamp(190px, 20vh, 235px) 1.4fr;
+}
+
+.grid-item {
+	border: 1px grey solid;
+	padding: 3%;
+}
+
+.grid-item-1 {
+	grid-column-start: 1;
+	grid-column-end: 2;
+	border-bottom: none;
+}
+
+.grid-item-2 {
+	grid-row: 2 / -1;
+	grid-column: 1 / 2;
+
+	display: grid;
+	grid-template-columns: 0.3fr 1.2fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	gap: 0px 0px;
+
+	/* ! this rule is for the invalid spans */
+	position: relative;
+}
+
+.grid-item-2>input,
+.grid-item-2>input:focus,
+.grid-item-2>input:active,
+input[type="number"],
+input[type="number"]:focus,
+input[type="number"]:active {
+	height: 85% !important;
+	width: 100% !important;
+	outline: none !important;
+	border-radius: 3px !important;
+	box-shadow: none !important;
+}
+
+#top-speed-and-weight {
+	display: flex;
+	width: 100%;
+	grid-column: 1 / -1;
+	justify-content: space-evenly;
+	align-items: center;
+	border-radius: 3px;
+}
+
+input[name="top-speed"],
+input[name="weight"] {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.radio-divs {
+	display: flex;
+	flex-direction: column;
+}
+
+.radio-divs input {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.radio-divs label {
+	color: white;
+}
+
+.grid-item-2>input {
+	grid-column: 2 / -1;
+	width: 98%;
+	justify-self: end;
+	align-self: center;
+}
+
+input::placeholder {
+	color: rgb(165, 165, 165) !important;
+}
+
+.grid-item-2>label {
+	color: white;
+	align-self: center;
+	justify-self: center;
+	text-align: center;
+	font-size: 14px;
+}
+
+.grid-item-2>input[name="car-name"] {
+	grid-row: 1 / 2;
+}
+
+.grid-item-2>input[name="engine-info"] {
+	grid-row: 2 / 3;
+}
+
+.grid-item-2>input[name="power"] {
+	grid-row: 3 / 4;
+}
+
+.grid-item-3 {
+	grid-column: 2 / -1;
+	grid-row: 1 / -1;
+	border-left: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.grid-item-3>input[type="submit"] {
+	width: 100%;
+}
+
+.form-floating {
+	height: 85% !important;
+	color: black;
+}
+
+.form-floating>label {
+	color: #6C757D;
+}
+
+.extra-info:active,
+.extra-info:focus,
+.extra-info {
+	color: black !important;
+	height: 100% !important;
+	outline: 0px !important;
+	-webkit-appearance: none;
+	box-shadow: none !important;
+	color: unset !important;
+	background-color: #fff;
+	border-color: #fff !important;
+	outline: none !important;
+	box-shadow: unset !important;
+	resize: none;
+	border-radius: 3px !important;
+}
+
+/*
+	? here we will hide the arrows in the inputs with type "number"
+	* Chrome, Safari, Edge, Opera
+*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none !important;
+	margin: 0 !important;
+}
+
+/* * Firefox */
+input[type=number] {
+	-moz-appearance: textfield !important;
+}
+
+.drop-zone {
+	width: 100%;
+	height: 100%;
+	min-height: 120px;
+	padding: 5px;
+
+	display: flex;
+	align-items: center;
+
+	justify-content: center;
+	text-align: center;
+
+	cursor: pointer;
+	color: #cccccc;
+	border: 4px dashed teal;
+	border-radius: 10px;
+
+	font-family: 'Quicksand', sans-serif;
+	font-weight: 500;
+	font-size: 20px;
+}
+
+.drop-zone--over {
+	border-style: solid;
+}
+
+.drop-zone__input {
+	display: none;
+}
+
+.drop-zone__thumb {
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	overflow: hidden;
+	background-color: #cccccc;
+	background-size: cover;
+	background-position: center;
+	position: relative;
+}
+
+.drop-zone__thumb::after {
+	content: attr(data-label);
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	max-height: 60px;
+	padding: 5px 0;
+	color: white;
+	background: rgba(0, 0, 0, 0.75);
+	font-size: 14px;
+	text-align: center;
+}
+
+.is-invalid,
+.is-invalid:active,
+.is-invalid:focus {
+	border: solid 2px #dc3545 !important;
+}
+
+.invalid-span {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	width: max-content;
+	height: max-content;
+
+	grid-column: 2 / 3;
+
+	color: red;
+	font-size: 12px;
+	display: none;
+
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	pointer-events: none;
+}
+
+#first-invalid-span {
+	grid-row: 1 / 2;
+}
+
+#second-invalid-span {
+	grid-row: 2 / 3;
+}
+
+#third-invalid-span {
+	grid-row: 3 / 4;
+}
+
+#fourth-invalid-span,
+#fifth-invalid-span {
+	right: 4px;
+	bottom: 2px;
+}
+
+#top-speed-div,
+#weight-div {
+	/* ! this rule is for the invalid spans and to center inputs */
+	position: relative;
+	height: 85%;
+	width: 30%;
+}
+
+/* ? portrait orientation (for mobile devices)*/
+@media only screen and (max-width: 520px) {
+	.grid-container {
+		grid-template-columns: clamp(280px, 80vw, 324px);
+		grid-template-rows: 0.1fr clamp(160px, 30vh, 241px) 0.1fr;
+		height: unset;
+		width: clamp(280px, 80vw, 324px);
+		top: 3vh;
+		transform: translateY(0);
+	}
+
+	.grid-item-3 {
+		grid-column: 1 / 1;
+		grid-row: 3 / 4;
+		border-width: 1px;
+		border-top: none;
+		border-left: 1px grey solid;
+	}
+
+	.grid-item-3>input {
+		margin-top: 5px !important;
+	}
+
+	.form-floating {
+		height: 100px !important;
+	}
+
+	.grid-item-2 {
+		grid-row: 2 / 3;
+		grid-column: 1 / 2;
+
+		display: grid;
+		grid-template-columns: 0.3fr 1.2fr;
+		grid-template-rows: 1fr 1fr 1fr 1fr;
+		gap: 0px 0px;
+	}
+}
+
+/* ? landscape orientation (for mobile devices) */
+@media only screen and (min-width: 521px) and (max-height: 520px) {
+	.grid-container {
+		top: 3vh;
+		transform: translateY(0);
+		width: clamp(500px, 70vw, 790px);
+		height: clamp(304px, 67.5vh, 336px);
+		grid-template-columns: clamp(301px, 35vw, 390px) 1fr;
+		grid-template-rows: clamp(135px, 20vh, 235px) clamp(170px, calc(67.5vh - 133px), 201px);
+	}
+
+	.grid-item-3>input {
+		margin-top: 9px !important;
+	}
+}
+
+/* ? for big sreens */
+@media only screen and (min-width: 1441px) and (min-height: 801px) {
+	.grid-container {
+		width: max(500px, 60vw);
+		height: max(690px, 75vh);
+		grid-template-columns: max(301px, 35vw) 1fr;
+		grid-template-rows: max(312px, 30vh) 1.4fr;
+	}
+
+	.grid-item-3>input {
+		height: 9%;
+	}
+
+	* {
+		font-size: calc(15px + 1vmin) !important;
+	}
+
+	.drop-zone__thumb::after {
+		font-size: calc(15px + 1vmin);
+	}
+}

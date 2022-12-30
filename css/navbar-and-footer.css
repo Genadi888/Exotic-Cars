@@ -1,0 +1,124 @@
+/* ? we use this file for multiple pages' navbars and footers */
+
+.navbar-nav {
+	position: absolute;
+	right: 30px;
+}
+
+#drop-down-menu-container > div {
+	position: relative;
+	left: 20px;
+}
+
+#drop-down-menu-container {
+	display: none;
+}
+
+@media only screen and (max-width: 992px) {
+	.navbar-nav {
+		position: relative;
+		left: 20px;
+		display: block;
+	}
+
+	.navbar-nav .nav-link {
+		padding-left: 5px;
+		color: grey;
+		transition: color 0.5s ease;
+	}
+
+	.navbar-nav .nav-link:hover {
+		color: black;
+	}
+
+	#drop-down-menu-container > div > li:nth-child(4) {
+		margin: 0;
+	}
+
+	#drop-down-menu-container {
+		width: 100%;
+		position: fixed;
+		top: 66px;
+		transform: translateY(-100%);
+		background-color: white;
+		z-index: 11;
+		display: unset;
+	}
+}
+
+@media (prefers-reduced-motion) {
+	#drop-down-menu-container {
+		transition: transform 1ms ease-in-out;
+	}
+}
+
+.social-media-list {
+	margin: 0;
+	padding: 0;
+	padding-top: 5px;
+	padding-bottom: 5px;
+
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.social-media-list>li {
+	display: inline;
+}
+
+#inline-navbar-nav>li:last-child {
+	margin-left: 20px;
+}
+
+.social-media-list>li:not(:last-child) {
+	margin-right: 7px;
+}
+
+nav > .container-fluid > a {
+	margin-left: 0.5%;
+	margin-right: 0.5%;
+}
+
+/* ? below is the code for the footer and its elements */
+
+footer {
+	display: flex;
+	justify-content: space-between;
+
+	padding-top: min(3vh, 25px);
+	padding-bottom: min(3vh, 25px);
+
+	background-color: cadetblue;
+	color: white;
+}
+
+footer>p {
+	margin: 0px;
+	margin-left: 3%;
+	display: inline;
+}
+
+footer>ul>li {
+	display: inline;
+	margin-right: 2px;
+}
+
+footer>ul>li:not(:last-child) {
+	margin-right: 7px;
+}
+
+footer>ul {
+	display: flex;
+    flex-wrap: wrap;
+    margin: 0px;
+    position: relative;
+    right: 0px;
+    padding: 0px;
+    padding-right: 10px;
+}
+
+@media only screen and (max-width: 310px) {
+	footer>ul {
+		padding: 0px;
+	}
+}

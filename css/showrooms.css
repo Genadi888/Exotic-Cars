@@ -2,20 +2,18 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	margin-top: 113px;
+	/* margin-top: 113px; */
 	height: clamp(200px, 70vh, 500px);
 }
 
 main {
 	height: 100vh;
 	width: 100%;
-}
-
-body {
-	background-image: url(../../images/mesh.webp);
+	background-image: url(/images/mesh.webp);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: right top;
+	padding-top: 113px;
 }
 
 #text-and-buttons {
@@ -78,8 +76,11 @@ iframe {
 @media only screen and (max-width: 799px) {
 	#central-section {
 		align-content: center;
-		margin-top: 75px;
 		height: unset;
+	}
+	
+	main {
+		padding-top: 75px;
 	}
 
 	#text-and-buttons > h1 {
@@ -107,8 +108,8 @@ iframe {
 	}
 
 	@media only screen and (max-height: 460px) and (min-height: 399px) {
-		#central-section {
-			margin-top: 35px;
+		main {
+			padding-top: 35px;
 		}
 
 		#text-and-buttons {
@@ -137,7 +138,7 @@ iframe {
 }
 
 @media only screen and (max-height: 320px) and (min-width: 800px) {
-	#central-section {
-		margin-top: 80px;
+	main {
+		padding-top: 80px;
 	}
 }

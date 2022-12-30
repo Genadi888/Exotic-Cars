@@ -50,7 +50,7 @@ function updateThumbnail(dropZoneElement, files) {
 	for (const file of files) {
 		filesArr.push(file);
 	}
-
+	
 	let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
 
 	if (dropZoneElement.querySelector('.drop-zone__prompt')) {
