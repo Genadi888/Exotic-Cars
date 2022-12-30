@@ -316,7 +316,6 @@ body>aside>ul>li>a:hover {
 	border-bottom-left-radius: 5px;
 
 	opacity: 0;
-	/* transition: opacity 1.2s ease-in-out; */
 }
 
 #no-posts {
@@ -343,6 +342,12 @@ body>aside>ul>li>a:hover {
 	bottom: 23px;
 	animation: load3 1.4s infinite linear;
 	transform: translateZ(0);
+}
+
+@media (prefers-reduced-motion) {
+	.loader {
+		display: none;
+	}
 }
 
 .loader::before {

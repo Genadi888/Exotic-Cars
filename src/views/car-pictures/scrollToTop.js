@@ -1,10 +1,13 @@
 export function setUpScrollToTop(ctx) {
 	let allowedToScroll = false;
 	const scrollToTopBtn = ctx.nestedShadowRoot.getElementById('go-to-top-link');
+	const transitionAllowed = !window.matchMedia('(prefers-reduced-motion)').matches;
 
 	window.addEventListener('scroll', () => {
 		if (window.scrollY > 1000) {
-			scrollToTopBtn.style.transition = 'opacity 1.2s ease-in-out';
+			if (transitionAllowed) {
+				scrollToTopBtn.style.transition = 'opacity 1.2s ease-in-out';
+			}
 			scrollToTopBtn.style.opacity = 1;
 			scrollToTopBtn.style.cursor = 'pointer';
 			allowedToScroll = true;
