@@ -73,18 +73,25 @@ section {
 	}
 }
 
-.post-icons > img {
+.post-icons img {
 	width: 2em;
 	height: 2em;
 	color: black;
+	cursor: pointer;
 }
 
-#like {
+.like {
 	width: 2.2em;
 	height: 2.2em;
+	transition: background-color 100ms ease-in-out;
+	border-radius: 5px;
 }
 
-#bin {
+.like:hover {
+	background-color: rgb(55, 143, 224);
+}
+
+.bin {
 	width: 2em;
 	height: 1.9em;
 }

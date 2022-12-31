@@ -60,5 +60,5 @@ export async function put(url, data) {
 	return request('put', url, data);
 }
 export async function del(url) {
-	return request('del', url);
+	return request('delete', url);
 }

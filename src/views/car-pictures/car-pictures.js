@@ -5,9 +5,11 @@ import { getAllPosts } from "../../api/posts.js";
 import { sectionClickHandler } from "./setUpInfoWindow.js";
 import { setUpScrollToTop } from "./scrollToTop.js";
 import { carPicturesTemplate } from "./carPicturesTemplate.js";
+import { getDeleteHandler } from "./postActions.js";
 
 export async function carPicturesView(ctx) {
-	const cardTemplate = carObj => html`
+	// console.log(ctx.user)
+	const cardTemplate = (carObj, user, deleteHandler) => html`
 		<div class="card border-0">
 			<img src=${carObj.images[0]} class="card-img-top" alt=${carObj.carName}>
 			<div class="card-body">
@@ -17,10 +19,18 @@ export async function carPicturesView(ctx) {
 				<span class="post-actions">
 					<a data-object-Id=${carObj.objectId} href="#" class="btn btn-primary show-more-info-btn">Show more info</a>
 					<span class="post-icons">
-						<img id="like" alt="like" src="/images/like.svg">
-						<img id="edit" alt="edit" src="/images/edit.svg">
-						<img id="flag" alt="flag" src="/images/flag.svg">
-						<img id="bin" alt="delete" src="/images/bin.svg">
+						${user?.id === carObj.owner.objectId ? 
+							html`
+								<img @click=${() => ctx.page.redirect(`/share-photos:${carObj.objectId}`)} class="edit" alt="edit" src="/images/edit.svg">
+								<img @click=${deleteHandler} class="bin" alt="delete" src="/images/bin.svg">
+							` : null
+						}
+						${user && user?.id !== carObj.owner.objectId ? 
+							html`<img class="like" alt="like" src="/images/like.svg">` : null
+						}
+						${user?.id !== carObj.owner.objectId ? 
+							html`<img class="flag" alt="flag" src="/images/flag.svg">` : null
+						}
 					</span>
 				</span>
 			</div>
@@ -49,7 +59,7 @@ export async function carPicturesView(ctx) {
 		return html`
 			${
 				posts.length > 0 ? 
-				repeat(posts, post => post.objectId, cardTemplate) : 
+				repeat(posts, post => post.objectId, post => cardTemplate(post, ctx.user, getDeleteHandler(ctx, post.objectId))) : 
 				noPostsTemplate
 			}
 		`

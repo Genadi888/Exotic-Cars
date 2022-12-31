@@ -1,28 +1,32 @@
 import { render as litRender } from "/src/lib/lit-html.js";
 import { inputEventHandlers } from "./inputEventHandlers.js";
 import { formTemplate } from "./formTemplate.js";
-import { createPost, getAllPosts } from "../../api/posts.js";
+import { createPost, editPost, getAllPosts, getPostById } from "../../api/posts.js";
 import { encodeImages } from "./encodeImages.js";
+import { until } from "../../lib/directives/until.js";
+import { html } from "/src/lib/lit-html.js";
 
 export function defineUploadForm(ctx) {
 	class UploadForm extends HTMLElement {
 		#inputEventHandlers = inputEventHandlers;
+		#postToEdit = null;
+		#postToEditId = null;
 
 		#getFormInputEventHandler() {
 			let timeout;
-
+			
 			return ev => {
 				clearTimeout(timeout);
 				
 				const form = ev.currentTarget;
 				const submitBtn = form.querySelector('input[type="submit"]');
 				submitBtn.disabled = true;
-				
+
 				timeout = setTimeout(() => {
 					const imagesInput = form.querySelector('input[name="images"]');
 					const fieldsAreNotEmpty = [...form.querySelectorAll('input.form-control')].every(el => el.value != '');
-					
-					if (!form.querySelector('.is-invalid') && fieldsAreNotEmpty && imagesInput.files.length != 0) {
+
+					if (!form.querySelector('.is-invalid') && fieldsAreNotEmpty && (imagesInput.files.length != 0 || this.#postToEdit)) {
 						submitBtn.removeAttribute('disabled');
 					}
 					else {
@@ -32,7 +36,7 @@ export function defineUploadForm(ctx) {
 			}
 		}
 
-		async #formSubmitEventHandler(ev) {
+		async #formSubmitEventHandler(ev, postId) {
 			ev.preventDefault();
 			const form = ev.currentTarget;
 			const submitBtn = form.querySelector('input[type="submit"]');
@@ -43,8 +47,16 @@ export function defineUploadForm(ctx) {
 			const speedUnit = [...form.querySelectorAll('.speed-unit-radios')].find(el => el.checked).value;
 			const weightUnit = [...form.querySelectorAll('.weight-radios')].find(el => el.checked).value;
 
+			let imagesArr = null;
+
+			if (postId) {
+				imagesArr = this.#postToEdit.images;
+			} else {
+				imagesArr = await encodeImages([...formData.getAll('images')]);
+			}
+
 			const objToSubmit = {
-				images: await encodeImages([...formData.getAll('images')]),
+				images: imagesArr,
 				carName: formData.get('car-name').trim(),
 				engineInfo: formData.get('engine-info').trim(),
 				power: formData.get('power').trim(),
@@ -54,12 +66,12 @@ export function defineUploadForm(ctx) {
 			}
 
 			try {
-				console.log(await createPost(objToSubmit));
+				await (postId ? editPost(postId, objToSubmit) : createPost(objToSubmit));
 				ctx.page.redirect('/car-pictures');
 			} catch (error) {
 				alert(error.message);
 				submitBtn.removeAttribute('disabled');
-				submitBtn.value = "Post";
+				submitBtn.value = postId ? "Edit" : "Post";
 			}
 		}
 
@@ -68,14 +80,37 @@ export function defineUploadForm(ctx) {
 			this.attachShadow({ mode: 'open' });
 		}
 
-		connectedCallback() {
-			litRender(formTemplate(this.#inputEventHandlers, this.#getFormInputEventHandler, this.#formSubmitEventHandler), this.shadowRoot);
-			this.#addDragAndDrop();
+		async connectedCallback() {
+			if (ctx.params.id) {
+				this.#postToEditId = ctx.params.id.slice(1);
+
+				const templatePromise = formTemplate(
+					this.#inputEventHandlers,
+					this.#getFormInputEventHandler(),
+					ev => this.#formSubmitEventHandler(ev, this.#postToEditId),
+					this.#postToEditId
+				);
+
+				litRender(until(templatePromise, html`<span id="loading">Loading post info...</span>`), this.shadowRoot);
+				this.#addDragAndDrop(templatePromise);
+			} else {
+				litRender(await formTemplate(this.#inputEventHandlers, this.#getFormInputEventHandler(), this.#formSubmitEventHandler), this.shadowRoot);
+				this.#addDragAndDrop();
+			}
 		}
 
-		#addDragAndDrop() {
+		async #addDragAndDrop(templatePromise) {
+			if (templatePromise) {
+				await templatePromise;
+				this.#postToEdit = await getPostById(this.#postToEditId);
+			}
+			
 			const inputElement = this.shadowRoot.querySelector('.drop-zone__input');
 			const dropZoneElement = inputElement.closest('.drop-zone');
+			
+			if (templatePromise) {
+				updateThumbnail(dropZoneElement, null, this.#postToEdit?.images);
+			}
 
 			dropZoneElement.addEventListener('click', () => {
 				inputElement.click();
@@ -83,7 +118,7 @@ export function defineUploadForm(ctx) {
 
 			inputElement.addEventListener('change', () => {
 				if (inputElement.files.length) {
-					updateThumbnail(dropZoneElement, inputElement.files);
+					updateThumbnail(dropZoneElement, inputElement.files, this.#postToEdit?.images);
 				}
 			});
 
@@ -108,7 +143,7 @@ export function defineUploadForm(ctx) {
 					filesArr.forEach(file => dataTransfer.items.add(file));
 					inputElement.files = dataTransfer.files;
 					// console.log((inputElement.files[0]));
-					updateThumbnail(dropZoneElement, inputElement.files);
+					updateThumbnail(dropZoneElement, inputElement.files, this.#postToEdit?.images);
 
 					inputElement.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
 				}
@@ -120,8 +155,8 @@ export function defineUploadForm(ctx) {
 				* @param {HTMLElement} dropZoneElement
 			*/
 
-			function updateThumbnail(dropZoneElement, fileList) {
-				const filesArr = [...fileList];
+			function updateThumbnail(dropZoneElement, fileList, imagesArr) {
+				const filesArr = imagesArr || [...fileList];
 				let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
 
 				if (dropZoneElement.querySelector('.drop-zone__prompt')) {
@@ -135,16 +170,24 @@ export function defineUploadForm(ctx) {
 					dropZoneElement.appendChild(thumbnailElement)
 				}
 
-				let label = '';
-				filesArr.forEach(file => label += file.name + ', ');
-				label = label.slice(0, -2);  //? here the last comma and space are excluded from the final label
-				thumbnailElement.dataset.label = label;
+				if (fileList) {
+					let label = '';
+					filesArr.forEach(file => label += file.name + ', ');
+					label = label.slice(0, -2);  //? here the last comma and space are excluded from the final label
+					thumbnailElement.dataset.label = label;
+				} else {
+					document.querySelector(':root').style['--thumb-padding'] = '0px';
+				}
 
-				const reader = new FileReader();
-				reader.readAsDataURL(filesArr[0]);
-				reader.addEventListener('load', () => {
-					thumbnailElement.style.backgroundImage = `url(${reader.result})`;
-				});
+				if (imagesArr) {
+					thumbnailElement.style.backgroundImage = `url(${filesArr[0]})`;
+				} else {
+					const reader = new FileReader();
+					reader.readAsDataURL(filesArr[0]);
+					reader.addEventListener('load', () => {
+						thumbnailElement.style.backgroundImage = `url(${reader.result})`;
+					});
+				}
 			}
 		}
 	}

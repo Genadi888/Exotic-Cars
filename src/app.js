@@ -33,6 +33,7 @@ page('/car-pictures', carPicturesView);
 page('/about-us', aboutUsView);
 page('/showrooms', showroomsView);
 page('/share-photos', sharePhotosView);
+page('/share-photos:id', sharePhotosView);
 page('/login', loginView);
 page('/register', registerView);
 page('/verify', verifyView);

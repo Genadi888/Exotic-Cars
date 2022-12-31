@@ -6,7 +6,7 @@ export async function getAllPosts() {
 }
 
 export async function getPostById(id) {
-	return api.get('/Posts/' + id);
+	return api.get(`/Posts/${id}`);
 }
 
 export async function createPost(post) {
@@ -14,8 +14,10 @@ export async function createPost(post) {
 	return api.post('/Posts', post);
 }
 
-// export async function createImage(image, post) {
-// 	// console.log({ imageFile: image, post: image.post })
-// 	linkPost(image, post.objectId);
-// 	return api.post('/PostsImages', { imageFile: image, post: image.post});
-// }
+export async function deletePost(postId) {
+	return api.del(`/Posts/${postId}`);
+}
+
+export async function editPost(postId, newPost) {
+	return api.put(`/Posts/${postId}`, newPost);
+}
