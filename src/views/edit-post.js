@@ -1,4 +1,4 @@
-import { defineEditUploadForm, defineUploadForm } from "../components/upload-form/upload-form.js";
+import { defineEditUploadForm } from "../components/upload-form/upload-form.js";
 import { html } from "../lib/lit-html.js";
 
 const editPostTemplate = () => html`
