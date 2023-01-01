@@ -22,11 +22,11 @@ export async function carPicturesView(ctx) {
 						${user?.id === carObj.owner.objectId ? 
 							html`
 								<img @click=${() => ctx.page.redirect(`/share-photos:${carObj.objectId}`)} class="edit" alt="edit" src="/images/edit.svg">
-								<img @click=${deleteHandler} class="bin" alt="delete" src="/images/bin.svg">
+								<img @click=${deleteHandler} class="bin" alt="delete" src="/images/trash-2.svg">
 							` : null
 						}
 						${user && user?.id !== carObj.owner.objectId ? 
-							html`<img class="like" alt="like" src="/images/like.svg">` : null
+							html`<img class="like" alt="like" src="/images/thumbs-up.svg">` : null
 						}
 						${user?.id !== carObj.owner.objectId ? 
 							html`<img class="flag" alt="flag" src="/images/flag.svg">` : null
