@@ -91,10 +91,30 @@ export function defineUploadForm(ctx) {
 					this.#postToEditId
 				);
 
-				litRender(until(templatePromise, html`<span id="loading">Loading post info...</span>`), this.shadowRoot);
+				litRender(until(
+					templatePromise, 
+					html`
+						<style>
+							#loading {
+								position: absolute;
+								top: 50%;
+								left: 50%;
+								transform: translate(-50%, -50%);
+								font-size: calc(15px + 3vmin) !important;
+							}
+						</style>
+						<span id="loading">Loading post info...</span>
+					`), 
+				this.shadowRoot);
+
 				this.#addDragAndDrop(templatePromise);
 			} else {
-				litRender(await formTemplate(this.#inputEventHandlers, this.#getFormInputEventHandler(), this.#formSubmitEventHandler), this.shadowRoot);
+				litRender(await formTemplate(
+					this.#inputEventHandlers, 
+					this.#getFormInputEventHandler(), 
+					this.#formSubmitEventHandler), 
+				this.shadowRoot);
+				
 				this.#addDragAndDrop();
 			}
 		}
