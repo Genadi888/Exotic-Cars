@@ -83,8 +83,12 @@ section {
 	transition: background-color 100ms ease-in-out;
 }
 
-.like:hover {
+.like:hover, .user-has-liked {
 	background-color: rgba(55, 142, 224, 0.63);
+}
+
+.like-span::after {
+	content: attr(data-likes);
 }
 
 .bin {

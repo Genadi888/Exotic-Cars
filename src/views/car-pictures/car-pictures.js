@@ -1,15 +1,15 @@
 import { html } from "../../lib/lit-html.js";
 import { repeat } from "../../lib/directives/repeat.js";
 import { until } from "../../lib/directives/until.js";
-import { getAllPosts } from "../../api/posts.js";
+import { getAllPosts, likePost } from "../../api/posts.js";
 import { sectionClickHandler } from "./setUpInfoWindow.js";
 import { setUpScrollToTop } from "./scrollToTop.js";
 import { carPicturesTemplate } from "./carPicturesTemplate.js";
-import { getDeleteHandler } from "./postActions.js";
+import { getDeleteHandler, getLikeClickHandler } from "./postActions.js";
 
 export async function carPicturesView(ctx) {
 	// console.log(ctx.user)
-	const cardTemplate = (carObj, user, deleteHandler) => html`
+	const cardTemplate = (carObj, user, deleteHandler, likeClickHandler) => html`
 		<div class="card border-0">
 			<img src=${carObj.images[0]} class="card-img-top" alt=${carObj.carName}>
 			<div class="card-body">
@@ -26,7 +26,11 @@ export async function carPicturesView(ctx) {
 							` : null
 						}
 						${user && user?.id !== carObj.owner.objectId ? 
-							html`<img class="like" alt="like" src="/images/thumbs-up.svg">` : null
+							html`
+							<span data-likes="${carObj.likesCount || ''}" class="like-span">
+								<img @click=${likeClickHandler} class="like${carObj.userHasLikedThisPost ? ' user-has-liked' : ''}" alt="like" src="/images/thumbs-up.svg">
+							</span>
+							` : null
 						}
 						${user?.id !== carObj.owner.objectId ? 
 							html`<img class="flag" alt="flag" src="/images/flag.svg">` : null
@@ -50,7 +54,7 @@ export async function carPicturesView(ctx) {
 	let posts = null;
 
 	const getSectionContentTemplate = async (noPostsTemplate) => {
-		posts = await getAllPosts();
+		posts = await getAllPosts(ctx);
 
 		if (posts.length == 0) {
 			ctx.nestedShadowRoot.querySelector('section').style['justifyContent'] = 'flex-start';
@@ -59,7 +63,7 @@ export async function carPicturesView(ctx) {
 		return html`
 			${
 				posts.length > 0 ? 
-				repeat(posts, post => post.objectId, post => cardTemplate(post, ctx.user, getDeleteHandler(ctx, post.objectId))) : 
+				repeat(posts, post => post.objectId, post => cardTemplate(post, ctx.user, getDeleteHandler(ctx, post.objectId), getLikeClickHandler(post.objectId, ctx.user?.id))) : 
 				noPostsTemplate
 			}
 		`

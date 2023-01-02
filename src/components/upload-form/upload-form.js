@@ -81,7 +81,6 @@ export function defineUploadForm(ctx) {
 		}
 
 		async connectedCallback() {
-			console.log(ctx)
 			if (ctx.params.id) {
 				this.#postToEditId = ctx.params.id.slice(1);
 
@@ -293,7 +292,6 @@ export function defineEditUploadForm(ctx) {
 		}
 
 		async connectedCallback() {
-			console.log(ctx)
 			if (ctx.params.id) {
 				this.#postToEditId = ctx.params.id.slice(1);
 

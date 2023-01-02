@@ -13,6 +13,11 @@ export function addOwner(item) {
 	item.owner = createPointer('_User', userData.id);
 }
 
+export function addUserWhoLiked(like) {
+	const userData = getUserData();
+	like.userWhoLiked = createPointer('_User', userData.id);
+}
+
 // export function linkPost(image, postObjectId) {
 // 	image.post = createPointer('Posts', postObjectId);
 // }

@@ -15,10 +15,10 @@ async function request(method, url, data) {
 
 	if (url.slice(0, 6) == '/users' || url.slice(0, 6) == '/login') {
 		options.headers['X-Parse-Revocable-Session'] = 1;
-	} else {
+	} else if (url.slice(0, 10) != '/functions') {
 		url = '/classes' + url;
 	}
-
+	
 	if (data != undefined) {
 		options.headers['Content-Type'] = 'application/json';
 		options.body = JSON.stringify(data);
