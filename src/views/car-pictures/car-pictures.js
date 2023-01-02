@@ -21,11 +21,14 @@ export async function carPicturesView(ctx) {
 					<span class="post-icons">
 						${user?.id === carObj.owner.objectId ? 
 							html`
+								<span data-likes="${carObj.likesCount || ''}" class="like-span">
+									<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
+								</span>
 								<img @click=${() => ctx.page.redirect(`/share-photos:${carObj.objectId}`)} class="edit" alt="edit" src="/images/edit.svg">
 								<img @click=${deleteHandler} class="bin" alt="delete" src="/images/trash-2.svg">
 							` : null
 						}
-						${user && user?.id !== carObj.owner.objectId ? 
+						${user && user.id !== carObj.owner.objectId ? 
 							html`
 							<span data-likes="${carObj.likesCount || ''}" class="like-span">
 								<img @click=${likeClickHandler} class="like${carObj.userHasLikedThisPost ? ' user-has-liked' : ''}" alt="like" src="/images/thumbs-up.svg">
