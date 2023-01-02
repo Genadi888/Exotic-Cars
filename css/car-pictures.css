@@ -87,6 +87,10 @@ section {
 	background-color: rgba(55, 142, 224, 0.63);
 }
 
+.unactive-like {
+	cursor: unset !important;
+}
+
 .like-span::after {
 	content: attr(data-likes);
 }
