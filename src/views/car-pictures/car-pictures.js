@@ -19,9 +19,14 @@ export async function carPicturesView(ctx) {
 				<span class="post-actions">
 					<a data-object-Id=${carObj.objectId} href="#" class="btn btn-primary show-more-info-btn">Show more info</a>
 					<span class="post-icons">
+						${!user ? html`
+							<span data-likes="${carObj.likesCount}" class="like-span">
+									<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
+							</span>	
+						` : null}
 						${user?.id === carObj.owner.objectId ? 
 							html`
-								<span data-likes="${carObj.likesCount || ''}" class="like-span">
+								<span data-likes="${carObj.likesCount}" class="like-span">
 									<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
 								</span>
 								<img @click=${() => ctx.page.redirect(`/share-photos:${carObj.objectId}`)} class="edit" alt="edit" src="/images/edit.svg">
@@ -30,12 +35,12 @@ export async function carPicturesView(ctx) {
 						}
 						${user && user.id !== carObj.owner.objectId ? 
 							html`
-							<span data-likes="${carObj.likesCount || ''}" class="like-span">
+							<span data-likes="${carObj.likesCount}" class="like-span">
 								<img @click=${likeClickHandler} class="like${carObj.userHasLikedThisPost ? ' user-has-liked' : ''}" alt="like" src="/images/thumbs-up.svg">
 							</span>
 							` : null
 						}
-						${user?.id !== carObj.owner.objectId ? 
+						${user && user.id !== carObj.owner.objectId ? 
 							html`<img class="flag" alt="flag" src="/images/flag.svg">` : null
 						}
 					</span>

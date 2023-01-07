@@ -17,7 +17,6 @@ export async function getAllPosts(ctx) {
 			}).length;
 	}
 
-	// console.log(allPosts)
 	return allPosts;
 }
 
