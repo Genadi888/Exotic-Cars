@@ -1,3 +1,4 @@
+import { createPointer } from "../api/data.js";
 import { logout } from "../api/users.js"
 
 export function addLogout() {
@@ -8,6 +9,6 @@ export function addLogout() {
 }
 
 function onLogout(ctx) {
-	logout();
+	logout(createPointer('_User', ctx.user?.id));
 	ctx.page.redirect('/');
 }
