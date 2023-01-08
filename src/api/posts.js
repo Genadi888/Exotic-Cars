@@ -50,8 +50,8 @@ export async function unlikePost(postId, userId) {
 	return api.del(`/PostsLikes/${likeObjId}`);
 }
 
-export async function reportObject(idOfReportedObject, reason) {
-	const report = { idOfReportedObject, reason };
+export async function reportObject(report) {
 	addEntryWithUserPointer(report, 'reporter');
-	api.post('/functions/reportObject', report);
+	console.log(report)
+	// await api.post('/functions/reportObject', report);
 }

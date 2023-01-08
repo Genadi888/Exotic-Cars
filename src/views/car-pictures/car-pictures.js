@@ -40,7 +40,7 @@ export async function carPicturesView(ctx) {
 							` : null
 						}
 						${user && user.id !== carObj.owner.objectId ? 
-							html`<img class="flag" alt="flag" src="/images/flag.svg">` : null
+							html`<img data-object-Id=${carObj.objectId} class="flag" alt="flag" src="/images/flag.svg">` : null
 						}
 					</span>
 				</span>
