@@ -5,10 +5,10 @@ import { getAllPosts } from "../../api/posts.js";
 import { sectionClickHandler } from "./infoWindow.js";
 import { setUpScrollToTop } from "./scrollToTop.js";
 import { carPicturesTemplate } from "./carPicturesTemplate.js";
-import { getDeleteHandler, getFlagClickHandler, getLikeClickHandler } from "./postActions.js";
+import { getDeleteHandler, getLikeClickHandler } from "./postActions.js";
 
 export async function carPicturesView(ctx) {
-	const cardTemplate = (carObj, user, binClickHandler, likeClickHandler, flagClickHandler) => html`
+	const cardTemplate = (carObj, user, binClickHandler, likeClickHandler) => html`
 		<div class="card border-0">
 			<img src=${carObj.images[0]} class="card-img-top" alt=${carObj.carName}>
 			<div class="card-body">
@@ -40,7 +40,7 @@ export async function carPicturesView(ctx) {
 							` : null
 						}
 						${user && user.id !== carObj.owner.objectId ? 
-							html`<img @click=${flagClickHandler} class="flag" alt="flag" src="/images/flag.svg">` : null
+							html`<img class="flag" alt="flag" src="/images/flag.svg">` : null
 						}
 					</span>
 				</span>
@@ -74,7 +74,6 @@ export async function carPicturesView(ctx) {
 					post, ctx.user,
 					getDeleteHandler(ctx, post.objectId),
 					getLikeClickHandler(post.objectId, ctx.user?.id),
-					getFlagClickHandler(post.objectId, ctx.user?.id),
 				)) : 
 				noPostsTemplate
 			}
