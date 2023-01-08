@@ -8,16 +8,7 @@ export function createPointer(className, objectId) {
 	}
 }
 
-export function addOwner(item) {
+export function addEntryWithUserPointer(item, keyName) {
 	const userData = getUserData();
-	item.owner = createPointer('_User', userData.id);
+	item[keyName] = createPointer('_User', userData.id);
 }
-
-export function addUserWhoLiked(like) {
-	const userData = getUserData();
-	like.userWhoLiked = createPointer('_User', userData.id);
-}
-
-// export function linkPost(image, postObjectId) {
-// 	image.post = createPointer('Posts', postObjectId);
-// }

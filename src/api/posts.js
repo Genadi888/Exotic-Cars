@@ -1,5 +1,5 @@
 import * as api from './api.js';
-import { addOwner, addUserWhoLiked } from './data.js';
+import { addEntryWithUserPointer } from './data.js';
 
 export async function getAllPosts(ctx) {
 	const allPosts = (await api.get('/Posts')).results;
@@ -25,7 +25,7 @@ export async function getPostById(id) {
 }
 
 export async function createPost(post) {
-	addOwner(post);
+	addEntryWithUserPointer(post, 'owner');
 	return api.post('/Posts', post);
 }
 
@@ -39,13 +39,19 @@ export async function editPost(postId, newPost) {
 
 export async function likePost(postId) {
 	const like = { postId };
-	addUserWhoLiked(like);
+	addEntryWithUserPointer(like, 'userWhoLiked');
 	return api.post(`/functions/likePost`, like);
 }
 
-export async function disLikePost(postId, userId) {
+export async function unlikePost(postId, userId) {
 	const { objectId: likeObjId } = 
 	(await api.get(`/PostsLikes?where={"postId": "${postId}", 
 	"userWhoLiked": {"__type":"Pointer","className":"_User","objectId":"${userId}"}}`)).results[0];
 	return api.del(`/PostsLikes/${likeObjId}`);
+}
+
+export async function reportObject(idOfReportedObject, reason) {
+	const report = { idOfReportedObject, reason };
+	addEntryWithUserPointer(report, 'reporter');
+	api.post('/functions/reportObject', report);
 }

@@ -1,4 +1,4 @@
-import { deletePost, disLikePost, likePost } from "../../api/posts.js";
+import { deletePost, unlikePost, likePost } from "../../api/posts.js";
 
 export function getDeleteHandler(ctx, postObjectId) {
 	return async () => {
@@ -16,8 +16,8 @@ export function getLikeClickHandler(postObjectId, userId) {
 		if (likeBtn.classList.contains('user-has-liked')) {
 			try {
 				likeBtn.classList.remove('user-has-liked');
-				likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes - 1 === 0 ? '' : +likeBtn.parentElement.dataset.likes - 1;
-				await disLikePost(postObjectId, userId);
+				likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes - 1;
+				await unlikePost(postObjectId, userId);
 			} catch (error) {
 				alert(error.message);
 				likeBtn.classList.add('user-has-liked')
@@ -29,8 +29,9 @@ export function getLikeClickHandler(postObjectId, userId) {
 				likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes + 1;
 				await likePost(postObjectId);	
 			} catch (error) {
+				alert(error.message);
 				likeBtn.classList.remove('user-has-liked');
-				likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes - 1 === 0 ? '' : +likeBtn.parentElement.dataset.likes - 1;
+				likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes - 1;
 			}
 		}
 	}

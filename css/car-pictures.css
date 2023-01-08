@@ -300,6 +300,63 @@ body>aside>ul>li>a:hover {
 	margin-top: 10px;
 }
 
+#report-form {
+	height: 92%;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+	position: absolute;
+    bottom: 0;
+    width: 100%;
+	justify-content: center;
+}
+
+#report-form #floatingTextarea {
+    height: 96%;
+}
+
+#report-form > .form-floating {
+	height: 87%;
+}
+
+#report-form > input[type="submit"], 
+#report-form > input[type="submit"]:active, 
+#report-form > input[type="submit"]:focus {
+	outline: none !important;
+	box-shadow: unset !important;
+}
+
+.report-reason:active,
+.report-reason:focus,
+.report-reason {
+	color: black !important;
+	outline: none !important;
+	box-shadow: none !important;
+	resize: none;
+	border-radius: 5px !important;
+}
+
+.form-floating>label {
+	color: #6C757D;
+}
+
+.form-floating > .invalid-span {
+	position: absolute;
+	right: 5px;
+	bottom: 10px;
+	width: max-content;
+	height: max-content;
+
+	color: red;
+	font-size: 12px;
+	display: none;
+
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	pointer-events: none;
+}
+
 
 /* Firefox */
 * {

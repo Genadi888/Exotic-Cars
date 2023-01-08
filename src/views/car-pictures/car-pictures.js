@@ -1,15 +1,14 @@
 import { html } from "../../lib/lit-html.js";
 import { repeat } from "../../lib/directives/repeat.js";
 import { until } from "../../lib/directives/until.js";
-import { getAllPosts, likePost } from "../../api/posts.js";
-import { sectionClickHandler } from "./setUpInfoWindow.js";
+import { getAllPosts } from "../../api/posts.js";
+import { sectionClickHandler } from "./infoWindow.js";
 import { setUpScrollToTop } from "./scrollToTop.js";
 import { carPicturesTemplate } from "./carPicturesTemplate.js";
-import { getDeleteHandler, getLikeClickHandler } from "./postActions.js";
+import { getDeleteHandler, getFlagClickHandler, getLikeClickHandler } from "./postActions.js";
 
 export async function carPicturesView(ctx) {
-	// console.log(ctx.user)
-	const cardTemplate = (carObj, user, deleteHandler, likeClickHandler) => html`
+	const cardTemplate = (carObj, user, binClickHandler, likeClickHandler, flagClickHandler) => html`
 		<div class="card border-0">
 			<img src=${carObj.images[0]} class="card-img-top" alt=${carObj.carName}>
 			<div class="card-body">
@@ -30,7 +29,7 @@ export async function carPicturesView(ctx) {
 									<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
 								</span>
 								<img @click=${() => ctx.page.redirect(`/share-photos:${carObj.objectId}`)} class="edit" alt="edit" src="/images/edit.svg">
-								<img @click=${deleteHandler} class="bin" alt="delete" src="/images/trash-2.svg">
+								<img @click=${binClickHandler} class="bin" alt="delete" src="/images/trash-2.svg">
 							` : null
 						}
 						${user && user.id !== carObj.owner.objectId ? 
@@ -41,7 +40,7 @@ export async function carPicturesView(ctx) {
 							` : null
 						}
 						${user && user.id !== carObj.owner.objectId ? 
-							html`<img class="flag" alt="flag" src="/images/flag.svg">` : null
+							html`<img @click=${flagClickHandler} class="flag" alt="flag" src="/images/flag.svg">` : null
 						}
 					</span>
 				</span>
@@ -71,7 +70,12 @@ export async function carPicturesView(ctx) {
 		return html`
 			${
 				posts.length > 0 ? 
-				repeat(posts, post => post.objectId, post => cardTemplate(post, ctx.user, getDeleteHandler(ctx, post.objectId), getLikeClickHandler(post.objectId, ctx.user?.id))) : 
+				repeat(posts, post => post.objectId, post => cardTemplate(
+					post, ctx.user,
+					getDeleteHandler(ctx, post.objectId),
+					getLikeClickHandler(post.objectId, ctx.user?.id),
+					getFlagClickHandler(post.objectId, ctx.user?.id),
+				)) : 
 				noPostsTemplate
 			}
 		`
@@ -83,9 +87,7 @@ export async function carPicturesView(ctx) {
 
 	ctx.render(carPicturesTemplate(
 		ev => sectionClickHandler(ev, posts, ctx),
-		until(getSectionContentTemplate(noPostsTemplate()), loadingTemplate()),
-		cardTemplate,
-		noPostsTemplate()
+		until(getSectionContentTemplate(noPostsTemplate()), loadingTemplate())
 	));
 
 	setUpScrollToTop(ctx);
