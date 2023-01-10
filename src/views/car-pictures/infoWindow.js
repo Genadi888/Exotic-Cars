@@ -23,16 +23,19 @@ const reportWindowTemplate = (clickHandler, onSubmit, getFormInputEventHandler, 
 `;
 
 function showOrHideWindow(moreInfoWindow) {
-	if (+moreInfoWindow.style.opacity == 0) {
-		moreInfoWindow.style['z-index'] = 1;
+	const delay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '0.5s';
+	moreInfoWindow.style.transition = `opacity ${delay} ease-in-out`;
+
+	if (+moreInfoWindow.style.opacity === 0) {
+		moreInfoWindow.style['pointer-events'] = 'unset';
 		moreInfoWindow.style.opacity = 1;
 	} else {
-		moreInfoWindow.style.opacity = 0;
 		moreInfoWindow.addEventListener('transitionend', ev => {
 			if (ev.propertyName == 'opacity' && moreInfoWindow.style.opacity == 0) {
-				moreInfoWindow.style['z-index'] = -1;
+				moreInfoWindow.style['pointer-events'] = 'none';
 			}
 		});
+		moreInfoWindow.style.opacity = 0;
 	}
 }
 
