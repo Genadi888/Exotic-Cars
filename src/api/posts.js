@@ -2,7 +2,7 @@ import * as api from './api.js';
 import { addEntryWithUserPointer } from './data.js';
 
 export async function getAllPosts(ctx) {
-	const allPosts = (await api.get('/Posts')).results;
+	const allPosts = (await api.post('/functions/getPosts')).result;
 	const allLikes = (await api.get('/PostsLikes')).results;
 
 	for (const post of allPosts) {
@@ -21,12 +21,12 @@ export async function getAllPosts(ctx) {
 }
 
 export async function getPostById(id) {
-	return api.get(`/Posts/${id}`);
+	return api.get(`/functions/getPostById?postId=${id}`);
 }
 
 export async function createPost(post) {
 	addEntryWithUserPointer(post, 'owner');
-	return api.post('/Posts', post);
+	return api.post('/functions/createPost', post);
 }
 
 export async function deletePost(postId) {
@@ -34,7 +34,8 @@ export async function deletePost(postId) {
 }
 
 export async function editPost(postId, newPost) {
-	return api.put(`/Posts/${postId}`, newPost);
+	newPost.objectId = postId;
+	return api.post(`/functions/editPost`, newPost);
 }
 
 export async function likePost(postId) {
