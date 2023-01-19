@@ -403,6 +403,10 @@ body>aside>ul>li>a:hover {
 #loading {
 	color: white !important;
 	font-size: calc(15px + 3vmin) !important;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	pointer-events: none;
 }
 
 .loader {

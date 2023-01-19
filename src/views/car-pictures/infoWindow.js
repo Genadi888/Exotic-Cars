@@ -66,17 +66,17 @@ export function sectionClickHandler(ev, posts, ctx) {
 			let timeout;
 	
 			return (ev) => {
+				const textarea = ev.currentTarget;
 				clearTimeout(timeout);
 				timeout = setTimeout(() => {
-					const inputEl = ev.path[0];
-					const span = inputEl.parentElement.querySelector('#textarea-invalid-span');
+					const span = textarea.parentElement.querySelector('#textarea-invalid-span');
 	
-					if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 4 || (!inputEl.value.match(/[\w'".-]{2,}/g) && inputEl.value != '')) {
-						inputEl.classList.add('is-invalid');
+					if (textarea.value.match(/[\w'".-]{2,}/g)?.length < 4 || (!textarea.value.match(/[\w'".-]{2,}/g) && textarea.value != '')) {
+						textarea.classList.add('is-invalid');
 						span.style.display = 'unset';
 						span.textContent = 'write at least 4 words';
 					} else {
-						inputEl.classList.remove('is-invalid');
+						textarea.classList.remove('is-invalid');
 						span.style.display = 'none';
 					}
 				}, 1000);
