@@ -52,6 +52,5 @@ export async function unlikePost(postId, userId) {
 
 export async function reportObject(report) {
 	addEntryWithUserPointer(report, 'reporter');
-	console.log(report)
 	await api.post('/functions/reportObject', report);
 }

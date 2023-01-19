@@ -9,103 +9,103 @@ export const inputEventHandlers = {
 		// console.log(ev.target.files)
 	},
 
-	getCarNameInputHandler(ev) {
+	getCarNameInputHandler() {
 		let timeout;
 
 		return (ev) => {
+			const textarea = ev.currentTarget;
 			clearTimeout(timeout);
 			timeout = setTimeout(() => {
-				const inputEl = ev.path[0];
-				const span = inputEl.parentElement.querySelector('#first-invalid-span');
+				const span = textarea.parentElement.querySelector('#first-invalid-span');
 
-				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 3 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
-					inputEl.classList.add('is-invalid');
+				if (textarea.value.match(/[\w'".-]{2,}/g)?.length < 3 || !textarea.value.match(/[\w'".-]{2,}/g)) {
+					textarea.classList.add('is-invalid');
 					span.style.display = 'unset';
 					span.textContent = 'write at least 3 words';
 				} else {
-					inputEl.classList.remove('is-invalid');
+					textarea.classList.remove('is-invalid');
 					span.style.display = 'none';
 				}
 			}, 1000);
 		}
 	},
 
-	getEngineInfoInputHandler(ev) {
+	getEngineInfoInputHandler() {
 		let timeout;
 
 		return (ev) => {
+			const textarea = ev.currentTarget;
 			clearTimeout(timeout);
 			timeout = setTimeout(() => {
-				const inputEl = ev.path[0];
-				const span = inputEl.parentElement.querySelector('#second-invalid-span');
+				const span = textarea.parentElement.querySelector('#second-invalid-span');
 
-				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 2 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
-					inputEl.classList.add('is-invalid');
+				if (textarea.value.match(/[\w'".-]{2,}/g)?.length < 2 || !textarea.value.match(/[\w'".-]{2,}/g)) {
+					textarea.classList.add('is-invalid');
 					span.style.display = 'unset';
 					span.textContent = 'write at least 2 words';
 				} else {
-					inputEl.classList.remove('is-invalid');
+					textarea.classList.remove('is-invalid');
 					span.style.display = 'none';
 				}
 			}, 1000);
 		}
 	},
 
-	getPowerInfoInputHandler(ev) {
+	getPowerInfoInputHandler() {
 		let timeout;
 
 		return (ev) => {
+			const textarea = ev.currentTarget;
 			clearTimeout(timeout);
 			timeout = setTimeout(() => {
-				const inputEl = ev.path[0];
-				const span = inputEl.parentElement.querySelector('#third-invalid-span');
+				const span = textarea.parentElement.querySelector('#third-invalid-span');
 
-				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 2 || !inputEl.value.match(/[\w'".-]{2,}/g)) {
-					inputEl.classList.add('is-invalid');
+				if (textarea.value.match(/[\w'".-]{2,}/g)?.length < 2 || !textarea.value.match(/[\w'".-]{2,}/g)) {
+					textarea.classList.add('is-invalid');
 					span.style.display = 'unset';
 					span.textContent = 'write at least 2 words';
 				} else {
-					inputEl.classList.remove('is-invalid');
+					textarea.classList.remove('is-invalid');
 					span.style.display = 'none';
 				}
 			}, 1000);
 		}
 	},
 
-	getTopSpeedInputHandler(ev) {
+	getTopSpeedInputHandler() {
 		let timeout;
 
 		return (ev) => {
+			const textarea = ev.currentTarget;
 			clearTimeout(timeout);
 			timeout = setTimeout(() => {
-				const inputEl = ev.path[0];
-				const span = inputEl.parentElement.querySelector('#fourth-invalid-span');
+				const span = textarea.parentElement.querySelector('#fourth-invalid-span');
 
-				if (+inputEl.value < 1) {
-					inputEl.classList.add('is-invalid');
+				if (+textarea.value < 1) {
+					textarea.classList.add('is-invalid');
 					span.style.display = 'unset';
 				} else {
-					inputEl.classList.remove('is-invalid');
+					textarea.classList.remove('is-invalid');
 					span.style.display = 'none';
 				}
 			}, 1000);
 		}
 	},
 
-	getWeightInputHandler(ev) {
+	getWeightInputHandler() {
 		let timeout;
 
 		return (ev) => {
+			const textarea = ev.currentTarget;
 			clearTimeout(timeout);
 			timeout = setTimeout(() => {
-				const inputEl = ev.path[0];
-				const span = inputEl.parentElement.querySelector('#fifth-invalid-span');
+				const span = textarea.parentElement.querySelector('#fifth-invalid-span');
 
-				if (+inputEl.value < 1) {
-					inputEl.classList.add('is-invalid');
+				if (+textarea.value < 1) {
+					textarea.classList.add('is-invalid');
 					span.style.display = 'unset';
 				} else {
-					inputEl.classList.remove('is-invalid');
+					textarea.classList.remove('is-invalid');
 					span.style.display = 'none';
 				}
 			}, 1000);
@@ -116,17 +116,17 @@ export const inputEventHandlers = {
 		let timeout;
 
 		return (ev) => {
+			const textarea = ev.currentTarget;
 			clearTimeout(timeout);
 			timeout = setTimeout(() => {
-				const inputEl = ev.path[0];
-				const span = inputEl.parentElement.querySelector('#textarea-invalid-span');
+				const span = textarea.parentElement.querySelector('#textarea-invalid-span');
 
-				if (inputEl.value.match(/[\w'".-]{2,}/g)?.length < 4 || (!inputEl.value.match(/[\w'".-]{2,}/g) && inputEl.value != '')) {
-					inputEl.classList.add('is-invalid');
+				if (textarea.value.match(/[\w'".-]{2,}/g)?.length < 4 || (!textarea.value.match(/[\w'".-]{2,}/g) && textarea.value != '')) {
+					textarea.classList.add('is-invalid');
 					span.style.display = 'unset';
 					span.textContent = 'write at least 4 words';
 				} else {
-					inputEl.classList.remove('is-invalid');
+					textarea.classList.remove('is-invalid');
 					span.style.display = 'none';
 				}
 			}, 1000);
