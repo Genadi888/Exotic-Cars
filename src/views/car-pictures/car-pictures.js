@@ -96,11 +96,18 @@ export async function carPicturesView(ctx) {
 		<h1 id="loading">Loading posts<div class="loader">Loading...</div></h1>
 	`
 
+	let sectionContentPromise = getSectionContentTemplate(noPostsTemplate());
 	ctx.render(carPicturesTemplate(
 		ev => sectionClickHandler(ev, posts, ctx),
-		until(getSectionContentTemplate(noPostsTemplate()), loadingTemplate()),
-		getSwitchToApprovalModeHandler()
+		until(sectionContentPromise, loadingTemplate()),
+		ctx.user?.isModerator ? getSwitchToApprovalModeHandler() : null
 	));
+
+	if (!ctx.user?.isModerator) {
+		ctx.nestedShadowRoot.querySelector('section').style['justifyContent'] = 'space-around';
+	} else {
+		sectionContentPromise.then(() => ctx.nestedShadowRoot.querySelector('section > .card').style['marginTop'] = '14px');
+	}
 
 	function getSwitchToApprovalModeHandler() {
 		let btnClicked = false;
@@ -114,11 +121,19 @@ export async function carPicturesView(ctx) {
 				button.textContent = 'Switch to approval mode';
 				btnClicked = false;
 			}
+
+			sectionContentPromise = getSectionContentTemplate(noPostsTemplate(), btnClicked ? 'unapproved' : null);
 			ctx.render(carPicturesTemplate(
 				ev => sectionClickHandler(ev, posts, ctx),
-				until(getSectionContentTemplate(noPostsTemplate(), btnClicked ? 'unapproved' : null), loadingTemplate()),
-				onSwitchToApprovalMode
+				until(sectionContentPromise, loadingTemplate()),
+				ctx.user?.isModerator ? onSwitchToApprovalMode : null
 			));
+
+			if (!ctx.user?.isModerator) {
+				ctx.nestedShadowRoot.querySelector('section').style['justifyContent'] = 'space-around';
+			} else {
+				sectionContentPromise.then(() => ctx.nestedShadowRoot.querySelector('section > .card').style['marginTop'] = '14px');
+			}
 		}
 	}
 

@@ -9,16 +9,24 @@ section {
 	}
 }
 
+.btn,
+.btn:focus,
+.btn:active {
+	outline: none !important;
+	box-shadow: none !important;
+	border-radius: 3px !important;
+}
+
 .approval-btn {
-    margin-top: 30px;
-    align-self: flex-start;
-    margin-left: 15px;
+	margin-top: 29px;
+	align-self: flex-start;
+	margin-left: 15px;
 }
 
 #button-and-posts-separating-line {
 	width: 98%;
-    height: 3px;
-    color: azure;
+	height: 3px;
+	color: azure;
 }
 
 section {
@@ -26,7 +34,6 @@ section {
 	flex-direction: column;
 	flex-wrap: nowrap;
 	align-items: center;
-	/* justify-content: space-around; */
 
 	margin-top: 55px;
 	padding-bottom: 2%;
@@ -52,8 +59,8 @@ section {
 
 .post-actions {
 	display: flex;
-    justify-content: space-around;
-    align-items: center;
+	justify-content: space-around;
+	align-items: center;
 }
 
 .show-more-info-btn {
@@ -76,7 +83,7 @@ section {
 	.reject-btn {
 		width: 100%;
 	}
-	
+
 	.approve-btn,
 	.reject-btn {
 		margin-top: 5px;
@@ -94,15 +101,16 @@ section {
 
 .post-icons img {
 	width: 2.1em;
-    height: 2.1em;
-    color: black;
-    cursor: pointer;
-    padding: 3px;
+	height: 2.1em;
+	color: black;
+	cursor: pointer;
+	padding: 3px;
 	border-radius: 5px;
 	transition: background-color 100ms ease-in-out;
 }
 
-.like:hover, .user-has-liked {
+.like:hover,
+.user-has-liked {
 	background-color: rgba(55, 142, 224, 0.63);
 }
 
@@ -119,7 +127,7 @@ section {
 	height: 1.9em;
 }
 
-:is(.bin, .flag):hover {
+.bin:hover {
 	background-color: rgba(224, 55, 55, 0.63);
 }
 
@@ -315,26 +323,26 @@ body>aside>ul>li>a:hover {
 
 #report-form {
 	height: 92%;
-    display: flex;
-    padding: 10px;
-    flex-direction: column;
+	display: flex;
+	padding: 10px;
+	flex-direction: column;
 	position: absolute;
-    bottom: 0;
-    width: 100%;
+	bottom: 0;
+	width: 100%;
 	justify-content: center;
 }
 
 #report-form #floatingTextarea {
-    height: 96%;
+	height: 96%;
 }
 
-#report-form > .form-floating {
+#report-form>.form-floating {
 	height: 87%;
 }
 
-#report-form > input[type="submit"], 
-#report-form > input[type="submit"]:active, 
-#report-form > input[type="submit"]:focus {
+#report-form>input[type="submit"],
+#report-form>input[type="submit"]:active,
+#report-form>input[type="submit"]:focus {
 	outline: none !important;
 	box-shadow: unset !important;
 }
@@ -353,7 +361,7 @@ body>aside>ul>li>a:hover {
 	color: #6C757D;
 }
 
-.form-floating > .invalid-span {
+.form-floating>.invalid-span {
 	position: absolute;
 	right: 5px;
 	bottom: 10px;
@@ -426,6 +434,7 @@ body>aside>ul>li>a:hover {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	pointer-events: none;
+	justify-self: center;
 }
 
 .loader {

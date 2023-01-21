@@ -10,7 +10,7 @@ export async function login(username, password, remember) {
 		sessionToken: result.sessionToken
 	}
 
-	setUserData(userData, remember);
+	setUserData(result, remember);
 
 	return result;
 }

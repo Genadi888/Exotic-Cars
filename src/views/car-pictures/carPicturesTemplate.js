@@ -8,8 +8,13 @@ export const carPicturesTemplate = (sectionClickHandler, postsTemplate, onSwitch
 	<a id="go-to-top-link"><img src="../../images/arrow-up-circle.svg" alt="" srcset=""></a>
 
 	<section @click=${sectionClickHandler}>
-		<button @click=${onSwitchToApprovalMode} type="button" class="approval-btn btn btn-primary">Switch to approval mode</button>
-		<hr id="button-and-posts-separating-line">
+		${
+			onSwitchToApprovalMode ?
+			html`
+				<button @click=${onSwitchToApprovalMode} type="button" class="approval-btn btn btn-primary">Switch to approval mode</button>
+				<hr id="button-and-posts-separating-line">
+			` : null
+		}
 		${postsTemplate}
 	</section>
 	
