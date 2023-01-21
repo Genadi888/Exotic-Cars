@@ -20,6 +20,15 @@ export async function getAllPosts(ctx) {
 	return allPosts;
 }
 
+export async function getAllUnapprovedPosts() {
+	const allPosts = (await api.post('/functions/getUnapprovedPosts')).result;
+	return allPosts;
+}
+
+export async function approvePost(objectId) {
+	return api.post('/functions/approvePost', { objectId });
+}
+
 export async function getPostById(id) {
 	return api.get(`/functions/getPostById?postId=${id}`);
 }

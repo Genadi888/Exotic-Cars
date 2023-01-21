@@ -4,7 +4,7 @@ import { html, render as litRender } from "../../lib/lit-html.js";
 const infoWindowTemplate = (carObj, clickHandler) => html`
 	<button @click=${clickHandler} type="button" class="btn-close" aria-label="Close"></button>
 	<h4>${carObj.carName}</h4>
-	<p id="extra-info">${carObj.extraInfo != '' ? carObj.extraInfo : 'Extra info has not been provided.'}</p>
+	<p id="extra-info">${carObj.extraInfo && carObj.extraInfo != '' ? carObj.extraInfo : 'Extra info has not been provided.'}</p>
 `;
 
 const reportWindowTemplate = (clickHandler, onSubmit, getFormInputEventHandler, getInputHandler) => html`
@@ -51,7 +51,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 		const cardObjectId = ev.target.dataset.objectId;
 		const selectedPost = Object.values(posts).find(postObj => postObj.objectId === cardObjectId);
 		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
-
+		
 		litRender(infoWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow)), moreInfoWindow);
 		showOrHideWindow(moreInfoWindow);
 	} else if (ev.target.classList.contains("flag")) {

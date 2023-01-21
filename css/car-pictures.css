@@ -9,12 +9,24 @@ section {
 	}
 }
 
+.approval-btn {
+    margin-top: 30px;
+    align-self: flex-start;
+    margin-left: 15px;
+}
+
+#button-and-posts-separating-line {
+	width: 98%;
+    height: 3px;
+    color: azure;
+}
+
 section {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	align-items: center;
-	justify-content: space-around;
+	/* justify-content: space-around; */
 
 	margin-top: 55px;
 	padding-bottom: 2%;
@@ -59,8 +71,15 @@ section {
 		flex-direction: column;
 	}
 
-	.show-more-info-btn {
+	.show-more-info-btn,
+	.approve-btn,
+	.reject-btn {
 		width: 100%;
+	}
+	
+	.approve-btn,
+	.reject-btn {
+		margin-top: 5px;
 	}
 
 	.card-text {

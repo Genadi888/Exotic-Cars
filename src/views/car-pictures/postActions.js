@@ -1,10 +1,14 @@
-import { deletePost, unlikePost, likePost } from "../../api/posts.js";
+import { deletePost, unlikePost, likePost, approvePost } from "../../api/posts.js";
 
 export function getDeleteHandler(ctx, postObjectId) {
 	return async () => {
 		if (confirm('You are going to DELETE this post! Proceed?')) {
-			await deletePost(postObjectId);
-			ctx.page.redirect('/car-pictures');
+			try {
+				await deletePost(postObjectId);
+				ctx.page.redirect('/car-pictures');
+			} catch (error) {
+				alert(error.message);
+			}
 		}
 	}
 }
@@ -33,6 +37,17 @@ export function getLikeClickHandler(postObjectId, userId) {
 				likeBtn.classList.remove('user-has-liked');
 				likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes - 1;
 			}
+		}
+	}
+}
+
+export function getApproveClickHandler(postObjectId, onSwitchToApprovalMode) {
+	return async ev => {
+		try {
+			await approvePost(postObjectId);
+			onSwitchToApprovalMode();
+		} catch (error) {
+			alert(error.message);
 		}
 	}
 }

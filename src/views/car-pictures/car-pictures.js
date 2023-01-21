@@ -1,14 +1,14 @@
 import { html } from "../../lib/lit-html.js";
 import { repeat } from "../../lib/directives/repeat.js";
 import { until } from "../../lib/directives/until.js";
-import { getAllPosts } from "../../api/posts.js";
+import { getAllPosts, getAllUnapprovedPosts } from "../../api/posts.js";
 import { sectionClickHandler } from "./infoWindow.js";
 import { setUpScrollToTop } from "./scrollToTop.js";
 import { carPicturesTemplate } from "./carPicturesTemplate.js";
-import { getDeleteHandler, getLikeClickHandler } from "./postActions.js";
+import { getApproveClickHandler, getDeleteHandler, getLikeClickHandler } from "./postActions.js";
 
 export async function carPicturesView(ctx) {
-	const cardTemplate = (carObj, user, binClickHandler, likeClickHandler) => html`
+	const cardTemplate = (carObj, user, deleteClickHandler, likeClickHandler, approveClickHandler, needApproval) => html`
 		<div class="card border-0">
 			<img src=${carObj.images[0]} class="card-img-top" alt=${carObj.carName}>
 			<div class="card-body">
@@ -17,29 +17,38 @@ export async function carPicturesView(ctx) {
 					<b>Top speed:</b> ${carObj.topSpeed} <b>|</b> <b>Weight:</b> ${carObj.weight}</p>
 				<span class="post-actions">
 					<a data-object-Id=${carObj.objectId} href="#" class="btn btn-primary show-more-info-btn">Show more info</a>
-					<span class="post-icons">
-						${!user ? html`
-							<span data-likes="${carObj.likesCount}" class="like-span">
-									<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
-							</span>	
-						` : null}
-						${user?.id === carObj.owner.objectId ? 
-							html`
-								<span data-likes="${carObj.likesCount}" class="like-span">
-									<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
-								</span>
-								<img @click=${() => ctx.page.redirect(`/share-photos:${carObj.objectId}`)} class="edit" alt="edit" src="/images/edit.svg">
-								<img @click=${binClickHandler} class="bin" alt="delete" src="/images/trash-2.svg">
-							` : null
-						}
-						${user && user.id !== carObj.owner.objectId ? 
-							html`
-							<span data-likes="${carObj.likesCount}" class="like-span">
-								<img @click=${likeClickHandler} class="like${carObj.userHasLikedThisPost ? ' user-has-liked' : ''}" alt="like" src="/images/thumbs-up.svg">
+					${
+						needApproval ?
+						html`
+							<button @click=${approveClickHandler} type="button" class="btn btn-success approve-btn">Approve</button>
+							<button @click=${deleteClickHandler} type="button" class="btn btn-danger reject-btn">Reject</button>
+						` :
+						html`
+							<span class="post-icons">
+								${!user ? html`
+									<span data-likes="${carObj.likesCount}" class="like-span">
+											<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
+									</span>	
+								` : null}
+								${user?.id === carObj.owner.objectId ? 
+									html`
+										<span data-likes="${carObj.likesCount}" class="like-span">
+											<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
+										</span>
+										<img @click=${() => ctx.page.redirect(`/share-photos:${carObj.objectId}`)} class="edit" alt="edit" src="/images/edit.svg">
+										<img @click=${deleteClickHandler} class="bin" alt="delete" src="/images/trash-2.svg">
+									` : null
+								}
+								${user && user.id !== carObj.owner.objectId ? 
+									html`
+									<span data-likes="${carObj.likesCount}" class="like-span">
+										<img @click=${likeClickHandler} class="like${carObj.userHasLikedThisPost ? ' user-has-liked' : ''}" alt="like" src="/images/thumbs-up.svg">
+									</span>
+									` : null
+								}
 							</span>
-							` : null
-						}
-					</span>
+						`
+					}
 				</span>
 			</div>
 		</div>
@@ -57,8 +66,12 @@ export async function carPicturesView(ctx) {
 
 	let posts = null;
 
-	const getSectionContentTemplate = async (noPostsTemplate) => {
-		posts = await getAllPosts(ctx);
+	const getSectionContentTemplate = async (noPostsTemplate, postType) => {
+		if (postType == 'unapproved') {
+			posts = await getAllUnapprovedPosts();
+		} else {
+			posts = await getAllPosts(ctx);
+		}
 
 		if (posts.length == 0) {
 			ctx.nestedShadowRoot.querySelector('section').style['justifyContent'] = 'flex-start';
@@ -71,6 +84,8 @@ export async function carPicturesView(ctx) {
 					post, ctx.user,
 					getDeleteHandler(ctx, post.objectId),
 					getLikeClickHandler(post.objectId, ctx.user?.id),
+					getApproveClickHandler(post.objectId, getSwitchToApprovalModeHandler()),
+					postType == 'unapproved'
 				)) : 
 				noPostsTemplate
 			}
@@ -83,8 +98,30 @@ export async function carPicturesView(ctx) {
 
 	ctx.render(carPicturesTemplate(
 		ev => sectionClickHandler(ev, posts, ctx),
-		until(getSectionContentTemplate(noPostsTemplate()), loadingTemplate())
+		until(getSectionContentTemplate(noPostsTemplate()), loadingTemplate()),
+		getSwitchToApprovalModeHandler()
 	));
+
+	function getSwitchToApprovalModeHandler() {
+		let btnClicked = false;
+
+		return function onSwitchToApprovalMode(switchEv) {
+			const button = switchEv.currentTarget;
+			if (!btnClicked) {
+				button.textContent = 'Switch to normal mode';
+				btnClicked = true;
+			} else {
+				button.textContent = 'Switch to approval mode';
+				btnClicked = false;
+			}
+			ctx.render(carPicturesTemplate(
+				ev => sectionClickHandler(ev, posts, ctx),
+				until(getSectionContentTemplate(noPostsTemplate(), btnClicked ? 'unapproved' : null), loadingTemplate()),
+				onSwitchToApprovalMode
+			));
+		}
+	}
+
 
 	setUpScrollToTop(ctx);
 }
