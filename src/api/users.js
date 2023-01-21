@@ -24,3 +24,7 @@ export function logout(userPointer) {
 	api.post('/functions/logout', { userPointer });
 	deleteUserData();
 }
+
+export async function resetPassword(email) {
+	return api.post('/requestPasswordReset', { email });
+}

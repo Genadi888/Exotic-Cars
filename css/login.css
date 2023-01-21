@@ -59,7 +59,7 @@ input:focus {
 	margin-top: 10px;
 }
 
-.inputs > input[type="submit"] {
+.inputs>input[type="submit"] {
 	margin-top: 10px !important;
 	width: 100% !important;
 }
@@ -83,12 +83,44 @@ input:focus {
 
 .server-error-msg {
 	display: block;
-    text-align: center;
-    background-color: #dc3545;
-    border-radius: 2px;
+	text-align: center;
+	background-color: #dc3545;
+	border-radius: 2px;
 }
 
-.redirect-span > a, .redirect-span > a:hover {
+.redirect-span>a,
+.forgot-password,
+.redirect-span>a:hover,
+.forgot-password:hover {
 	color: aquamarine;
-	text-decoration: none;
+}
+
+@media not (prefers-reduced-motion) {
+	.redirect-span>a,
+	.forgot-password {
+		transition: color 100ms ease-in-out;
+	}
+
+	.redirect-span>a:hover,
+	.forgot-password:hover {
+		color: #0883b5;
+	}
+}
+
+.password-reset-div {
+	display: none;
+}
+
+.input-and-button {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.input-and-button>.btn-primary {
+	border-radius: 3px !important;
+}
+
+#email {
+	margin-right: 5px;
 }

@@ -15,7 +15,7 @@ async function request(method, url, data) {
 
 	if (url.slice(0, 6) == '/users' || url.slice(0, 6) == '/login') {
 		options.headers['X-Parse-Revocable-Session'] = 1;
-	} else if (url.slice(0, 10) != '/functions') {
+	} else if (url.slice(0, 10) != '/functions' && url != '/requestPasswordReset') {
 		url = '/classes' + url;
 	}
 	

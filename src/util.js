@@ -55,20 +55,20 @@ export function getUsernameInputHandler() {
 
 		timeout = setTimeout(() => {
 			if (username.length < 4) {
-				inputEl.classList.add('is-invalid');
+				inputEl.classList.add('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'block';
 				span.textContent = 'too short name';
 			} else if (username.split(' ').some(word => word.length < 2)) {
-				inputEl.classList.add('is-invalid');
+				inputEl.classList.add('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'block';
 				span.textContent = 'too short words';
 			} else if (username.match(/[\r\n~`!%^&*()=+\[{\]}\|:;\",<.>/?]/g) ||
 				(username.includes("'") && !username.match(/^([a-zA-Z]+(?:'[a-zA-Z])?[a-zA-Z]*)$/g))) {
-				inputEl.classList.add('is-invalid');
+				inputEl.classList.add('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'block';
 				span.textContent = 'invalid symbols';
 			} else {
-				inputEl.classList.remove('is-invalid');
+				inputEl.classList.remove('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'none';
 			}
 		}, 1000)
@@ -117,9 +117,9 @@ export function getLoginOrRegisterFormInputHandler() {
 		submitBtn.disabled = true;
 
 		timeout = setTimeout(() => {
-			const fieldsAreNotEmpty = [...form.querySelectorAll('input.form-control')].every(el => el.value != '');
+			const fieldsAreNotEmpty = [...form.querySelectorAll('input#username, input#password')].every(el => el.value != '');
 
-			if (!form.querySelector('.is-invalid') && fieldsAreNotEmpty) {
+			if (!form.querySelector('.mandatory-is-invalid') && fieldsAreNotEmpty) {
 				submitBtn.removeAttribute('disabled');
 			}
 			else {

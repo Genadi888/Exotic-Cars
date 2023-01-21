@@ -55,7 +55,7 @@ input:focus {
 	border-radius: 3px !important;
 }
 
-.inputs > input[type="submit"] {
+.inputs>input[type="submit"] {
 	margin-top: 10px !important;
 	width: 100% !important;
 }
@@ -73,16 +73,26 @@ input:focus {
 
 .server-error-msg {
 	display: block;
-    text-align: center;
-    background-color: #dc3545;
-    border-radius: 2px;
+	text-align: center;
+	background-color: #dc3545;
+	border-radius: 2px;
 }
 
 .redirect-div {
 	margin-top: 4px;
 }
 
-.redirect-div > a, .redirect-div > a:hover {
+.redirect-div>a,
+.redirect-div>a:hover {
 	color: aquamarine;
-	text-decoration: none;
+}
+
+@media not (prefers-reduced-motion) {
+	.redirect-div>a {
+		transition: color 100ms ease-in-out;
+	}
+
+	.redirect-div>a:hover {
+		color: #0883b5;
+	}
 }
