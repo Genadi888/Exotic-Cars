@@ -252,20 +252,16 @@ export function defineEditUploadForm(ctx) {
 			const form = ev.currentTarget;
 			const submitBtn = form.querySelector('input[type="submit"]');
 			submitBtn.disabled = true;
-			submitBtn.value = "Posting...";
+			submitBtn.value = "Editing...";
 
 			const formData = new FormData(form);
 			const speedUnit = [...form.querySelectorAll('.speed-unit-radios')].find(el => el.checked).value;
 			const weightUnit = [...form.querySelectorAll('.weight-radios')].find(el => el.checked).value;
 
 			let imagesArr = null;
-
-			if (postId) {
-				imagesArr = this.#postToEdit.images;
-			} else {
-				imagesArr = await encodeImages([...formData.getAll('images')]);
-			}
-
+			
+			imagesArr = this.#postToEdit.images;
+			
 			const objToSubmit = {
 				images: imagesArr,
 				carName: formData.get('car-name').trim(),
@@ -273,16 +269,17 @@ export function defineEditUploadForm(ctx) {
 				power: formData.get('power').trim(),
 				topSpeed: `${formData.get('top-speed')} ${speedUnit}`,
 				weight: `${formData.get('weight')} ${weightUnit}`,
-				extraInfo: formData.get('extra-info').trim()
+				extraInfo: formData.get('extra-info').trim(),
+				objectId: postId,
 			}
 
 			try {
-				await (postId ? editPost(postId, objToSubmit) : createPost(objToSubmit));
+				await editPost(objToSubmit);
 				ctx.page.redirect('/car-pictures');
 			} catch (error) {
 				alert(error.message);
 				submitBtn.removeAttribute('disabled');
-				submitBtn.value = postId ? "Edit" : "Post";
+				submitBtn.value = "Edit";
 			}
 		}
 

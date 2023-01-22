@@ -8,6 +8,7 @@ export function getDeleteHandler(ctx, postObjectId) {
 				ctx.page.redirect('/car-pictures');
 			} catch (error) {
 				alert(error.message);
+				throw error;
 			}
 		}
 	}
@@ -26,6 +27,7 @@ export function getLikeClickHandler(postObjectId, userId) {
 				alert(error.message);
 				likeBtn.classList.add('user-has-liked')
 				likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes + 1;
+				throw error;
 			}
 		} else {
 			try {
@@ -36,18 +38,20 @@ export function getLikeClickHandler(postObjectId, userId) {
 				alert(error.message);
 				likeBtn.classList.remove('user-has-liked');
 				likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes - 1;
+				throw error;
 			}
 		}
 	}
 }
 
-export function getApproveClickHandler(postObjectId, onSwitchToApprovalMode) {
+export function getApproveClickHandler(postObjectId, switchToApprovalModeBtn) {
 	return async ev => {
 		try {
 			await approvePost(postObjectId);
-			onSwitchToApprovalMode();
+			switchToApprovalModeBtn.click();
 		} catch (error) {
 			alert(error.message);
+			throw error;
 		}
 	}
 }

@@ -30,7 +30,7 @@ export async function carPicturesView(ctx) {
 											<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
 									</span>	
 								` : null}
-								${user?.id === carObj.owner.objectId ? 
+								${user?.objectId === carObj.owner.objectId ? 
 									html`
 										<span data-likes="${carObj.likesCount}" class="like-span">
 											<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
@@ -39,7 +39,7 @@ export async function carPicturesView(ctx) {
 										<img @click=${deleteClickHandler} class="bin" alt="delete" src="/images/trash-2.svg">
 									` : null
 								}
-								${user && user.id !== carObj.owner.objectId ? 
+								${user && user?.objectId !== carObj.owner.objectId ? 
 									html`
 									<span data-likes="${carObj.likesCount}" class="like-span">
 										<img @click=${likeClickHandler} class="like${carObj.userHasLikedThisPost ? ' user-has-liked' : ''}" alt="like" src="/images/thumbs-up.svg">
@@ -75,9 +75,9 @@ export async function carPicturesView(ctx) {
 			}
 		} catch (error) {
 			alert(error.message);
+			throw error;
 		}
 		
-
 		if (posts.length == 0) {
 			ctx.nestedShadowRoot.querySelector('section').style['justifyContent'] = 'flex-start';
 		}
@@ -88,8 +88,8 @@ export async function carPicturesView(ctx) {
 				repeat(posts, post => post.objectId, post => cardTemplate(
 					post, ctx.user,
 					getDeleteHandler(ctx, post.objectId),
-					getLikeClickHandler(post.objectId, ctx.user?.id),
-					getApproveClickHandler(post.objectId, getSwitchToApprovalModeHandler()),
+					getLikeClickHandler(post.objectId, ctx.user?.objectId),
+					getApproveClickHandler(post.objectId, ctx.nestedShadowRoot.querySelector('section > .approval-btn')),
 					postType == 'unapproved'
 				)) : 
 				noPostsTemplate
@@ -137,7 +137,12 @@ export async function carPicturesView(ctx) {
 			if (!ctx.user?.isModerator) {
 				ctx.nestedShadowRoot.querySelector('section').style['justifyContent'] = 'space-around';
 			} else {
-				sectionContentPromise.then(() => ctx.nestedShadowRoot.querySelector('section > .card').style['marginTop'] = '14px');
+				sectionContentPromise.then(() => {
+					const card = ctx.nestedShadowRoot.querySelector('section > .card');
+					if (card) {
+						card.style['marginTop'] = '14px';
+					}
+				});
 			}
 		}
 	}

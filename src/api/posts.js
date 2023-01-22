@@ -30,7 +30,7 @@ export async function approvePost(objectId) {
 }
 
 export async function getPostById(id) {
-	return api.get(`/functions/getPostById?postId=${id}`);
+	return (await api.post(`/functions/getPostById`, { objectId: id })).result;
 }
 
 export async function createPost(post) {
@@ -42,8 +42,8 @@ export async function deletePost(postId) {
 	return api.del(`/Posts/${postId}`);
 }
 
-export async function editPost(postId, newPost) {
-	newPost.objectId = postId;
+export async function editPost(newPost) {
+	addEntryWithUserPointer(newPost, 'owner');
 	return api.post(`/functions/editPost`, newPost);
 }
 

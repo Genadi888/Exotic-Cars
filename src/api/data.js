@@ -10,5 +10,5 @@ export function createPointer(className, objectId) {
 
 export function addEntryWithUserPointer(item, keyName) {
 	const userData = getUserData();
-	item[keyName] = createPointer('_User', userData.id);
+	item[keyName] = createPointer('_User', userData.objectId);
 }

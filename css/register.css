@@ -71,6 +71,12 @@ input:focus {
 	pointer-events: none;
 }
 
+.is-invalid,
+.is-invalid:active,
+.is-invalid:focus {
+	border: solid 2px #dc3545 !important;
+}
+
 .server-error-msg {
 	display: block;
 	text-align: center;

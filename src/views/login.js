@@ -1,14 +1,14 @@
 import { login, resetPassword } from "../api/users.js";
 import { html } from "../lib/lit-html.js";
-import { getPasswordInputHandler, getUsernameInputHandler, getLoginOrRegisterFormInputHandler, bindForm } from "../util.js";
+import { getPasswordInputHandler, getUsernameInputHandler, bindForm } from "../util.js";
 
-const loginTemplate = (getUsernameInputHandler, getPasswordInputHandler, getEmailInputHandler, getLoginOrRegisterFormInputHandler, onSubmit, onForgotPasswordClick, resetPass, error) => html`
+const loginTemplate = (getUsernameInputHandler, getPasswordInputHandler, getEmailInputHandler, onSubmit, onForgotPasswordClick, resetPass, error) => html`
 	<link rel="stylesheet" href="/css/login.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
 	<main>
-		<form @submit=${onSubmit} @input=${getLoginOrRegisterFormInputHandler()}>
+		<form @submit=${onSubmit}>
 			<h1>Log in</h1>
 			${error ? html`<span class="server-error-msg">${error}</span>` : null}
 			<div class="inputs">
@@ -38,7 +38,7 @@ const loginTemplate = (getUsernameInputHandler, getPasswordInputHandler, getEmai
 					</div>
 					<span class="invalid-span" id="third-invalid-span"></span>
 				</div>
-				<input disabled class="btn btn-primary" type="submit" value="Log in">
+				<input class="btn btn-primary" type="submit" value="Log in">
 			</div>
 		</form>
 	</main>
@@ -50,7 +50,6 @@ export function loginView(ctx) {
 			getUsernameInputHandler,
 			getPasswordInputHandler,
 			getEmailInputHandler,
-			getLoginOrRegisterFormInputHandler,
 			bindForm(onSubmit),
 			onForgotPasswordClick,
 			onResetPasswordBtnClick
@@ -68,7 +67,6 @@ export function loginView(ctx) {
 					getUsernameInputHandler,
 					getPasswordInputHandler,
 					getEmailInputHandler,
-					getLoginOrRegisterFormInputHandler,
 					bindForm(onSubmit),
 					onForgotPasswordClick,
 					onResetPasswordBtnClick,

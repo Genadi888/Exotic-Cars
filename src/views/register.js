@@ -1,6 +1,6 @@
 import { register } from "../api/users.js";
 import { html } from "../lib/lit-html.js";
-import { getPasswordInputHandler, getUsernameInputHandler, getLoginOrRegisterFormInputHandler, bindForm } from "../util.js";
+import { getPasswordInputHandler, getUsernameInputHandler, getRegisterFormInputHandler, bindForm } from "../util.js";
 
 const registerTemplate = (getUsernameInputHandler, getPasswordInputHandler, getEmailInputHandler, getLoginOrRegisterFormInputHandler, onSubmit, error) => html`
 	<link rel="stylesheet" href="/css/register.css">
@@ -38,7 +38,7 @@ export function registerView(ctx) {
 			getUsernameInputHandler,
 			getPasswordInputHandler,
 			getEmailInputHandler,
-			getLoginOrRegisterFormInputHandler,
+			getRegisterFormInputHandler,
 			bindForm(onSubmit)
 		)
 	);
@@ -54,7 +54,7 @@ export function registerView(ctx) {
 					getUsernameInputHandler,
 					getPasswordInputHandler,
 					getEmailInputHandler,
-					getLoginOrRegisterFormInputHandler,
+					getRegisterFormInputHandler,
 					bindForm(onSubmit),
 					error.message
 				)

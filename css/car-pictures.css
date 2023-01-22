@@ -372,9 +372,9 @@ body>aside>ul>li>a:hover {
 	font-size: 12px;
 	display: none;
 
-	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
+	user-select: none;
 	pointer-events: none;
 }
 
@@ -430,9 +430,9 @@ body>aside>ul>li>a:hover {
 #loading {
 	color: white !important;
 	font-size: calc(15px + 3vmin) !important;
-	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
+	user-select: none;
 	pointer-events: none;
 	justify-self: center;
 }

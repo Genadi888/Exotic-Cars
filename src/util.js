@@ -106,7 +106,7 @@ export function getPasswordInputHandler() {
 	}
 }
 
-export function getLoginOrRegisterFormInputHandler() {
+export function getRegisterFormInputHandler() {
 	let timeout;
 
 	return ev => {

@@ -6,7 +6,7 @@ export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandl
 	<link rel="stylesheet" href="/css/navbar-and-footer.css">
 	
 	<div @click=${collapseClickHandler} id="drop-down-menu-container">
-		<div class="navbar-nav">
+		<ul class="navbar-nav">
 			${user ? html`
 				<li class="nav-item">
 					<a class="nav-link" href="/share-photos">SHARE YOUR CAR PHOTOS!</a>
@@ -48,7 +48,7 @@ export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandl
 					</li>
 				</ul>
 			</li>
-		</div>
+		</ul>
 	</div>
 	<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
@@ -64,7 +64,7 @@ export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandl
 			</button>
 	
 			<div class="collapse navbar-collapse" id="navbarNav">
-				<div class="navbar-nav" id="inline-navbar-nav">
+				<ul class="navbar-nav" id="inline-navbar-nav">
 					${user ? html`
 						<li class="nav-item">
 							<a class="nav-link" href="/share-photos">SHARE YOUR CAR PHOTOS!</a>
@@ -108,7 +108,7 @@ export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandl
 							</li>
 						</ul>
 					</li>
-				</div>
+				</ul>
 			</div>
 		</div>
 	</nav>
