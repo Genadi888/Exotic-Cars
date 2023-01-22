@@ -67,11 +67,16 @@ export async function carPicturesView(ctx) {
 	let posts = null;
 
 	const getSectionContentTemplate = async (noPostsTemplate, postType) => {
-		if (postType == 'unapproved') {
-			posts = await getAllUnapprovedPosts();
-		} else {
-			posts = await getAllPosts(ctx);
+		try {
+			if (postType == 'unapproved') {
+				posts = await getAllUnapprovedPosts();
+			} else {
+				posts = await getAllPosts(ctx);
+			}
+		} catch (error) {
+			alert(error.message);
 		}
+		
 
 		if (posts.length == 0) {
 			ctx.nestedShadowRoot.querySelector('section').style['justifyContent'] = 'flex-start';

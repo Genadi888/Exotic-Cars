@@ -9,6 +9,6 @@ export function addLogout() {
 }
 
 function onLogout(ctx) {
-	logout(createPointer('_User', ctx.user?.id));
+	logout(createPointer('_User', ctx.user?.objectId));
 	ctx.page.redirect('/');
 }

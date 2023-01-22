@@ -1,5 +1,4 @@
 import { html } from "../lib/lit-html.js";
-import { getCollapseClickHandler } from "../util.js";
 
 export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandler) => html`
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"

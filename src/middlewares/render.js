@@ -5,7 +5,8 @@ import { layoutTemplate } from "../views/layout.js";
 export function addRender() {
 	let nestedShadowRoot = null;
 	return (ctx, next) => {
-		litRender(layoutTemplate(ctx.topShadowRoot, ctx.onLogout, ctx.user?.sessionToken, getCollapseClickHandler(ctx.topShadowRoot)), ctx.topShadowRoot); //? layout initialization
+		//? layout initialization
+		litRender(layoutTemplate(ctx.topShadowRoot, ctx.onLogout, ctx.user?.sessionToken, getCollapseClickHandler(ctx.topShadowRoot)), ctx.topShadowRoot);
 
 		ctx.render = (templateResult) => {
 			if (nestedShadowRoot == null) {
