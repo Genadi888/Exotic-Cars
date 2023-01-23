@@ -89,7 +89,7 @@ export const formTemplate = async (inputEventHandlers, formInputEventHandler, fo
 			</div>
 			<div class="grid-item grid-item-3">
 				<div class="form-floating">
-					<textarea .value=${post.extraInfo ?? ''} @input=${inputEventHandlers.getExtraInfoInputHandler()} class="form-control extra-info"
+					<textarea .value=${post?.extraInfo ?? ''} @input=${inputEventHandlers.getExtraInfoInputHandler()} class="form-control extra-info"
 						name="extra-info" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
 					<label for="floatingTextarea">Extra info (optional)</label>
 					<span class="invalid-span" id="textarea-invalid-span">Invalid extra info</span>
