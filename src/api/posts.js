@@ -9,7 +9,7 @@ export async function getAllPosts(ctx) {
 		post.likesCount = allLikes
 			.filter(likeObj => {
 				if (likeObj.postId === post.objectId) {
-					if (likeObj.userWhoLiked.objectId === ctx.user?.id) {
+					if (likeObj.userWhoLiked.objectId === ctx.user?.objectId) {
 						post.userHasLikedThisPost = true;
 					}
 					return true;

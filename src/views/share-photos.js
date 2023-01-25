@@ -1,4 +1,4 @@
-import { defineUploadForm } from "../components/upload-form/upload-form.js";
+import { defineCreateUploadForm } from "../components/upload-form/upload-form.js";
 import { html } from "../lib/lit-html.js";
 
 const sharePhotosTemplate = () => html`
@@ -14,6 +14,6 @@ const sharePhotosTemplate = () => html`
 `
 
 export function sharePhotosView(ctx) {
-	defineUploadForm(ctx);
+	defineCreateUploadForm(ctx);
 	ctx.render(sharePhotosTemplate());
 }

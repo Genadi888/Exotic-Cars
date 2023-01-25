@@ -6,7 +6,7 @@ import { encodeImages } from "./encodeImages.js";
 import { until } from "../../lib/directives/until.js";
 import { html } from "/src/lib/lit-html.js";
 
-export function defineUploadForm(ctx) {
+export function defineCreateUploadForm(ctx) {
 	class UploadForm extends HTMLElement {
 		#inputEventHandlers = inputEventHandlers;
 		#postToEdit = null;
@@ -329,8 +329,12 @@ export function defineEditUploadForm(ctx) {
 
 		async #addDragAndDrop(templatePromise) {
 			if (templatePromise) {
-				await templatePromise;
-				this.#postToEdit = await getPostById(this.#postToEditId);
+				try {
+					await templatePromise;
+					this.#postToEdit = await getPostById(this.#postToEditId);
+				} catch (error) {
+					alert(error.message);
+				}
 			}
 			
 			const inputElement = this.shadowRoot.querySelector('.drop-zone__input');
