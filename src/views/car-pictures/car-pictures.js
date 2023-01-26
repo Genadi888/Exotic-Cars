@@ -54,10 +54,10 @@ export async function carPicturesView(ctx) {
 		</div>
 	`
 
-	const noPostsTemplate = () => {
+	const getNoPostsTemplate = (shouldIncludeCreateLink) => {
 		return ctx.user?.sessionToken ? 
 		html`
-			<h1 id="no-posts">There are no posts yet.<br><a @click=${() => ctx.page.redirect('/share-photos')} href="/share-photos">Create one!</a></h1>
+			<h1 id="no-posts">There are no posts yet. ${shouldIncludeCreateLink ? html`<br><a @click=${() => ctx.page.redirect('/share-photos')} href="/share-photos">Create one!</a>` : null}</h1>
 		` :
 		html`
 			<h1 id="no-posts">There are no posts yet.<br><a @click=${() => ctx.page.redirect('/login')} href="/login">Log in</a> and create one!</h1>
@@ -92,7 +92,7 @@ export async function carPicturesView(ctx) {
 					getApproveClickHandler(post.objectId, ctx.nestedShadowRoot.querySelector('section > .approval-btn')),
 					postType == 'unapproved'
 				)) : 
-				noPostsTemplate
+				getNoPostsTemplate(postType !== 'unapproved')
 			}
 		`
 	}
@@ -101,7 +101,7 @@ export async function carPicturesView(ctx) {
 		<h1 id="loading">Loading posts<div class="loader">Loading...</div></h1>
 	`
 
-	let sectionContentPromise = getSectionContentTemplate(noPostsTemplate());
+	let sectionContentPromise = getSectionContentTemplate(getNoPostsTemplate);
 	ctx.render(carPicturesTemplate(
 		ev => sectionClickHandler(ev, posts, ctx),
 		until(sectionContentPromise, loadingTemplate()),
@@ -127,7 +127,7 @@ export async function carPicturesView(ctx) {
 				btnClicked = false;
 			}
 
-			sectionContentPromise = getSectionContentTemplate(noPostsTemplate(), btnClicked ? 'unapproved' : null);
+			sectionContentPromise = getSectionContentTemplate(getNoPostsTemplate, btnClicked ? 'unapproved' : null);
 			ctx.render(carPicturesTemplate(
 				ev => sectionClickHandler(ev, posts, ctx),
 				until(sectionContentPromise, loadingTemplate()),

@@ -1,11 +1,15 @@
 import { deletePost, unlikePost, likePost, approvePost } from "../../api/posts.js";
 
 export function getDeleteHandler(ctx, postObjectId) {
-	return async () => {
+	return async (ev) => {
 		if (confirm('You are going to DELETE this post! Proceed?')) {
 			try {
 				await deletePost(postObjectId);
-				ctx.page.redirect('/car-pictures');
+				if (ev.target.classList.contains('reject-btn')) {
+					ctx.nestedShadowRoot.querySelector('.approval-btn').click();
+				} else {
+					ctx.page.redirect('/car-pictures');
+				}
 			} catch (error) {
 				alert(error.message);
 				throw error;
