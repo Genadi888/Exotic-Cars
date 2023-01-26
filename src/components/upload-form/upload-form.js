@@ -408,7 +408,7 @@ export function defineEditUploadForm(ctx) {
 					label = label.slice(0, -2);  //? here the last comma and space are excluded from the final label
 					thumbnailElement.dataset.label = label;
 				} else {
-					document.querySelector(':root').style['--thumb-padding'] = '0px';
+					dropZoneElement.style.setProperty('--thumb-padding', '0px');
 				}
 
 				if (imagesArr) {
