@@ -49,7 +49,7 @@ export async function carPicturesView(ctx) {
 		<h1 id="loading">Loading posts<div class="loader"></div></h1>
 	`
 
-	let sectionContentPromise = getSectionContentTemplate(getNoPostsTemplate);
+	let sectionContentPromise = getSectionContentTemplate(getNoPostsTemplate, ctx.hash == 'approval-mode' ? 'unapproved' : null);
 	ctx.render(carPicturesTemplate(
 		ev => sectionClickHandler(ev, posts, ctx),
 		until(sectionContentPromise, loadingTemplate()),
