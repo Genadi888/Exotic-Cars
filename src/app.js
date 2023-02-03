@@ -35,6 +35,16 @@ page('/about-us', aboutUsView);
 page('/showrooms', showroomsView);
 page('/share-photos', sharePhotosView);
 page('/share-photos:id', editPostView);
+
+page.exit('/share-photos', exitFunction);
+page.exit('/share-photos:id', exitFunction);
+function exitFunction(ctx, next) {
+	ctx.controller.abort(); //? remove navbar's listener for click event after user leaves "share-photos"
+	// console.log(ctx.popStateListener)
+	// window.removeEventListener('popstate', ctx.popStateListener)
+	next();
+}
+
 page('/login', loginView);
 page('/register', registerView);
 page('/verify', verifyView);

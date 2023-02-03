@@ -16,4 +16,17 @@ const editPostTemplate = () => html`
 export function editPostView(ctx) {
 	defineEditUploadForm(ctx);
 	ctx.render(editPostTemplate());
+	
+	ctx.controller = new AbortController();
+	
+	ctx.topShadowRoot.querySelector('.navbar').addEventListener('click', ev => {
+		if (!confirm('You may have unsaved changes. Proceed?')) {
+			ev.preventDefault(); //? don't let the link change the url
+		}
+	}, { signal: ctx.controller.signal});
+
+	window.addEventListener('beforeunload', (ev) => {
+		ev.preventDefault();
+  		return ev.returnValue = 'You may have unsaved changes. Proceed?';
+	}, { signal: ctx.controller.signal});
 }
