@@ -373,7 +373,6 @@ body>aside>ul>li>a:hover {
 	display: none;
 
 	-webkit-user-select: none;
-	-moz-user-select: none;
 	user-select: none;
 	pointer-events: none;
 }
@@ -425,13 +424,14 @@ body>aside>ul>li>a:hover {
 	margin-top: 70px;
 	text-align: center;
 	font-size: calc(15px + 3vmin) !important;
+	-webkit-user-select: none;
+	user-select: none;
 }
 
 #loading {
 	color: white !important;
 	font-size: calc(15px + 3vmin) !important;
 	-webkit-user-select: none;
-	-moz-user-select: none;
 	user-select: none;
 	pointer-events: none;
 	justify-self: center;
