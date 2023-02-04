@@ -73,6 +73,7 @@ export function loginView(ctx) {
 					error.message
 				)
 			);
+			ctx.nestedShadowRoot.querySelector('#password').value = '';
 		}
 	}
 

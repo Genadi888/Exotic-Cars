@@ -40,8 +40,7 @@ page.exit('/share-photos', exitFunction);
 page.exit('/share-photos:id', exitFunction);
 function exitFunction(ctx, next) {
 	ctx.controller.abort(); //? remove navbar's listener for click event after user leaves "share-photos"
-	// console.log(ctx.popStateListener)
-	// window.removeEventListener('popstate', ctx.popStateListener)
+	sessionStorage.removeItem('userHasUnsavedData');
 	next();
 }
 

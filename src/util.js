@@ -97,7 +97,7 @@ export function getPasswordInputHandler() {
 			} else if (!password.match(/\D/g)) {
 				inputEl.classList.add('is-invalid');
 				span.style.display = 'block';
-				span.textContent = 'non digit symbol required';
+				span.textContent = 'non-digit symbol required';
 			} else {
 				inputEl.classList.remove('is-invalid');
 				span.style.display = 'none';

@@ -32,6 +32,8 @@ export function defineCreateUploadForm(ctx) {
 					else {
 						submitBtn.disabled = true;
 					}
+
+					sessionStorage.setItem('userHasUnsavedData', 'true');
 				}, 1000)
 			}
 		}
@@ -232,17 +234,19 @@ export function defineEditUploadForm(ctx) {
 				const form = ev.currentTarget;
 				const submitBtn = form.querySelector('input[type="submit"]');
 				submitBtn.disabled = true;
-
+				
 				timeout = setTimeout(() => {
 					const imagesInput = form.querySelector('input[name="images"]');
 					const fieldsAreNotEmpty = [...form.querySelectorAll('input.form-control')].every(el => el.value != '');
-
+					
 					if (!form.querySelector('.is-invalid') && fieldsAreNotEmpty && (imagesInput.files.length != 0 || this.#postToEdit)) {
 						submitBtn.removeAttribute('disabled');
 					}
 					else {
 						submitBtn.disabled = true;
 					}
+
+					sessionStorage.setItem('userHasUnsavedData', 'true');
 				}, 1000)
 			}
 		}
