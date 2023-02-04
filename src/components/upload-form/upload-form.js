@@ -21,6 +21,7 @@ export function defineCreateUploadForm(ctx) {
 				const form = ev.currentTarget;
 				const submitBtn = form.querySelector('input[type="submit"]');
 				submitBtn.disabled = true;
+				sessionStorage.setItem('userHasUnsavedData', 'true');
 
 				timeout = setTimeout(() => {
 					const imagesInput = form.querySelector('input[name="images"]');
@@ -32,8 +33,6 @@ export function defineCreateUploadForm(ctx) {
 					else {
 						submitBtn.disabled = true;
 					}
-
-					sessionStorage.setItem('userHasUnsavedData', 'true');
 				}, 1000)
 			}
 		}
@@ -234,6 +233,7 @@ export function defineEditUploadForm(ctx) {
 				const form = ev.currentTarget;
 				const submitBtn = form.querySelector('input[type="submit"]');
 				submitBtn.disabled = true;
+				sessionStorage.setItem('userHasUnsavedData', 'true');
 				
 				timeout = setTimeout(() => {
 					const imagesInput = form.querySelector('input[name="images"]');
@@ -245,8 +245,6 @@ export function defineEditUploadForm(ctx) {
 					else {
 						submitBtn.disabled = true;
 					}
-
-					sessionStorage.setItem('userHasUnsavedData', 'true');
 				}, 1000)
 			}
 		}
