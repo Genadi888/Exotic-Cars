@@ -76,7 +76,7 @@ export async function carPicturesView(ctx) {
 		sectionContentPromise.then(() => {
 			const card = ctx.nestedShadowRoot.querySelector('section > .card');
 			if (card) {
-				card.style['marginTop'] &&= '14px';
+				card.style['marginTop'] = '14px';
 			}
 		});
 	}
