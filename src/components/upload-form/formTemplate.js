@@ -94,7 +94,7 @@ export const formTemplate = async (inputEventHandlers, formInputEventHandler, fo
 					<label for="floatingTextarea">Extra info (optional)</label>
 					<span class="invalid-span" id="textarea-invalid-span">Invalid extra info</span>
 				</div>
-				<input ?disabled=${!post} class="btn btn-primary" type="submit" value=${post ? 'Edit' : "Post"}>
+				<input disabled class="btn btn-primary" type="submit" value=${post ? 'Edit' : "Post"}>
 			</div>
 		</form>
 	`;
