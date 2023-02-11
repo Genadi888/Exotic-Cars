@@ -28,7 +28,7 @@ export function sharePhotosView(ctx) {
 	}, { signal: ctx.controller.signal});
 
 	window.addEventListener('beforeunload', (ev) => {
-		ev.preventDefault();
-  		return ev.returnValue = 'You may have unsaved changes. Proceed?';
+		// ev.preventDefault();
+  		// return ev.returnValue = 'You may have unsaved changes. Proceed?';
 	}, { signal: ctx.controller.signal});
 }

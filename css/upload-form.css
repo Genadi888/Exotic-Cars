@@ -42,11 +42,7 @@
 }
 
 .grid-item-2>input,
-.grid-item-2>input:focus,
-.grid-item-2>input:active,
-input[type="number"],
-input[type="number"]:focus,
-input[type="number"]:active {
+input[type="number"] {
 	height: 85% !important;
 	width: 100% !important;
 	outline: none !important;
@@ -137,8 +133,6 @@ input::placeholder {
 	color: #6C757D;
 }
 
-.extra-info:active,
-.extra-info:focus,
 .extra-info {
 	color: black !important;
 	height: 100% !important;
@@ -225,9 +219,7 @@ input[type=number] {
 	text-align: center;
 }
 
-.is-invalid,
-.is-invalid:active,
-.is-invalid:focus {
+.is-invalid {
 	border: solid 2px #dc3545 !important;
 }
 
@@ -274,6 +266,11 @@ input[type=number] {
 	position: relative;
 	height: 85%;
 	width: 30%;
+}
+
+#top-speed-div>label,
+#weight-div>label {
+	display: none;
 }
 
 /* ? portrait orientation (for mobile devices)*/

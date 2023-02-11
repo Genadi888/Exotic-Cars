@@ -41,7 +41,8 @@ export const formTemplate = async (inputEventHandlers, formInputEventHandler, fo
 		
 				<span id="top-speed-and-weight">
 					<div id="top-speed-div">
-						<input .value=${post ? post?.topSpeed.match(/\d+/)[0] : ''} @input=${inputEventHandlers.getTopSpeedInputHandler()} class="form-control" type="number"
+						<label for="top-speed">Top speed</label>
+						<input id="top-speed" .value=${post ? post?.topSpeed.match(/\d+/)[0] : ''} @input=${inputEventHandlers.getTopSpeedInputHandler()} class="form-control" type="number"
 							placeholder="Top speed" aria-label="default input example" name="top-speed">
 						<span class="invalid-span" id="fourth-invalid-span">invalid speed</span>
 					</div>
@@ -50,21 +51,22 @@ export const formTemplate = async (inputEventHandlers, formInputEventHandler, fo
 						<span>
 							<input ?checked=${!post || post.topSpeed.match(/[A-Za-z\/]+/)[0] === 'km/h'} class="form-check-input speed-unit-radios" type="radio" name="speed-unit"
 								id="flexRadioDefault1" value="km/h">
-							<label class="form-check-label" for="speed-unit">
+							<label class="form-check-label" for="flexRadioDefault1">
 								km/h
 							</label>
 						</span>
 						<span>
 							<input ?checked=${post?.topSpeed.match(/[A-Za-z\/]+/)[0] === 'mph'}  class="form-check-input speed-unit-radios" type="radio" name="speed-unit"
 								id="flexRadioDefault1" value="mph">
-							<label class="form-check-label" for="speed-unit">
+							<label class="form-check-label" for="flexRadioDefault1">
 								mph
 							</label>
 						</span>
 					</div>
 		
 					<div id="weight-div">
-						<input .value=${post ? post?.weight.match(/\d+/)[0] : ''} @input=${inputEventHandlers.getWeightInputHandler()} class="form-control" type="number"
+						<label for="weight">Weight</label>
+						<input id="weight" .value=${post ? post?.weight.match(/\d+/)[0] : ''} @input=${inputEventHandlers.getWeightInputHandler()} class="form-control" type="number"
 							placeholder="Weight" aria-label="default input example" name="weight">
 						<span class="invalid-span" id="fifth-invalid-span">invalid weight</span>
 					</div>
@@ -73,14 +75,14 @@ export const formTemplate = async (inputEventHandlers, formInputEventHandler, fo
 						<span>
 							<input ?checked=${!post || post.weight.match(/[A-Za-z\/]+/)[0] === 'kgs'} class="form-check-input weight-radios" type="radio" name="weight-unit"
 								id="flexRadioDefault1" value="kgs">
-							<label class="form-check-label" for="weight-unit">
+							<label class="form-check-label" for="flexRadioDefault1">
 								kgs
 							</label>
 						</span>
 						<span>
 							<input ?checked=${post?.weight.match(/[A-Za-z\/]+/)[0] === 'lbs'} class="form-check-input weight-radios" type="radio" name="weight-unit" id="flexRadioDefault1"
 								value="lbs">
-							<label class="form-check-label" for="weight-unit">
+							<label class="form-check-label" for="flexRadioDefault1">
 								lbs
 							</label>
 						</span>
