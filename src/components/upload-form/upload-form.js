@@ -168,7 +168,15 @@ export function defineCreateUploadForm(ctx) {
 	}
 }
 
-export function defineEditUploadForm(ctx) {
+let editCtx = null;
+export function defineEditUploadForm(paramCtx) {
+	/*
+		? The class EditUploadForm has access to the editCtx variable. 
+		? I change the variable's reference everytime I visit the "edit-post" page because otherwise the class will always read the old context if it's present.
+	*/
+
+	editCtx = paramCtx;
+
 	class EditUploadForm extends HTMLElement {
 		#inputEventHandlers = inputEventHandlers;
 		#postToEdit = null;
@@ -228,10 +236,10 @@ export function defineEditUploadForm(ctx) {
 				extraInfo: formData.get('extra-info').trim(),
 				objectId: postId,
 			}
-			
+
 			try {
 				await editPost(objToSubmit);
-				ctx.page.redirect('/car-pictures');
+				editCtx.page.redirect('/car-pictures');
 			} catch (error) {
 				alert(error.message);
 				submitBtn.removeAttribute('disabled');
@@ -245,7 +253,7 @@ export function defineEditUploadForm(ctx) {
 		}
 
 		async connectedCallback() {
-			this.#postToEditId = ctx.params.id.slice(1);
+			this.#postToEditId = editCtx.params.id.slice(1);
 
 			const templatePromise = formTemplate(
 				this.#inputEventHandlers,

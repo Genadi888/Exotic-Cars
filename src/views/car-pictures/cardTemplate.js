@@ -27,7 +27,7 @@ export const cardTemplate = (carObj, user, deleteClickHandler, likeClickHandler,
 									<span data-likes="${carObj.likesCount}" class="like-span">
 										<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
 									</span>
-									<img @click=${() => ctx.page.redirect(`/share-photos:${carObj.objectId}`)} class="edit" alt="edit" src="/images/edit.svg">
+									<a href="/share-photos:${carObj.objectId}"><img class="edit" alt="edit" src="/images/edit.svg"></a>
 									<img @click=${deleteClickHandler} class="bin" alt="delete" src="/images/trash-2.svg">
 								` : null
 							}
