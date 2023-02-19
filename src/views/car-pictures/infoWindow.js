@@ -1,26 +1,6 @@
 import { reportObject } from "../../api/posts.js";
-import { html, render as litRender } from "../../lib/lit-html.js";
-
-const infoWindowTemplate = (carObj, clickHandler) => html`
-	<button @click=${clickHandler} type="button" class="btn-close" aria-label="Close"></button>
-	<h4>${carObj.carName}</h4>
-	<p id="extra-info">${carObj.extraInfo && carObj.extraInfo != '' ? carObj.extraInfo : 'Extra info has not been provided.'}</p>
-`;
-
-const reportWindowTemplate = (clickHandler, onSubmit, getFormInputEventHandler, getInputHandler) => html`
-	<button @click=${clickHandler} type="button" class="btn-close" aria-label="Close"></button>
-	<h4>Report this post</h4>
-	
-	<form @input=${getFormInputEventHandler()} @submit=${onSubmit} id="report-form">
-		<div class="form-floating">
-			<textarea @input=${getInputHandler()} class="form-control report-reason"
-				name="reason" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-			<label for="floatingTextarea">Write a report reason</label>
-			<span class="invalid-span" id="textarea-invalid-span">Invalid report reason</span>
-		</div>
-		<input disabled class="btn btn-danger" type="submit" value="Report">
-	</form>
-`;
+import { render as litRender } from "../../lib/lit-html.js";
+import { commentWindowTemplate, infoWindowTemplate, reportWindowTemplate } from "./infoWindowTemplates.js";
 
 function showOrHideWindow(moreInfoWindow) {
 	const delay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '0.5s';
@@ -134,5 +114,13 @@ export function sectionClickHandler(ev, posts, ctx) {
 				submitBtn.value = "Report";
 			}
 		}
+	} else if (ev.target.classList.contains("comment-btn"))  {
+		ev.preventDefault();
+		const cardObjectId = ev.target.dataset.objectId;
+		const selectedPost = Object.values(posts).find(postObj => postObj.objectId === cardObjectId);
+		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
+		
+		litRender(commentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow)), moreInfoWindow);
+		showOrHideWindow(moreInfoWindow);
 	}
 }

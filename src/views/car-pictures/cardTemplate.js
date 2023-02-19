@@ -1,6 +1,6 @@
 import { html } from "../../lib/lit-html.js";
 
-export const cardTemplate = (carObj, user, deleteClickHandler, likeClickHandler, approveClickHandler, needApproval, ctx) => html`
+export const cardTemplate = (carObj, user, deleteClickHandler, likeClickHandler, approveClickHandler, needApproval) => html`
 	<div class="card border-0">
 		<img src=${carObj.images[0]} class="card-img-top" alt=${carObj.carName}>
 		<div class="card-body">
@@ -19,7 +19,7 @@ export const cardTemplate = (carObj, user, deleteClickHandler, likeClickHandler,
 						<span class="post-icons">
 							${!user ? html`
 								<span data-likes="${carObj.likesCount}" class="like-span">
-										<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
+									<img class="unactive-like" alt="like" src="/images/thumbs-up.svg">
 								</span>	
 							` : null}
 							${user?.objectId === carObj.owner.objectId ? 
@@ -38,6 +38,7 @@ export const cardTemplate = (carObj, user, deleteClickHandler, likeClickHandler,
 								</span>
 								` : null
 							}
+							<img data-object-Id=${carObj.objectId} class="comment-btn" alt="like" src="/images/message-square.svg">
 						</span>
 					`
 				}

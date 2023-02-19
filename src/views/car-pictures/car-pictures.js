@@ -37,8 +37,7 @@ export async function carPicturesView(ctx) {
 					getDeleteHandler(ctx, post.objectId),
 					getLikeClickHandler(post.objectId, ctx.user?.objectId),
 					getApproveClickHandler(post.objectId, ctx.nestedShadowRoot.querySelector('section > .approval-btn')),
-					postType == 'unapproved',
-					ctx
+					postType == 'unapproved'
 				)) : 
 				getNoPostsTemplate(postType !== 'unapproved', ctx)
 			}
