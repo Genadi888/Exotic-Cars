@@ -391,7 +391,7 @@ body>aside>ul>li>a:hover {
 .comment-user-info {
 	display: flex;
     flex-direction: column;
-	padding-top: 6px;
+	padding-top: 10%;
 }
 
 .comment-info {
@@ -424,18 +424,17 @@ body>aside>ul>li>a:hover {
     flex-direction: column;
 	min-width: 30px;
     justify-content: flex-start;
-	height: 90%;
+	height: fit-content;
     padding-left: 7px;
 }
 
 .comment-actions>img {
 	width: calc(20px + 1vmin);
     min-width: 25px;
-}
-
-.comment-actions>img:first-child {
-	margin-bottom: 100%;
-    margin-top: 6px;
+	cursor: pointer;
+	/* padding: 3px; */
+	border-radius: 5px;
+	transition: background-color 100ms ease-in-out;
 }
 
 .comment-like-btn {
@@ -445,6 +444,12 @@ body>aside>ul>li>a:hover {
     height: fit-content;
     justify-self: center;
     align-self: center;
+	margin-bottom: 30%;
+    margin-top: 10%;
+}
+
+.comment-like-btn:hover {
+	background-color: rgba(122, 191, 255, 0.63);
 }
 
 .comment-report-btn {
@@ -455,6 +460,15 @@ body>aside>ul>li>a:hover {
     align-self: center;
     justify-self: center;
     white-space: nowrap;
+	margin-bottom: 20%;
+}
+
+.comment-report-btn:hover {
+	background-color: rgba(255, 97, 97, 0.63);
+}
+
+.comment-reply-btn:hover {
+	background-color: rgba(39, 255, 0, 0.63);
 }
 
 #publish-comment {
