@@ -31,6 +31,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 		const cardObjectId = ev.target.dataset.objectId;
 		const selectedPost = Object.values(posts).find(postObj => postObj.objectId === cardObjectId);
 		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
+		moreInfoWindow.classList.remove('dimmed');
 		
 		litRender(infoWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow)), moreInfoWindow);
 		showOrHideWindow(moreInfoWindow);
@@ -38,6 +39,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 		ev.preventDefault();
 		const cardObjectId = ev.target.dataset.objectId;
 		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
+		moreInfoWindow.classList.remove('dimmed');
 
 		litRender(reportWindowTemplate(() => showOrHideWindow(moreInfoWindow), reportSubmitHandler, getFormInputEventHandler, getTextareaInputHandler), moreInfoWindow);
 		showOrHideWindow(moreInfoWindow);
@@ -119,6 +121,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 		const cardObjectId = ev.target.dataset.objectId;
 		const selectedPost = Object.values(posts).find(postObj => postObj.objectId === cardObjectId);
 		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
+		moreInfoWindow.classList.add('dimmed');
 		
 		litRender(commentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow)), moreInfoWindow);
 		showOrHideWindow(moreInfoWindow);
