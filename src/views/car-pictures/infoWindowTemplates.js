@@ -34,35 +34,19 @@ export const commentWindowTemplate = (carObj, clickHandler) => html`
 						<p class="comment-info">Genadi<br>1 hour ago</p>
 					</div>
 				</div>
-				<p class="comment-text">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-					molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-					numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-					optio, eaque rerum!
-				</p>
-				<div class="comment-actions-wrapper">
-					<div class="comment-actions">
-						<img src="/images/thumbs-up.svg" title="like" alt="like" class="comment-like-btn">
-						<img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn">
-						<img src="/images/plus-square.svg" title="reply" alt="reply" class="comment-reply-btn">
-					</div>
+				<div class="comment-text-wrapper">
+					<input type="checkbox" id="overflow-control-btn">
+					<p class="comment-text">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+						molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
+						numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
+						optio, eaque rerum!
+					</p>
+					<label for="overflow-control-btn">
+						<span class="show-more-btn">Show more</span>
+						<span class="show-less-btn">Show less</span>
+					</label>
 				</div>
-				<!-- <button type="button" class="btn btn-primary comment-like-btn">Like</button> -->
-				<!-- <button type="button" class="btn btn-danger comment-report-btn">Report</button> -->
-			</div>
-			<div class="comment">
-				<div class="comment-user-info-wrapper">
-					<div class="comment-user-info">
-						<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
-						<p class="comment-info">Genadi<br>1 hour ago</p>
-					</div>
-				</div>
-				<p class="comment-text">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-					molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-					numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-					optio, eaque rerum!
-				</p>
 				<div class="comment-actions-wrapper">
 					<div class="comment-actions">
 						<img src="/images/thumbs-up.svg" title="like" alt="like" class="comment-like-btn">

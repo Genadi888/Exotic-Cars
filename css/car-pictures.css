@@ -358,7 +358,7 @@ body>aside>ul>li>a:hover {
 	/* padding-top: 10px; */
 	color: white;
 	word-break: break-word;
-	text-shadow: 0px 0px 12px #000000;
+	text-shadow: 0px 0px 2px #000000;
 	overflow: auto;
 	/* font-size: larger; */
 }
@@ -411,12 +411,57 @@ body>aside>ul>li>a:hover {
 }
 
 .comment-text {
-	/* max-height: 100px; */
-    /* overflow: auto; */
+	max-height: 100px;
+    overflow: hidden;
     margin-bottom: 0px;
 	padding-left: 2px;
     width: 86%;
 	font-size: calc(10px + 1vmin);
+}
+
+.comment-text-wrapper>#overflow-control-btn {
+	display: none;
+}
+
+.comment-text-wrapper>label[for="overflow-control-btn"] {
+    display: block;
+    background-image: linear-gradient(0deg, #212529, transparent);
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    width: 100%;
+    line-height: 27px;
+    /* margin: 50px auto 0; */
+    /* border-radius: 10px; */
+    user-select: none;
+}
+
+/* TODO: Need to make the show more/less button not appear on shorter text */
+
+@media only screen and (min-width: 660px) {
+	.comment-text-wrapper>label[for="overflow-control-btn"] {
+		display: none;
+	}
+
+	.comment-text {
+		max-height: unset !important;
+	}
+}
+
+.comment-text-wrapper .show-less-btn {
+	display: none;
+}
+
+.comment-text-wrapper #overflow-control-btn:checked~.comment-text {
+	max-height: unset;
+}
+.comment-text-wrapper #overflow-control-btn:checked~label>.show-less-btn {
+	display: block;
+}
+.comment-text-wrapper #overflow-control-btn:checked~label>.show-more-btn {
+	display: none;
 }
 
 .comment-actions {
