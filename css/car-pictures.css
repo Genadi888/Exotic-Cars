@@ -438,8 +438,6 @@ body>aside>ul>li>a:hover {
     text-shadow: 0px 2px 7px black;
 }
 
-/* TODO: Need to make the show more/less button not appear on shorter text */
-
 @media only screen and (min-width: 725px) {
 	.comment-text-wrapper>label[for="overflow-control-btn"] {
 		display: none;
