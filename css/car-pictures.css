@@ -411,12 +411,15 @@ body>aside>ul>li>a:hover {
 }
 
 .comment-text {
-	max-height: 100px;
     overflow: hidden;
     margin-bottom: 0px;
 	padding-left: 2px;
-    width: 86%;
+    width: 100%;
 	font-size: calc(10px + 1vmin);
+}
+
+.comment-text-wrapper {
+	position: relative;
 }
 
 .comment-text-wrapper>#overflow-control-btn {
@@ -424,7 +427,7 @@ body>aside>ul>li>a:hover {
 }
 
 .comment-text-wrapper>label[for="overflow-control-btn"] {
-    display: block;
+    display: none;
     background-image: linear-gradient(0deg, cornflowerblue, transparent);
     color: white;
     cursor: pointer;
@@ -434,35 +437,53 @@ body>aside>ul>li>a:hover {
     width: 100%;
     line-height: 27px;
     user-select: none;
-    transform: translateY(-100%);
-    text-shadow: 0px 2px 7px black;
+	position: absolute;
+	bottom: 0;
+    text-shadow: 0px -1px 7px black;
 }
 
-@media only screen and (min-width: 725px) {
+@media only screen and (max-width: 725px) {
 	.comment-text-wrapper>label[for="overflow-control-btn"] {
-		display: none;
+		display: block;
 	}
 
 	.comment-text {
-		max-height: unset !important;
+		max-height: 100px !important;
+	}
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 2100px) {
+	.comment-text-wrapper>label[for="overflow-control-btn"] {
+		display: block;
+	}
+
+	.comment-text {
+		max-height: 16vh;
 	}
 }
 
 .comment-text-wrapper .show-less-btn {
 	display: none;
+	pointer-events: none;
+	user-select: none;
 }
 
-.comment-text-wrapper #overflow-control-btn:checked~label {
-	transform: translateY(0);
+.comment-text-wrapper .show-more-btn {
+	pointer-events: none;
+	user-select: none;
 }
 
-.comment-text-wrapper #overflow-control-btn:checked~.comment-text {
-	max-height: unset;
+.overflow-control-btn-pressed~label {
+	position: unset !important;
 }
-.comment-text-wrapper #overflow-control-btn:checked~label>.show-less-btn {
+
+.overflow-control-btn-pressed~.comment-text {
+	max-height: unset !important;
+}
+.overflow-control-btn-pressed~label>.show-less-btn {
 	display: block;
 }
-.comment-text-wrapper #overflow-control-btn:checked~label>.show-more-btn {
+.overflow-control-btn-pressed~label>.show-more-btn {
 	display: none;
 }
 

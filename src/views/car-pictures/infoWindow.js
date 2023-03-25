@@ -124,6 +124,18 @@ export function sectionClickHandler(ev, posts, ctx) {
 		moreInfoWindow.classList.add('dimmed');
 		
 		litRender(commentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow)), moreInfoWindow);
+
+		moreInfoWindow.addEventListener('click', ev => {
+			if (ev.target.getAttribute('for') == 'overflow-control-btn') {
+				const commentTextWrapper = ev.target.parentElement;
+				const button = commentTextWrapper.querySelector('#overflow-control-btn');
+
+				button.classList.contains('overflow-control-btn-pressed') ?
+				button.classList.remove('overflow-control-btn-pressed') :
+				button.classList.add('overflow-control-btn-pressed');
+			}
+		});
+
 		showOrHideWindow(moreInfoWindow);
 	}
 }
