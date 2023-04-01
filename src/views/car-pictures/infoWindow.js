@@ -133,6 +133,16 @@ export function sectionClickHandler(ev, posts, ctx) {
 				button.classList.contains('overflow-control-btn-pressed') ?
 				button.classList.remove('overflow-control-btn-pressed') :
 				button.classList.add('overflow-control-btn-pressed');
+			} else if (ev.target.classList.contains('show-replies-lines')) {
+				const repliesDiv = ev.target.parentElement.querySelector('.comment-replies');
+
+				if (repliesDiv.style.display == 'none' || repliesDiv.style.display == '') {
+					ev.target.textContent = 'Hide replies';
+					repliesDiv.style.display = 'block';
+				} else if (repliesDiv.style.display == 'block') {
+					ev.target.textContent = 'Show replies';
+					repliesDiv.style.display = 'none';
+				}
 			}
 		});
 
