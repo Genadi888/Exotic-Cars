@@ -357,13 +357,12 @@ body>aside>ul>li>a:hover {
 }
 
 #comments {
-	/* height: 69%; */
-	/* padding-top: 10px; */
+	--commentTextMaxHeight: initial;
+	padding-bottom: 5vh;
 	color: white;
 	word-break: break-word;
 	text-shadow: 0px 0px 2px #000000;
 	overflow: auto;
-	/* font-size: larger; */
 }
 
 .comment {
@@ -425,6 +424,8 @@ body>aside>ul>li>a:hover {
 
 .comment-text-wrapper {
 	position: relative;
+	overflow: hidden;
+	max-height: var(--commentTextMaxHeight);
 }
 
 .comment-text-wrapper>#overflow-control-btn {
@@ -447,23 +448,23 @@ body>aside>ul>li>a:hover {
 	text-shadow: 0px -1px 7px black;
 }
 
-@media only screen and (max-width: 725px) {
-	.comment-text-wrapper>label[for="overflow-control-btn"] {
+@media only screen and (max-width: 1023px) {
+	/* .comment-text-wrapper>label[for="overflow-control-btn"] {
 		display: block;
-	}
+	} */
 
-	.comment-text {
-		max-height: 100px !important;
+	#comments {
+		--commentTextMaxHeight: 100px !important;
 	}
 }
 
 @media only screen and (min-width: 1024px) and (max-width: 2100px) {
-	.comment-text-wrapper>label[for="overflow-control-btn"] {
+	/* .comment-text-wrapper>label[for="overflow-control-btn"] {
 		display: block;
-	}
+	} */
 
-	.comment-text {
-		max-height: 16vh;
+	#comments {
+		--commentTextMaxHeight: 14vh !important;
 	}
 }
 
@@ -480,10 +481,6 @@ body>aside>ul>li>a:hover {
 
 .overflow-control-btn-pressed~label {
 	position: unset !important;
-}
-
-.overflow-control-btn-pressed~.comment-text {
-	max-height: unset !important;
 }
 
 .overflow-control-btn-pressed~label>.show-less-btn {
@@ -547,8 +544,26 @@ body>aside>ul>li>a:hover {
 	background-color: rgba(39, 255, 0, 0.63);
 }
 
+@media only screen and (max-width: 540px) {
+	.comment-replies-wrapper {
+		grid-column: 1 / -1 !important;
+		margin-left: auto !important;
+	}
+
+	.reply-comment {
+		padding: min(2vmin, 11px);
+		padding-left: 5vmin;
+	}
+
+	.show-replies-lines::before,
+	.show-replies-lines::after {
+		width: calc(100% - 49vw) !important;
+	}
+}
+
 .comment-replies-wrapper {
 	grid-column: 2 / -1;
+	width: 100%;
 }
 
 .comment-replies {

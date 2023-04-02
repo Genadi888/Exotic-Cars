@@ -58,7 +58,7 @@ export const commentWindowTemplate = (carObj, clickHandler) => html`
 					<h2 class="show-replies-lines">Show replies</h2>
 
 					<div class="comment-replies">
-						<div class="comment">
+						<div class="comment reply-comment">
 							<div class="comment-user-info-wrapper">
 								<div class="comment-user-info">
 									<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
@@ -68,10 +68,7 @@ export const commentWindowTemplate = (carObj, clickHandler) => html`
 							<div class="comment-text-wrapper">
 								<input type="checkbox" id="overflow-control-btn">
 								<p class="comment-text">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-									molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-									numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-									optio, eaque rerum!
+									Ei, tsiganior!
 								</p>
 								<label for="overflow-control-btn">
 									<span class="show-more-btn">Show more</span>
@@ -85,13 +82,9 @@ export const commentWindowTemplate = (carObj, clickHandler) => html`
 									<img src="/images/plus-square.svg" title="reply" alt="reply" class="comment-reply-btn">
 								</div>
 							</div>
-							<!-- <button type="button" class="btn btn-primary comment-like-btn">Like</button> -->
-							<!-- <button type="button" class="btn btn-danger comment-report-btn">Report</button> -->
 						</div>
 					</div>
 				</div>
-				<!-- <button type="button" class="btn btn-primary comment-like-btn">Like</button> -->
-				<!-- <button type="button" class="btn btn-danger comment-report-btn">Report</button> -->
 			</div>
 			<div class="comment">
 				<div class="comment-user-info-wrapper">
@@ -120,8 +113,6 @@ export const commentWindowTemplate = (carObj, clickHandler) => html`
 						<img src="/images/plus-square.svg" title="reply" alt="reply" class="comment-reply-btn">
 					</div>
 				</div>
-				<!-- <button type="button" class="btn btn-primary comment-like-btn">Like</button> -->
-				<!-- <button type="button" class="btn btn-danger comment-report-btn">Report</button> -->
 			</div>
 		</div>
 		<span id="publish-comment">
