@@ -1,6 +1,9 @@
+import { createComment } from "../../api/comments.js";
 import { reportObject } from "../../api/posts.js";
 import { render as litRender } from "../../lib/lit-html.js";
-import { commentWindowTemplate, infoWindowTemplate, reportWindowTemplate } from "./infoWindowTemplates.js";
+import { until } from "/src/lib/directives/until.js";
+
+import { getCommentWindowTemplate, infoWindowTemplate, reportWindowTemplate } from "./infoWindowTemplates.js";
 
 function showOrHideWindow(moreInfoWindow) {
 	const delay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '0.5s';
@@ -122,8 +125,18 @@ export function sectionClickHandler(ev, posts, ctx) {
 		const selectedPost = Object.values(posts).find(postObj => postObj.objectId === cardObjectId);
 		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
 		moreInfoWindow.classList.add('dimmed');
+		
+		litRender(getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), commentBtnHandler), moreInfoWindow);
 
-		litRender(commentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow)), moreInfoWindow);
+		async function commentBtnHandler(ev) {
+			const commentText = ev.target.parentElement.querySelector('textarea#comment-input').value.trim();
+
+			try {
+				await createComment({ commentText }, ctx);
+			} catch (error) {
+				alert(error);
+			}
+		}
 
 		moreInfoWindow.addEventListener('click', ev => {
 			if (ev.target.getAttribute('for') == 'overflow-control-btn') {

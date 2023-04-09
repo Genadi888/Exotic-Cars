@@ -1,3 +1,6 @@
+import { getAllComments } from "../../api/comments.js";
+import { repeat } from "../../lib/directives/repeat.js";
+import { until } from "../../lib/directives/until.js";
 import { html } from "../../lib/lit-html.js";
 
 export const infoWindowTemplate = (carObj, clickHandler) => html`
@@ -21,27 +24,21 @@ export const reportWindowTemplate = (clickHandler, onSubmit, getFormInputEventHa
 	</form>
 `;
 
-export const commentWindowTemplate = (carObj, clickHandler) => html`
-	<button @click=${clickHandler} type="button" class="btn-close" aria-label="Close"></button>
-	<h4>${carObj.carName} - comments</h4>
-	
-	<div id="comment-section">
-		<div id="comments">
-			<div class="comment">
+function commentTemplate (comment, needsToBeAReply) {
+	comment.createdAt = new Date(comment.createdAt).toDateString();
+
+	if (needsToBeAReply) {
+		return html`
+			<div class="comment reply-comment">
 				<div class="comment-user-info-wrapper">
 					<div class="comment-user-info">
 						<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
-						<p class="comment-info">Genadi<br>1 hour ago</p>
+						<p class="comment-info">${comment.commenter}<br>${comment.data}</p>
 					</div>
 				</div>
 				<div class="comment-text-wrapper">
 					<input type="checkbox" id="overflow-control-btn">
-					<p class="comment-text">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-						molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-						numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-						optio, eaque rerum!
-					</p>
+					<p class="comment-text">${comment.commentText}</p>
 					<label for="overflow-control-btn">
 						<span class="show-more-btn">Show more</span>
 						<span class="show-less-btn">Show less</span>
@@ -54,71 +51,78 @@ export const commentWindowTemplate = (carObj, clickHandler) => html`
 						<img src="/images/plus-square.svg" title="reply" alt="reply" class="comment-reply-btn">
 					</div>
 				</div>
-				<div class="comment-replies-wrapper">
-					<h2 class="show-replies-lines">Show replies</h2>
+			</div>
+		`
+	} else {
+		return html`
+			<div class="comment">
+				<div class="comment-user-info-wrapper">
+					<div class="comment-user-info">
+						<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
+						<p class="comment-info">${comment.ownerName}<br>published on:<br>${comment.createdAt}</p>
+					</div>
+				</div>
+				<div class="comment-text-wrapper">
+					<input type="checkbox" id="overflow-control-btn">
+					<p class="comment-text">${comment.commentText}</p>
+					<label for="overflow-control-btn">
+						<span class="show-more-btn">Show more</span>
+						<span class="show-less-btn">Show less</span>
+					</label>
+				</div>
+				<div class="comment-actions-wrapper">
+					<div class="comment-actions">
+						<img src="/images/thumbs-up.svg" title="like" alt="like" class="comment-like-btn">
+						<img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn">
+						<img src="/images/plus-square.svg" title="reply" alt="reply" class="comment-reply-btn">
+					</div>
+				</div>
 
-					<div class="comment-replies">
-						<div class="comment reply-comment">
-							<div class="comment-user-info-wrapper">
-								<div class="comment-user-info">
-									<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
-									<p class="comment-info">Genadi<br>1 hour ago</p>
-								</div>
-							</div>
-							<div class="comment-text-wrapper">
-								<input type="checkbox" id="overflow-control-btn">
-								<p class="comment-text">
-									Ei, tsiganior!
-								</p>
-								<label for="overflow-control-btn">
-									<span class="show-more-btn">Show more</span>
-									<span class="show-less-btn">Show less</span>
-								</label>
-							</div>
-							<div class="comment-actions-wrapper">
-								<div class="comment-actions">
-									<img src="/images/thumbs-up.svg" title="like" alt="like" class="comment-like-btn">
-									<img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn">
-									<img src="/images/plus-square.svg" title="reply" alt="reply" class="comment-reply-btn">
-								</div>
+				${
+					comment.replies ? html`
+						<div class="comment-replies-wrapper">
+							<h2 class="show-replies-lines">Show replies</h2>
+				
+							<div class="comment-replies">
+								${repeat(comment.replies, reply => reply.objectId, reply => commentTemplate(reply, true))}
 							</div>
 						</div>
-					</div>
-				</div>
+					` : null
+				}
 			</div>
-			<div class="comment">
-				<div class="comment-user-info-wrapper">
-					<div class="comment-user-info">
-						<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
-						<p class="comment-info">Genadi<br>1 hour ago</p>
-					</div>
-				</div>
-				<div class="comment-text-wrapper">
-					<input type="checkbox" id="overflow-control-btn">
-					<p class="comment-text">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-						molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-						numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-						optio, eaque rerum!
-					</p>
-					<label for="overflow-control-btn">
-						<span class="show-more-btn">Show more</span>
-						<span class="show-less-btn">Show less</span>
-					</label>
-				</div>
-				<div class="comment-actions-wrapper">
-					<div class="comment-actions">
-						<img src="/images/thumbs-up.svg" title="like" alt="like" class="comment-like-btn">
-						<img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn">
-						<img src="/images/plus-square.svg" title="reply" alt="reply" class="comment-reply-btn">
-					</div>
-				</div>
+		`;
+	}
+} 
+
+export function getCommentWindowTemplate(carObj, closeBtnHandler, commentBtnHandler) {
+	async function commentsTemplate() {
+		let comments = null;
+
+		try {
+			comments = (await getAllComments()).results;
+			console.log(comments)
+		} catch (error) {
+			alert(error);
+		}
+
+		return html`${repeat(comments, comment => comment.objectId, commentTemplate)}`;
+	}
+
+
+	return html`
+		<button @click=${closeBtnHandler} type="button" class="btn-close" aria-label="Close"></button>
+		<h4>${carObj.carName} - comments</h4>
+		
+		<div id="comment-section">
+			<div id="comments">
+				${until(commentsTemplate(), html`Loading...`)}
 			</div>
+
+			<span id="publish-comment">
+				<label for="comment-input">Comment:</label>
+				<textarea class="form-control" id="comment-input" rows="3"></textarea>
+				<button  type="button" class="btn btn-primary" @click=${commentBtnHandler}>Comment</button>
+			</span>
 		</div>
-		<span id="publish-comment">
-			<label for="comment-input">Comment:</label>
-			<textarea class="form-control" id="comment-input" rows="3"></textarea>
-			<button type="button" class="btn btn-primary">Comment</button>
-		</span>
-	</div>
-`;
+	`;
+} 

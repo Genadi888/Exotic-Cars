@@ -495,8 +495,8 @@ body>aside>ul>li>a:hover {
 	display: flex;
 	flex-direction: column;
 	min-width: 30px;
-	justify-content: flex-start;
-	height: fit-content;
+	justify-content: space-evenly;
+	height: 100%;
 	padding-left: 7px;
 	align-items: center;
 }
@@ -604,6 +604,7 @@ body>aside>ul>li>a:hover {
 }
 
 @media only screen and (max-width: 340px) {
+
 	.show-replies-lines::before,
 	.show-replies-lines::after {
 		width: 27% !important;
@@ -616,6 +617,17 @@ body>aside>ul>li>a:hover {
 	justify-content: space-around;
 	color: white;
 	height: 20%;
+	transition: height 400ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@media (prefers-reduced-motion) {
+	#publish-comment {
+		transition: none !important;
+	}
+}
+
+#publish-comment:focus-within {
+	height: 100%;
 }
 
 #publish-comment>label {
@@ -634,7 +646,7 @@ body>aside>ul>li>a:hover {
 	background-color: rgb(128, 128, 128, 0.4);
 	outline: none !important;
 	box-shadow: none !important;
-	
+
 	font-size: calc(10px + 1vmin);
 	line-height: normal;
 	text-shadow: 0px 0px 2px #000000;
