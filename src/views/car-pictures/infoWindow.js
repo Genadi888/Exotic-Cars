@@ -1,7 +1,9 @@
-import { createComment } from "../../api/comments.js";
+import { createComment, getRepliesForAComment } from "../../api/comments.js";
 import { reportObject } from "../../api/posts.js";
-import { render as litRender } from "../../lib/lit-html.js";
-import { getCommentWindowTemplate, infoWindowTemplate, reportWindowTemplate } from "./infoWindowTemplates.js";
+import { repeat } from "../../lib/directives/repeat.js";
+import { until } from "../../lib/directives/until.js";
+import { html, render as litRender } from "../../lib/lit-html.js";
+import { commentTemplate, getCommentWindowTemplate, infoWindowTemplate, reportWindowTemplate } from "./infoWindowTemplates.js";
 
 let moreInfoWindowCommentClickListener;
 
@@ -165,12 +167,12 @@ export function sectionClickHandler(ev, posts, ctx) {
 				const publishbtn = ev.target.closest('#comments').parentElement.querySelector('#publish-comment > button');
 				publishbtn.textContent = 'Comment';
 				if ('repliedCommentId' in publishbtn.dataset) {
-					delete publishbtn.dataset.repliedCommentId;
+					delete publishbtn.dataset.repliedCommentId; //? it's a slow operation :P
 				}
 			}
 		}
 
-		moreInfoWindow.addEventListener('click', moreInfoWindowCommentClickListener = ev => {
+		moreInfoWindow.addEventListener('click', moreInfoWindowCommentClickListener = async ev => {
 			if (ev.target.getAttribute('for') == 'overflow-control-btn') {
 				const commentTextWrapper = ev.target.parentElement;
 				const button = commentTextWrapper.querySelector('#overflow-control-btn');
@@ -193,6 +195,18 @@ export function sectionClickHandler(ev, posts, ctx) {
 					ev.target.textContent = 'Show replies';
 					repliesDiv.style.display = 'none';
 				}
+				
+				if (!repliesDiv.hasChildNodes()) {
+					const getRepliesTemplate = async () => {
+						const repliedCommentId = repliesDiv.closest('.comment').dataset.objectId;
+						const replies = await getRepliesForAComment(repliedCommentId);
+	
+						return html`${repeat(replies, reply => reply.objectId, reply => commentTemplate(reply, true))}`
+					}
+	
+					litRender(until(getRepliesTemplate(), html`Loading...`), repliesDiv);
+				}
+
 			}
 		});
 

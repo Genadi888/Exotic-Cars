@@ -11,6 +11,10 @@ export async function createComment(comment, ctx, idOfRepliedComment) {
 	return api.post(`/Comments`, comment);
 }
 
+export async function getRepliesForAComment(idOfRepliedComment) {
+	return (await api.post(`/functions/getRepliesForAComment`, { idOfRepliedComment })).result;
+}
+
 export async function getAllComments() {
-	return api.post(`/functions/getComments`);
+	return (await api.post(`/functions/getComments`)).result;
 }

@@ -637,7 +637,7 @@ body>aside>ul>li>a:hover {
 }
 
 #publish-comment:focus-within {
-	height: 100%;
+	height: 50%;
 }
 
 #publish-comment>label {

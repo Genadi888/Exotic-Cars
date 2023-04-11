@@ -24,12 +24,12 @@ export const reportWindowTemplate = (clickHandler, onSubmit, getFormInputEventHa
 	</form>
 `;
 
-function commentTemplate (comment, needsToBeAReply) {
+export const commentTemplate = (comment, needsToBeAReply) => {
 	comment.createdAt = new Date(comment.createdAt).toDateString();
 
 	if (needsToBeAReply) {
 		return html`
-			<div class="comment reply-comment">
+			<div class="comment reply-comment" data-object-Id="${comment.objectId}">
 				<div class="comment-user-info-wrapper">
 					<div class="comment-user-info">
 						<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
@@ -55,7 +55,7 @@ function commentTemplate (comment, needsToBeAReply) {
 		`
 	} else {
 		return html`
-			<div class="comment">
+			<div class="comment" data-object-Id="${comment.objectId}">
 				<div class="comment-user-info-wrapper">
 					<div class="comment-user-info">
 						<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
@@ -79,13 +79,11 @@ function commentTemplate (comment, needsToBeAReply) {
 				</div>
 
 				${
-					comment.replies ? html`
+					comment.hasReplies ? html`
 						<div class="comment-replies-wrapper">
 							<h2 class="show-replies-lines">Show replies</h2>
 				
-							<div class="comment-replies">
-								${repeat(comment.replies, reply => reply.objectId, reply => commentTemplate(reply, true))}
-							</div>
+							<div class="comment-replies"></div>
 						</div>
 					` : null
 				}
@@ -94,19 +92,19 @@ function commentTemplate (comment, needsToBeAReply) {
 	}
 } 
 
-export function getCommentWindowTemplate(carObj, closeBtnHandler, publishCommentBtnHandler, commentsDivClickHandler) {
+export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishCommentBtnHandler, commentsDivClickHandler) => {
 	async function commentsTemplate() {
 		let comments = null;
 
 		try {
-			comments = (await getAllComments()).result;
+			comments = await getAllComments();
+			console.log(comments)
 		} catch (error) {
 			alert(error);
 		}
 
 		return html`${repeat(comments, comment => comment.objectId, commentTemplate)}`;
 	}
-
 
 	return html`
 		<button @click=${closeBtnHandler} type="button" class="btn-close" aria-label="Close"></button>
