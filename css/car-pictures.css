@@ -258,12 +258,12 @@ body>aside>ul>li>a:hover {
 #more-info-window {
 	width: 80vw;
 	min-width: 270px;
-	height: clamp(231px, 50vh, 463px);
+	height: clamp(231px, 70vh, 463px);
 
 	position: fixed;
 	transform: translateX(-50%) translateY(-50%);
 	left: 50%;
-	top: max(50%, 190px);
+	top: max(50%, 203px);
 
 	border-radius: 5px;
 	box-shadow: 1px 1px 14px 2px rgba(0, 0, 0, 0.75);
@@ -372,6 +372,17 @@ body>aside>ul>li>a:hover {
 	grid-template-rows: 1fr;
 	grid-column-gap: 10px;
 	grid-row-gap: 10px;
+	transition: background-color 400ms ease-in-out;
+}
+
+.focused-comment {
+	background-color: #ed143d6e !important;
+}
+
+@media (prefers-reduced-motion) {
+	.comment {
+		transition: none !important;
+	}
 }
 
 @media only screen and (max-width: 600px) {
@@ -407,9 +418,8 @@ body>aside>ul>li>a:hover {
 	width: fit-content;
 	align-self: center;
 	justify-self: center;
-	/* max-height: 50px; */
 	white-space: nowrap;
-	font-size: calc(9px + 1vmin);
+	font-size: calc(6px + 1vmin);
 	line-height: normal;
 	text-shadow: 0px 0px 12px #000000;
 }
@@ -579,7 +589,7 @@ body>aside>ul>li>a:hover {
 	top: 50%;
 	left: 0;
 	background: #212529;
-	z-index: -1;
+	/* z-index: -1; */
 }
 
 .show-replies-lines {
@@ -600,7 +610,7 @@ body>aside>ul>li>a:hover {
 	position: absolute;
 	top: 50%;
 	right: 0;
-	z-index: -1;
+	/* z-index: -1; */
 }
 
 @media only screen and (max-width: 340px) {
@@ -617,7 +627,7 @@ body>aside>ul>li>a:hover {
 	justify-content: space-around;
 	color: white;
 	height: 20%;
-	transition: height 400ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
+	transition: height 500ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
 @media (prefers-reduced-motion) {

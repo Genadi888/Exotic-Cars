@@ -33,7 +33,7 @@ function commentTemplate (comment, needsToBeAReply) {
 				<div class="comment-user-info-wrapper">
 					<div class="comment-user-info">
 						<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
-						<p class="comment-info">${comment.commenter}<br>${comment.data}</p>
+						<p class="comment-info">${comment.ownerName}<br>${comment.createdAt}</p>
 					</div>
 				</div>
 				<div class="comment-text-wrapper">
@@ -48,7 +48,7 @@ function commentTemplate (comment, needsToBeAReply) {
 					<div class="comment-actions">
 						<img src="/images/thumbs-up.svg" title="like" alt="like" class="comment-like-btn">
 						<img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn">
-						<img src="/images/plus-square.svg" title="reply" alt="reply" class="comment-reply-btn">
+						<img src="/images/plus-square.svg" data-object-Id="${comment.objectId}" title="reply" alt="reply" class="comment-reply-btn">
 					</div>
 				</div>
 			</div>
@@ -74,7 +74,7 @@ function commentTemplate (comment, needsToBeAReply) {
 					<div class="comment-actions">
 						<img src="/images/thumbs-up.svg" title="like" alt="like" class="comment-like-btn">
 						<img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn">
-						<img src="/images/plus-square.svg" title="reply" alt="reply" class="comment-reply-btn">
+						<img src="/images/plus-square.svg" data-object-Id="${comment.objectId}" title="reply" alt="reply" class="comment-reply-btn">
 					</div>
 				</div>
 
@@ -94,13 +94,12 @@ function commentTemplate (comment, needsToBeAReply) {
 	}
 } 
 
-export function getCommentWindowTemplate(carObj, closeBtnHandler, commentBtnHandler) {
+export function getCommentWindowTemplate(carObj, closeBtnHandler, publishCommentBtnHandler, commentsDivClickHandler) {
 	async function commentsTemplate() {
 		let comments = null;
 
 		try {
-			comments = (await getAllComments()).results;
-			console.log(comments)
+			comments = (await getAllComments()).result;
 		} catch (error) {
 			alert(error);
 		}
@@ -114,14 +113,14 @@ export function getCommentWindowTemplate(carObj, closeBtnHandler, commentBtnHand
 		<h4>${carObj.carName} - comments</h4>
 		
 		<div id="comment-section">
-			<div id="comments">
+			<div id="comments" @click=${commentsDivClickHandler}>
 				${until(commentsTemplate(), html`Loading...`)}
 			</div>
 
 			<span id="publish-comment">
 				<label for="comment-input">Comment:</label>
 				<textarea class="form-control" id="comment-input" rows="3"></textarea>
-				<button  type="button" class="btn btn-primary" @click=${commentBtnHandler}>Comment</button>
+				<button  type="button" class="btn btn-primary" @click=${publishCommentBtnHandler}>Comment</button>
 			</span>
 		</div>
 	`;
