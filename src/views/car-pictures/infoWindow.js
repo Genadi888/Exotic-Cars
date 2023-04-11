@@ -130,7 +130,9 @@ export function sectionClickHandler(ev, posts, ctx) {
 		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
 		moreInfoWindow.classList.add('dimmed');
 
-		litRender(getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler), moreInfoWindow);
+		if (moreInfoWindow.querySelector('#comment-section') === null) { //? if comment section doesn't exist
+			litRender(getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler), moreInfoWindow);
+		}
 
 		async function publishCommentBtnHandler(ev) {
 			ev.preventDefault();
@@ -156,18 +158,18 @@ export function sectionClickHandler(ev, posts, ctx) {
 				const btn = publishCommentSpan.querySelector('.btn-primary');
 				const comment = ev.target.closest('.comment');
 
-				ev.target.closest('#comments').querySelector('.focused-comment')?.classList.remove('focused-comment');
+				ev.target.closest('#comments').querySelector('.focused-comment')?.classList.remove('focused-comment'); //? unfocus other comment (if any)
 				comment.classList.add('focused-comment');
 
 				publishCommentSpan.querySelector('textarea#comment-input').focus();
 				btn.textContent = 'Reply';
-				btn.dataset.repliedCommentId = ev.target.dataset.objectId;
+				btn.dataset.repliedCommentId = ev.target.dataset.objectId; //? we attach the id of the replied comment to the dataset so we can easily get it in "publishCommentBtnHandler"
 			} else {
-				ev.target.closest('#comments').querySelector('.focused-comment')?.classList.remove('focused-comment');
+				ev.target.closest('#comments').querySelector('.focused-comment')?.classList.remove('focused-comment'); //? unfocus comment
 				const publishbtn = ev.target.closest('#comments').parentElement.querySelector('#publish-comment > button');
 				publishbtn.textContent = 'Comment';
 				if ('repliedCommentId' in publishbtn.dataset) {
-					delete publishbtn.dataset.repliedCommentId; //? it's a slow operation :P
+					delete publishbtn.dataset.repliedCommentId;
 				}
 			}
 		}
@@ -196,7 +198,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 					repliesDiv.style.display = 'none';
 				}
 				
-				if (!repliesDiv.hasChildNodes()) {
+				if (!repliesDiv.hasChildNodes()) { //? if repliesDiv is empty
 					const getRepliesTemplate = async () => {
 						const repliedCommentId = repliesDiv.closest('.comment').dataset.objectId;
 						const replies = await getRepliesForAComment(repliedCommentId);
