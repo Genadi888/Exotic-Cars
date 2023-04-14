@@ -432,6 +432,16 @@ body>aside>ul>li>a:hover {
 	font-size: calc(10px + 1vmin);
 }
 
+.comment-text-of-reply-to-reply::before {
+    content: '@' attr(data-owner-name-of-replied-comment);
+    margin-right: 7px;
+    padding: 0px 5px 2px;
+    background-color: #003232;
+    border-radius: 10px;
+    color: cyan;
+    text-shadow: none;
+}
+
 .comment-text-wrapper {
 	position: relative;
 	overflow: hidden;
@@ -637,7 +647,7 @@ body>aside>ul>li>a:hover {
 }
 
 #publish-comment:focus-within {
-	height: 50%;
+	height: 60%;
 }
 
 #publish-comment>label {

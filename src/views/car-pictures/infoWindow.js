@@ -130,9 +130,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
 		moreInfoWindow.classList.add('dimmed');
 
-		if (moreInfoWindow.querySelector('#comment-section') === null) { //? if comment section doesn't exist
-			litRender(getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler), moreInfoWindow);
-		}
+		litRender(getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler), moreInfoWindow);
 
 		async function publishCommentBtnHandler(ev) {
 			ev.preventDefault();
@@ -140,12 +138,17 @@ export function sectionClickHandler(ev, posts, ctx) {
 			const textarea = button.parentElement.querySelector('textarea#comment-input');
 
 			try {
-				console.log(button.dataset)
-				await createComment({ commentText: textarea.value.trim() }, ctx, button.dataset.repliedCommentId || null);
+				await createComment({ commentText: textarea.value.trim() }, ctx, button.dataset.repliedCommentId || null, button.dataset.ownerNameOfRepliedComment || null);
 				button.blur();
+
 				textarea.value = '';
 				button.textContent = 'Comment';
+
 				delete button.dataset.repliedCommentId;
+				delete button.dataset.ownerNameOfRepliedComment;
+
+				//? refresh the comment section
+				litRender(getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler), moreInfoWindow);
 			} catch (error) {
 				alert(error);
 			}
@@ -164,12 +167,15 @@ export function sectionClickHandler(ev, posts, ctx) {
 				publishCommentSpan.querySelector('textarea#comment-input').focus();
 				btn.textContent = 'Reply';
 				btn.dataset.repliedCommentId = ev.target.dataset.objectId; //? we attach the id of the replied comment to the dataset so we can easily get it in "publishCommentBtnHandler"
+				btn.dataset.ownerNameOfRepliedComment = ev.target.dataset.ownerName; //? we attach the owner's name of the replied comment to the dataset so we can easily get it in "publishCommentBtnHandler"
 			} else {
-				ev.target.closest('#comments').querySelector('.focused-comment')?.classList.remove('focused-comment'); //? unfocus comment
-				const publishbtn = ev.target.closest('#comments').parentElement.querySelector('#publish-comment > button');
-				publishbtn.textContent = 'Comment';
-				if ('repliedCommentId' in publishbtn.dataset) {
+				const focusedComment = ev.target.closest('#comments').querySelector('.focused-comment');
+				if (focusedComment) {
+					ev.target.closest('#comments').querySelector('.focused-comment')?.classList.remove('focused-comment'); //? unfocus comment
+					const publishbtn = ev.target.closest('#comments').parentElement.querySelector('#publish-comment > button');
+					publishbtn.textContent = 'Comment';
 					delete publishbtn.dataset.repliedCommentId;
+					delete publishbtn.dataset.ownerNameOfRepliedComment;
 				}
 			}
 		}
@@ -197,15 +203,15 @@ export function sectionClickHandler(ev, posts, ctx) {
 					ev.target.textContent = 'Show replies';
 					repliesDiv.style.display = 'none';
 				}
-				
+
 				if (!repliesDiv.hasChildNodes()) { //? if repliesDiv is empty
 					const getRepliesTemplate = async () => {
 						const repliedCommentId = repliesDiv.closest('.comment').dataset.objectId;
 						const replies = await getRepliesForAComment(repliedCommentId);
-	
+
 						return html`${repeat(replies, reply => reply.objectId, reply => commentTemplate(reply, true))}`
 					}
-	
+
 					litRender(until(getRepliesTemplate(), html`Loading...`), repliesDiv);
 				}
 

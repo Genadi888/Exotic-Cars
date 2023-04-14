@@ -25,20 +25,22 @@ export const reportWindowTemplate = (clickHandler, onSubmit, getFormInputEventHa
 `;
 
 export const commentTemplate = (comment, needsToBeAReply) => {
-	comment.createdAt = new Date(comment.createdAt).toDateString();
+	console.log(needsToBeAReply)
 
-	if (needsToBeAReply) {
+	comment.updatedAt = new Date(comment.updatedAt).toDateString();
+
+	if (needsToBeAReply === true) {
 		return html`
 			<div class="comment reply-comment" data-object-Id="${comment.objectId}">
 				<div class="comment-user-info-wrapper">
 					<div class="comment-user-info">
 						<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
-						<p class="comment-info">${comment.ownerName}<br>${comment.createdAt}</p>
+						<p class="comment-info">${comment.ownerName}<br>${comment.updatedAt}</p>
 					</div>
 				</div>
 				<div class="comment-text-wrapper">
 					<input type="checkbox" id="overflow-control-btn">
-					<p class="comment-text">${comment.commentText}</p>
+					<p class="comment-text ${comment.ownerNameOfRepliedComment !== 'undefined' ? 'comment-text-of-reply-to-reply' : ''}" data-owner-name-of-replied-comment="${comment.ownerNameOfRepliedComment !== 'undefined' ? comment.ownerNameOfRepliedComment : ''}">${comment.commentText}</p>
 					<label for="overflow-control-btn">
 						<span class="show-more-btn">Show more</span>
 						<span class="show-less-btn">Show less</span>
@@ -48,7 +50,8 @@ export const commentTemplate = (comment, needsToBeAReply) => {
 					<div class="comment-actions">
 						<img src="/images/thumbs-up.svg" title="like" alt="like" class="comment-like-btn">
 						<img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn">
-						<img src="/images/plus-square.svg" data-object-Id="${comment.objectId}" title="reply" alt="reply" class="comment-reply-btn">
+						<!-- data-object-Id is comment.idOfRepliedComment so that every reply of this reply is placed in the main comment's reply section -->
+						<img src="/images/plus-square.svg" data-owner-Name="${comment.ownerName}" data-object-Id="${comment.idOfRepliedComment}" title="reply" alt="reply" class="comment-reply-btn">
 					</div>
 				</div>
 			</div>
@@ -59,7 +62,7 @@ export const commentTemplate = (comment, needsToBeAReply) => {
 				<div class="comment-user-info-wrapper">
 					<div class="comment-user-info">
 						<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
-						<p class="comment-info">${comment.ownerName}<br>published on:<br>${comment.createdAt}</p>
+						<p class="comment-info">${comment.ownerName}<br>published on:<br>${comment.updatedAt}</p>
 					</div>
 				</div>
 				<div class="comment-text-wrapper">
@@ -98,7 +101,7 @@ export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishComment
 
 		try {
 			comments = await getAllComments();
-			console.log(comments)
+			// console.log(comments)
 		} catch (error) {
 			alert(error);
 		}
@@ -118,7 +121,7 @@ export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishComment
 			<span id="publish-comment">
 				<label for="comment-input">Comment:</label>
 				<textarea class="form-control" id="comment-input" rows="3"></textarea>
-				<button  type="button" class="btn btn-primary" @click=${publishCommentBtnHandler}>Comment</button>
+				<button type="button" class="btn btn-primary" @click=${publishCommentBtnHandler}>Comment</button>
 			</span>
 		</div>
 	`;
