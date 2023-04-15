@@ -115,7 +115,7 @@ export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishComment
 		
 		<div id="comment-section">
 			<div id="comments" @click=${commentsDivClickHandler}>
-				${until(commentsTemplatePromise, html`Loading...`)}
+				${until(commentsTemplatePromise, html`<div class="comments-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>`)}
 			</div>
 
 			<span id="publish-comment">

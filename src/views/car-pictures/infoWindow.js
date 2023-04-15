@@ -225,7 +225,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 
 					const repliesTemplatePromise = getRepliesTemplate();
 
-					litRender(until(repliesTemplatePromise, html`Loading...`), repliesDiv);
+					litRender(until(repliesTemplatePromise, html`<div class="comments-spinner comments-spinner-replies"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>`), repliesDiv);
 
 					//? we wait for the replies to appear and then we start observing them
 					repliesTemplatePromise.then(() => startObservingComments([...repliesDiv.querySelectorAll('p.comment-text')]))
