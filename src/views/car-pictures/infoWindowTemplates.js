@@ -93,7 +93,7 @@ export const commentTemplate = (comment, needsToBeAReply) => {
 	}
 } 
 
-export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishCommentBtnHandler, commentsDivClickHandler) => {
+export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishCommentBtnHandler, commentsDivClickHandler, publishCommentInputHandler) => {
 	async function commentsTemplate() {
 		let comments = null;
 
@@ -118,10 +118,11 @@ export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishComment
 				${until(commentsTemplatePromise, html`<div class="comments-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>`)}
 			</div>
 
-			<span id="publish-comment">
+			<span @input=${publishCommentInputHandler} id="publish-comment">
 				<label for="comment-input">Comment:</label>
 				<textarea class="form-control" id="comment-input" rows="3"></textarea>
-				<button type="button" class="btn btn-primary" @click=${publishCommentBtnHandler}>Comment</button>
+				<span class="invalid-span" id="textarea-invalid-span">Invalid comment</span>
+				<button disabled type="button" class="btn btn-primary" @click=${publishCommentBtnHandler}>Comment</button>
 			</span>
 		</div>
 	`, commentsTemplatePromise];

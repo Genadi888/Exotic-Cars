@@ -3,7 +3,7 @@ const resizeObserver = new ResizeObserver(entries => {
 		const commentTextElement = entry.target;
 
 		//? Here we get the raw value of the variable (as string):
-		const cssVarForMaxHeight = getComputedStyle(commentTextElement.closest('#comments'))
+		const cssVarForMaxHeight = getComputedStyle(commentTextElement)
 			.getPropertyValue('--commentTextMaxHeight')
 			.trim();
 

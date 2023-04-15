@@ -131,7 +131,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
 		moreInfoWindow.classList.add('dimmed');
 
-		const [commentWindowTemplate, commentsTemplatePromise] = getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler);
+		const [commentWindowTemplate, commentsTemplatePromise] = getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler, getPublishCommentInputHandler());
 
 		litRender(commentWindowTemplate, moreInfoWindow);
 
@@ -153,7 +153,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 				delete button.dataset.repliedCommentId;
 				delete button.dataset.ownerNameOfRepliedComment;
 
-				const [commentWindowTemplate, commentsTemplatePromise] = getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler);
+				const [commentWindowTemplate, commentsTemplatePromise] = getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler, getPublishCommentInputHandler());
 				
 				//? refresh the moreInfoWindow view
 				litRender(commentWindowTemplate, moreInfoWindow);
@@ -162,6 +162,33 @@ export function sectionClickHandler(ev, posts, ctx) {
 				commentsTemplatePromise.then(() => startObservingComments([...moreInfoWindow.querySelectorAll('p.comment-text')]));
 			} catch (error) {
 				alert(error);
+			}
+		}
+
+		function getPublishCommentInputHandler() {
+			let timeout;
+
+			return (ev) => {
+				if (ev.target.id == 'comment-input') {
+					const textarea = ev.target;
+					const button = textarea.parentElement.querySelector('.btn-primary');
+					button.disabled = true;
+					clearTimeout(timeout);
+
+					timeout = setTimeout(() => {
+						const span = textarea.parentElement.querySelector('#textarea-invalid-span');
+	
+						if (!textarea.value.match(/[\w'".-]{2,}/g) || textarea.value == '') {
+							textarea.classList.add('is-invalid');
+							span.style.display = 'unset';
+							span.textContent = 'write at least one word';
+						} else {
+							textarea.classList.remove('is-invalid');
+							span.style.display = 'none';
+							button.removeAttribute('disabled');
+						}
+					}, 1000);
+				}
 			}
 		}
 
