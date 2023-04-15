@@ -258,7 +258,7 @@ body>aside>ul>li>a:hover {
 #more-info-window {
 	width: 80vw;
 	min-width: 270px;
-	height: clamp(231px, 70vh, 463px);
+	height: clamp(231px, 70vh, 2000px);
 
 	position: fixed;
 	transform: translateX(-50%) translateY(-50%);
@@ -363,6 +363,13 @@ body>aside>ul>li>a:hover {
 	word-break: break-word;
 	text-shadow: 0px 0px 2px #000000;
 	overflow: auto;
+}
+
+#no-comments-header {
+	text-align: center;
+    margin: 8% 3% 0 3%;
+    font-size: calc(20px + 1vmin);
+    color: greenyellow;
 }
 
 .comments-spinner {
@@ -618,6 +625,10 @@ body>aside>ul>li>a:hover {
 
 .overflow-control-btn-pressed~label>.show-more-btn {
 	display: none;
+}
+
+.comment-actions-wrapper {
+	max-height: 400px;
 }
 
 .comment-actions {

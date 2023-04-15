@@ -144,7 +144,13 @@ export function sectionClickHandler(ev, posts, ctx) {
 			const textarea = button.parentElement.querySelector('textarea#comment-input');
 
 			try {
-				await createComment({ commentText: textarea.value.trim() }, ctx, button.dataset.repliedCommentId || null, button.dataset.ownerNameOfRepliedComment || null);
+				await createComment(
+					{ commentText: textarea.value.trim() }, 
+					ctx, button.dataset.repliedCommentId || null, 
+					button.dataset.ownerNameOfRepliedComment || null, 
+					button.dataset.repliedCommentId === undefined ? cardObjectId : null //? if repliedCommentId is missing, then the comment is not a reply
+				);
+
 				button.blur();
 
 				textarea.value = '';

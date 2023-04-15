@@ -1,4 +1,4 @@
-import { getAllComments } from "../../api/comments.js";
+import { getCommentsOfAPost } from "../../api/comments.js";
 import { repeat } from "../../lib/directives/repeat.js";
 import { until } from "../../lib/directives/until.js";
 import { html } from "../../lib/lit-html.js";
@@ -98,13 +98,18 @@ export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishComment
 		let comments = null;
 
 		try {
-			comments = await getAllComments();
+			comments = await getCommentsOfAPost(carObj.objectId);
 			// console.log(comments)
 		} catch (error) {
 			alert(error);
 		}
 
-		return html`${repeat(comments, comment => comment.objectId, commentTemplate)}`;
+		if (comments.length > 0) {
+			return html`${repeat(comments, comment => comment.objectId, commentTemplate)}`;
+		} else {
+			return html`<h1 id="no-comments-header">There are no comments for this post.</h1>`
+		}
+
 	}
 
 	const commentsTemplatePromise = commentsTemplate();
