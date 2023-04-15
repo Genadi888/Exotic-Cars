@@ -25,8 +25,6 @@ export const reportWindowTemplate = (clickHandler, onSubmit, getFormInputEventHa
 `;
 
 export const commentTemplate = (comment, needsToBeAReply) => {
-	console.log(needsToBeAReply)
-
 	comment.updatedAt = new Date(comment.updatedAt).toDateString();
 
 	if (needsToBeAReply === true) {
@@ -109,13 +107,15 @@ export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishComment
 		return html`${repeat(comments, comment => comment.objectId, commentTemplate)}`;
 	}
 
-	return html`
+	const commentsTemplatePromise = commentsTemplate();
+
+	return [html`
 		<button @click=${closeBtnHandler} type="button" class="btn-close" aria-label="Close"></button>
 		<h4>${carObj.carName} - comments</h4>
 		
 		<div id="comment-section">
 			<div id="comments" @click=${commentsDivClickHandler}>
-				${until(commentsTemplate(), html`Loading...`)}
+				${until(commentsTemplatePromise, html`Loading...`)}
 			</div>
 
 			<span id="publish-comment">
@@ -124,5 +124,5 @@ export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishComment
 				<button type="button" class="btn btn-primary" @click=${publishCommentBtnHandler}>Comment</button>
 			</span>
 		</div>
-	`;
+	`, commentsTemplatePromise];
 } 

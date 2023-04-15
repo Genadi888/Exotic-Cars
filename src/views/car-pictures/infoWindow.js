@@ -3,6 +3,7 @@ import { reportObject } from "../../api/posts.js";
 import { repeat } from "../../lib/directives/repeat.js";
 import { until } from "../../lib/directives/until.js";
 import { html, render as litRender } from "../../lib/lit-html.js";
+import { startObservingComments } from "./commentsObserver.js";
 import { commentTemplate, getCommentWindowTemplate, infoWindowTemplate, reportWindowTemplate } from "./infoWindowTemplates.js";
 
 let moreInfoWindowCommentClickListener;
@@ -130,7 +131,12 @@ export function sectionClickHandler(ev, posts, ctx) {
 		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
 		moreInfoWindow.classList.add('dimmed');
 
-		litRender(getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler), moreInfoWindow);
+		const [commentWindowTemplate, commentsTemplatePromise] = getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler);
+
+		litRender(commentWindowTemplate, moreInfoWindow);
+
+		//? we wait for the comments to appear and then we start observing them
+		commentsTemplatePromise.then(() => startObservingComments([...moreInfoWindow.querySelectorAll('p.comment-text')]));
 
 		async function publishCommentBtnHandler(ev) {
 			ev.preventDefault();
@@ -147,8 +153,13 @@ export function sectionClickHandler(ev, posts, ctx) {
 				delete button.dataset.repliedCommentId;
 				delete button.dataset.ownerNameOfRepliedComment;
 
-				//? refresh the comment section
-				litRender(getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler), moreInfoWindow);
+				const [commentWindowTemplate, commentsTemplatePromise] = getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler);
+				
+				//? refresh the moreInfoWindow view
+				litRender(commentWindowTemplate, moreInfoWindow);
+
+				//? we wait for the comments to appear and then we start observing them
+				commentsTemplatePromise.then(() => startObservingComments([...moreInfoWindow.querySelectorAll('p.comment-text')]));
 			} catch (error) {
 				alert(error);
 			}
@@ -212,59 +223,15 @@ export function sectionClickHandler(ev, posts, ctx) {
 						return html`${repeat(replies, reply => reply.objectId, reply => commentTemplate(reply, true))}`
 					}
 
-					litRender(until(getRepliesTemplate(), html`Loading...`), repliesDiv);
-				}
+					const repliesTemplatePromise = getRepliesTemplate();
 
-			}
-		});
+					litRender(until(repliesTemplatePromise, html`Loading...`), repliesDiv);
 
-		const resizeObserver = new ResizeObserver(entries => {
-			for (const entry of entries) {
-				const commentTextElement = entry.target;
-
-				//? Here we get the raw value of the variable (as string):
-				const cssVarForMaxHeight = getComputedStyle(commentTextElement.closest('#comments'))
-					.getPropertyValue('--commentTextMaxHeight')
-					.trim();
-
-				//? If the variable's value ends with "vh", it will be converted to pixels, otherwise, the value will not be changed.
-				const maxHeight = Math.floor(cssVarForMaxHeight.endsWith('vh') ?
-					document.documentElement.clientHeight * +cssVarForMaxHeight.slice(0, -2) / 100 :
-					+cssVarForMaxHeight.slice(0, -2));
-
-				//? since we are observing only a single element, so we access the first element in entries array
-				const commentTextHeight = Math.floor(+entry.borderBoxSize[0].blockSize);
-				const commentTextWrapper = commentTextElement.parentElement;
-
-				if (commentTextWrapper.style.maxHeight.trim() !== cssVarForMaxHeight //? Here we check if the current max-height differs from our CSS variable for max-height (this can occur after resizing).
-					&& commentTextWrapper.style.maxHeight.match(/\d/) //? Here we make sure that both values are valid (different from "unset" or something else).
-					&& cssVarForMaxHeight.match(/\d/)) {
-
-					// console.log(commentTextWrapper.style.maxHeight.trim(), cssVar);
-					commentTextWrapper.style.maxHeight = cssVarForMaxHeight;
-				}
-
-				const labelToClickOn = commentTextWrapper.querySelector('label[for="overflow-control-btn"]');
-				const inputCheckbox = commentTextWrapper.querySelector('#overflow-control-btn');
-
-				if (commentTextHeight > commentTextWrapper.clientHeight) {
-					labelToClickOn.style.display = 'block'; //? If the comment text is overflowing outside the wrapper, the "show-more" label will be shown.
-				}
-				else if (commentTextHeight <= maxHeight || maxHeight == 0) {
-					//? If the comment text is less than our desired max-height, the label will be hidden as there is no need for it.
-					//? The label will also be hidden if the max-height is removed (screen becomes too large).
-
-					labelToClickOn.style.display = 'none';
-					if (inputCheckbox.classList.contains('overflow-control-btn-pressed')) {
-						labelToClickOn.click(); //? Here we simulate a click, if the label is hidden after it has been clicked (last text was "show less"). We do that to prevent unwanted behavior.
-					}
+					//? we wait for the replies to appear and then we start observing them
+					repliesTemplatePromise.then(() => startObservingComments([...repliesDiv.querySelectorAll('p.comment-text')]))
 				}
 			}
 		});
-
-		for (const commentTextElement of [...moreInfoWindow.querySelectorAll('p.comment-text')]) {
-			resizeObserver.observe(commentTextElement, { box: 'border-box' });
-		}
 
 		showOrHideWindow(moreInfoWindow);
 	}
