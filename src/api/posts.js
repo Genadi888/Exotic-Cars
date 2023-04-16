@@ -2,22 +2,7 @@ import * as api from './api.js';
 import { addEntryWithUserPointer } from './data.js';
 
 export async function getAllPosts(ctx) {
-	const allPosts = (await api.post('/functions/getPosts')).result;
-	const allLikes = (await api.get('/PostsLikes')).results;
-
-	for (const post of allPosts) {
-		post.likesCount = allLikes
-			.filter(likeObj => {
-				if (likeObj.postId === post.objectId) {
-					if (likeObj.userWhoLiked.objectId === ctx.user?.objectId) {
-						post.userHasLikedThisPost = true;
-					}
-					return true;
-				}
-			}).length;
-	}
-
-	return allPosts;
+	return (await api.post('/functions/getPosts')).result;
 }
 
 export async function getAllUnapprovedPosts() {
