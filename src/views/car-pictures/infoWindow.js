@@ -1,4 +1,4 @@
-import { createComment, getRepliesForAComment } from "../../api/comments.js";
+import { createComment, getRepliesForAComment, likeComment, unlikeComment } from "../../api/comments.js";
 import { reportObject } from "../../api/posts.js";
 import { repeat } from "../../lib/directives/repeat.js";
 import { until } from "../../lib/directives/until.js";
@@ -131,7 +131,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
 		moreInfoWindow.classList.add('dimmed');
 
-		const [commentWindowTemplate, commentsTemplatePromise] = getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler, getPublishCommentInputHandler());
+		const [commentWindowTemplate, commentsTemplatePromise] = getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler, getPublishCommentInputHandler(), ctx);
 
 		litRender(commentWindowTemplate, moreInfoWindow);
 
@@ -159,7 +159,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 				delete button.dataset.repliedCommentId;
 				delete button.dataset.ownerNameOfRepliedComment;
 
-				const [commentWindowTemplate, commentsTemplatePromise] = getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler, getPublishCommentInputHandler());
+				const [commentWindowTemplate, commentsTemplatePromise] = getCommentWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow), publishCommentBtnHandler, commentsDivClickHandler, getPublishCommentInputHandler(), ctx);
 				
 				//? refresh the moreInfoWindow view
 				litRender(commentWindowTemplate, moreInfoWindow);
@@ -198,7 +198,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 			}
 		}
 
-		function commentsDivClickHandler(ev) {
+		async function commentsDivClickHandler(ev) {
 			ev.preventDefault();
 			if (ev.target.classList.contains('comment-reply-btn')) {
 				const publishCommentSpan = ev.target.closest('#comment-section').querySelector('#publish-comment');
@@ -212,7 +212,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 				btn.textContent = 'Reply';
 				btn.dataset.repliedCommentId = ev.target.dataset.objectId; //? we attach the id of the replied comment to the dataset so we can easily get it in "publishCommentBtnHandler"
 				btn.dataset.ownerNameOfRepliedComment = ev.target.dataset.ownerName; //? we attach the owner's name of the replied comment to the dataset so we can easily get it in "publishCommentBtnHandler"
-			} else {
+			} else if (ev.target.classList.contains('comment-reply-btn')) {
 				const focusedComment = ev.target.closest('#comments').querySelector('.focused-comment');
 				if (focusedComment) {
 					ev.target.closest('#comments').querySelector('.focused-comment')?.classList.remove('focused-comment'); //? unfocus comment
@@ -220,6 +220,34 @@ export function sectionClickHandler(ev, posts, ctx) {
 					publishbtn.textContent = 'Comment';
 					delete publishbtn.dataset.repliedCommentId;
 					delete publishbtn.dataset.ownerNameOfRepliedComment;
+				}
+			} else if (ev.target.classList.contains('comment-like-btn') && ctx.user?.objectId && ctx.user?.objectId != ev.target.dataset.objectId) {
+				//TODO: NEED TO FIX THE PREVIOUS LINE - "ctx.user?.objectId != ev.target.dataset.objectId"
+				const likeBtn = ev.target;
+				const commentObjectId = ev.target.dataset.objectId;
+
+				if (likeBtn.classList.contains('user-has-liked-comment')) {
+					try {
+						likeBtn.classList.remove('user-has-liked-comment');
+						likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes - 1;
+						await unlikeComment(commentObjectId);
+					} catch (error) {
+						alert(error.message);
+						likeBtn.classList.add('user-has-liked-comment')
+						likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes + 1;
+						throw error;
+					}
+				} else {
+					try {
+						likeBtn.classList.add('user-has-liked-comment')
+						likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes + 1;
+						await likeComment(commentObjectId);	
+					} catch (error) {
+						alert(error.message);
+						likeBtn.classList.remove('user-has-liked-comment');
+						likeBtn.parentElement.dataset.likes = +likeBtn.parentElement.dataset.likes - 1;
+						throw error;
+					}
 				}
 			}
 		}
@@ -253,7 +281,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 						const repliedCommentId = repliesDiv.closest('.comment').dataset.objectId;
 						const replies = await getRepliesForAComment(repliedCommentId);
 
-						return html`${repeat(replies, reply => reply.objectId, reply => commentTemplate(reply, true))}`
+						return html`${repeat(replies, reply => reply.objectId, reply => commentTemplate(reply, true, ctx))}`
 					}
 
 					const repliesTemplatePromise = getRepliesTemplate();

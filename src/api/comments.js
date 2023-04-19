@@ -20,6 +20,16 @@ export async function createComment(comment, ctx, idOfRepliedComment, ownerNameO
 	return api.post(`/Comments`, comment);
 }
 
+export async function likeComment(commentId) {
+	const likeObj = { commentId };
+	addEntryWithUserPointer(likeObj, 'userWhoLiked');
+	return api.post(`/functions/likeComment`, likeObj);
+}
+
+export async function unlikeComment(commentId) {
+	return api.post(`/functions/unlikeComment`, { commentId });
+}
+
 export async function getRepliesForAComment(idOfRepliedComment) {
 	return (await api.post(`/functions/getRepliesForAComment`, { idOfRepliedComment })).result;
 }

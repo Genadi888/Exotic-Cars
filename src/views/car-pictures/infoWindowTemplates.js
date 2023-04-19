@@ -24,7 +24,7 @@ export const reportWindowTemplate = (clickHandler, onSubmit, getFormInputEventHa
 	</form>
 `;
 
-export const commentTemplate = (comment, needsToBeAReply) => {
+export const commentTemplate = (comment, needsToBeAReply, ctx) => {
 	comment.updatedAt = new Date(comment.updatedAt).toDateString();
 
 	if (needsToBeAReply === true) {
@@ -46,7 +46,12 @@ export const commentTemplate = (comment, needsToBeAReply) => {
 				</div>
 				<div class="comment-actions-wrapper">
 					<div class="comment-actions">
-						<img src="/images/thumbs-up.svg" title="like" alt="like" class="comment-like-btn">
+						<span class="comment-like-btn-span" data-likes="${comment.likesCount}">
+							<img src="/images/thumbs-up.svg" data-object-Id="${comment.objectId}" 
+							title=${ctx.user?.objectId !== comment.owner.objectId ? (comment.userHasLikedThisComment ? "unlike" : "like") : ""} alt="like" 
+							class="comment-like-btn ${comment.userHasLikedThisComment ? 'user-has-liked-comment' : ''} 
+							${ctx.user?.objectId === comment.owner.objectId ? 'disabled-comment-like-btn' : ''}">
+						</span>
 						<img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn">
 						<!-- data-object-Id is comment.idOfRepliedComment so that every reply of this reply is placed in the main comment's reply section -->
 						<img src="/images/plus-square.svg" data-owner-Name="${comment.ownerName}" data-object-Id="${comment.idOfRepliedComment}" title="reply" alt="reply" class="comment-reply-btn">
@@ -60,7 +65,7 @@ export const commentTemplate = (comment, needsToBeAReply) => {
 				<div class="comment-user-info-wrapper">
 					<div class="comment-user-info">
 						<img src="/images/blank-profile-picture.webp" title="user-pic" alt="user-pic" class="comment-user-pic">
-						<p class="comment-info">${comment.ownerName}<br>published on:<br>${comment.updatedAt}</p>
+						<p class="comment-info">${comment.ownerName}<br>${comment.updatedAt}</p>
 					</div>
 				</div>
 				<div class="comment-text-wrapper">
@@ -73,7 +78,12 @@ export const commentTemplate = (comment, needsToBeAReply) => {
 				</div>
 				<div class="comment-actions-wrapper">
 					<div class="comment-actions">
-						<img src="/images/thumbs-up.svg" title="like" alt="like" class="comment-like-btn">
+						<span class="comment-like-btn-span" data-likes="${comment.likesCount}">
+							<img src="/images/thumbs-up.svg" data-object-Id="${comment.objectId}" 
+							title=${ctx.user?.objectId !== comment.owner.objectId ? (comment.userHasLikedThisComment ? "unlike" : "like") : ""} alt="like" 
+							class="comment-like-btn ${comment.userHasLikedThisComment ? 'user-has-liked-comment' : ''} 
+							${ctx.user?.objectId === comment.owner.objectId ? 'disabled-comment-like-btn' : ''}">
+						</span>
 						<img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn">
 						<img src="/images/plus-square.svg" data-object-Id="${comment.objectId}" title="reply" alt="reply" class="comment-reply-btn">
 					</div>
@@ -93,7 +103,7 @@ export const commentTemplate = (comment, needsToBeAReply) => {
 	}
 } 
 
-export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishCommentBtnHandler, commentsDivClickHandler, publishCommentInputHandler) => {
+export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishCommentBtnHandler, commentsDivClickHandler, publishCommentInputHandler, ctx) => {
 	async function commentsTemplate() {
 		let comments = null;
 
@@ -105,7 +115,7 @@ export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishComment
 		}
 
 		if (comments.length > 0) {
-			return html`${repeat(comments, comment => comment.objectId, commentTemplate)}`;
+			return html`${repeat(comments, comment => comment.objectId, comment => commentTemplate(comment, null, ctx))}`;
 		} else {
 			return html`<h1 id="no-comments-header">There are no comments for this post.</h1>`
 		}
