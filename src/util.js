@@ -1,5 +1,5 @@
 export function getUserData() {
-	return JSON.parse(sessionStorage.getItem('userData') || localStorage.getItem('userData'));
+	return JSON.parse(sessionStorage.getItem('userData') || localStorage.getItem('userData')) || undefined;
 }
 export function setUserData(data, remember) {
 	sessionStorage.setItem('userData', JSON.stringify(data));

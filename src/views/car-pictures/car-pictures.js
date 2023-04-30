@@ -2,13 +2,13 @@ import { html } from "../../lib/lit-html.js";
 import { repeat } from "../../lib/directives/repeat.js";
 import { until } from "../../lib/directives/until.js";
 import { getAllPosts, getAllUnapprovedPosts } from "../../api/posts.js";
-import { sectionClickHandler } from "./infoWindow.js";
+import { sectionClickHandler } from "./infoWindow/infoWindow.js";
 import { setUpScrollToTop } from "./scrollToTop.js";
 import { carPicturesTemplate } from "./carPicturesTemplate.js";
-import { getApproveClickHandler, getDeleteHandler, getLikeClickHandler } from "./postActions.js";
-import { getSwitchToApprovalModeHandler } from "./switchToApprovalModeHandler.js";
-import { cardTemplate } from "./cardTemplate.js";
-import { getNoPostsTemplate } from "./getNoPostsTemplate.js";
+import { getApproveClickHandler, getDeleteHandler, getLikeClickHandler } from "./posts/postActions.js";
+import { getSwitchToApprovalModeHandler } from "./posts/switchToApprovalModeHandler.js";
+import { cardTemplate } from "./posts/cardTemplate.js";
+import { getNoPostsTemplate } from "./posts/getNoPostsTemplate.js";
 
 export async function carPicturesView(ctx) {
 	let posts = null;

@@ -1,4 +1,4 @@
-import { deletePost, unlikePost, likePost, approvePost } from "../../api/posts.js";
+import { deletePost, unlikePost, likePost, approvePost } from "/src/api/posts.js";
 
 export function getDeleteHandler(ctx, postObjectId) {
 	return async (ev) => {

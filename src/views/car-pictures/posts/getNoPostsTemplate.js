@@ -1,4 +1,4 @@
-import { html } from "../../lib/lit-html.js"
+import { html } from "/src/lib/lit-html.js"
 
 export const getNoPostsTemplate = (shouldIncludeCreateLink, ctx) => {
 	return ctx.user?.sessionToken ? 

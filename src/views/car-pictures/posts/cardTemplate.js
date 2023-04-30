@@ -1,4 +1,4 @@
-import { html } from "../../lib/lit-html.js";
+import { html } from "/src/lib/lit-html.js";
 
 export const cardTemplate = (carObj, user, deleteClickHandler, likeClickHandler, approveClickHandler, needApproval) => html`
 	<div class="card border-0">

@@ -1,7 +1,7 @@
-import { getCommentsOfAPost } from "../../api/comments.js";
-import { repeat } from "../../lib/directives/repeat.js";
-import { until } from "../../lib/directives/until.js";
-import { html } from "../../lib/lit-html.js";
+import { getCommentsOfAPost } from "/src/api/comments.js";
+import { repeat } from "/src/lib/directives/repeat.js";
+import { until } from "/src/lib/directives/until.js";
+import { html } from "/src/lib/lit-html.js";
 
 export const infoWindowTemplate = (carObj, clickHandler) => html`
 	<button @click=${clickHandler} type="button" class="btn-close" aria-label="Close"></button>
@@ -47,15 +47,27 @@ export const commentTemplate = (comment, needsToBeAReply, ctx) => {
 				<div class="comment-actions-wrapper">
 					<div class="comment-actions">
 						<span class="comment-like-btn-span" data-likes="${comment.likesCount}">
-							<img src="/images/thumbs-up.svg" data-object-Id="${comment.objectId}" 
+							<img src="/images/thumbs-up.svg" data-object-Id="${comment.objectId}" data-owner-object-id="${comment.owner.objectId}" 
 							title=${ctx.user?.objectId !== comment.owner.objectId ? (comment.userHasLikedThisComment ? "unlike" : "like") : ""} alt="like" 
 							class="comment-like-btn ${comment.userHasLikedThisComment ? 'user-has-liked-comment' : ''} 
-							${ctx.user?.objectId === comment.owner.objectId ? 'disabled-comment-like-btn' : ''}">
+							${ctx.user?.objectId === comment.owner.objectId || !ctx.user ? 'disabled-comment-like-btn' : ''}">
 						</span>
-						<img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn">
+						<!-- <img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn"> -->
 						<!-- data-object-Id is comment.idOfRepliedComment so that every reply of this reply is placed in the main comment's reply section -->
-						<img src="/images/plus-square.svg" data-owner-Name="${comment.ownerName}" data-object-Id="${comment.idOfRepliedComment}" title="reply" alt="reply" class="comment-reply-btn">
+						
+						${ctx.user ? html`
+							<img src="/images/plus-square.svg" data-owner-Name="${comment.ownerName}" data-object-Id="${comment.idOfRepliedComment}" title="reply" alt="reply" class="comment-reply-btn">
+						` : null}
+
+						${ctx.user ? html`
+							<img src="/images/more-horizontal.svg" data-object-Id="${comment.objectId}" title="more" alt="more" class="comment-more-btn">
+						` : null}
 					</div>
+
+					<ul tabindex="1" class="extra-comment-actions">
+						<li class="comment-report-btn">Report</li>
+						<li class="comment-delete-btn">Delete</li>
+					</ul>
 				</div>
 			</div>
 		`
@@ -79,14 +91,26 @@ export const commentTemplate = (comment, needsToBeAReply, ctx) => {
 				<div class="comment-actions-wrapper">
 					<div class="comment-actions">
 						<span class="comment-like-btn-span" data-likes="${comment.likesCount}">
-							<img src="/images/thumbs-up.svg" data-object-Id="${comment.objectId}" 
+							<img src="/images/thumbs-up.svg" data-object-Id="${comment.objectId}" data-owner-object-id="${comment.owner.objectId}"
 							title=${ctx.user?.objectId !== comment.owner.objectId ? (comment.userHasLikedThisComment ? "unlike" : "like") : ""} alt="like" 
 							class="comment-like-btn ${comment.userHasLikedThisComment ? 'user-has-liked-comment' : ''} 
-							${ctx.user?.objectId === comment.owner.objectId ? 'disabled-comment-like-btn' : ''}">
+							${ctx.user?.objectId === comment.owner.objectId || !ctx.user ? 'disabled-comment-like-btn' : ''}">
 						</span>
-						<img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn">
-						<img src="/images/plus-square.svg" data-object-Id="${comment.objectId}" title="reply" alt="reply" class="comment-reply-btn">
+						<!-- <img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn"> -->
+						
+						${ctx.user ? html`
+							<img src="/images/plus-square.svg" data-object-Id="${comment.objectId}" title="reply" alt="reply" class="comment-reply-btn">
+						` : null}
+
+						${ctx.user ? html`
+							<img src="/images/more-horizontal.svg" data-object-Id="${comment.objectId}" title="more" alt="more" class="comment-more-btn">
+						` : null}
 					</div>
+
+					<ul tabindex="1" class="extra-comment-actions">
+						<li class="comment-report-btn">Report</li>
+						<li class="comment-delete-btn">Delete</li>
+					</ul>
 				</div>
 
 				${
@@ -104,6 +128,7 @@ export const commentTemplate = (comment, needsToBeAReply, ctx) => {
 } 
 
 export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishCommentBtnHandler, commentsDivClickHandler, publishCommentInputHandler, ctx) => {
+	console.log(ctx)
 	async function commentsTemplate() {
 		let comments = null;
 
@@ -133,12 +158,17 @@ export const getCommentWindowTemplate = (carObj, closeBtnHandler, publishComment
 				${until(commentsTemplatePromise, html`<div class="comments-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>`)}
 			</div>
 
-			<span @input=${publishCommentInputHandler} id="publish-comment">
-				<label for="comment-input">Comment:</label>
-				<textarea class="form-control" id="comment-input" rows="3"></textarea>
-				<span class="invalid-span" id="textarea-invalid-span">Invalid comment</span>
-				<button disabled type="button" class="btn btn-primary" @click=${publishCommentBtnHandler}>Comment</button>
-			</span>
+			${
+				ctx.user 
+				? html`
+					<span @input=${publishCommentInputHandler} id="publish-comment">
+						<label for="comment-input">Comment:</label>
+						<textarea class="form-control" id="comment-input" rows="3"></textarea>
+						<span class="invalid-span" id="textarea-invalid-span">Invalid comment</span>
+						<button disabled type="button" class="btn btn-primary" @click=${publishCommentBtnHandler}>Comment</button>
+					</span>
+				` : null
+			}
 		</div>
 	`, commentsTemplatePromise];
 } 
