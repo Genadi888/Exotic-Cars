@@ -679,6 +679,7 @@ ul.extra-comment-actions:focus {
 .extra-comment-actions>li {
 	display: inherit;
 	cursor: pointer;
+	transition: color 160ms ease-in-out;
 }
 
 .extra-comment-actions>li:not(:last-child) {
@@ -741,7 +742,10 @@ ul.extra-comment-actions:focus {
 
 .comment-report-btn {
 	white-space: nowrap;
-	margin-bottom: 12%;
+}
+
+.comment-report-btn:hover, .comment-delete-btn:hover {
+	color: red;
 }
 
 /* .comment-report-btn:hover {
