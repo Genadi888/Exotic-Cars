@@ -281,7 +281,7 @@ input[type=number] {
 @media only screen and (max-width: 520px) {
 	.grid-container {
 		grid-template-columns: clamp(280px, 80vw, 324px);
-		grid-template-rows: 0.1fr clamp(160px, 30vh, 241px) 0.1fr;
+		grid-template-rows: 0.1fr clamp(177px, 30vh, 241px) 0.1fr;
 		height: unset;
 		width: clamp(280px, 80vw, 324px);
 		top: 3vh;
