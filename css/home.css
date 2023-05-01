@@ -5,6 +5,7 @@
 article {
 	height: 110vh;
 	width: 100%;
+	background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.233)), to(rgba(0, 0, 0, 0.664))), url(/images/dirt-racing.webp) center center/cover no-repeat scroll;
 	background: linear-gradient(to right, rgba(0, 0, 0, 0.233), rgba(0, 0, 0, 0.664)), url(/images/dirt-racing.webp) center center/cover no-repeat scroll;
 	background-size: cover;
 }
@@ -16,6 +17,7 @@ article {
 	top: 10%;
 	color: aliceblue;
 	transition: opacity 700ms ease-in-out;
+	opacity: 0;
 }
 
 @media (prefers-reduced-motion) {
@@ -24,13 +26,8 @@ article {
 	}
 }
 
-/* ? the two end points for the transition */
-.fadeOut {
-	opacity: 0;
-}
-
 .fadeIn {
-	opacity: 1;
+	opacity: 1 !important;
 }
 
 #goal-div>h1 {

@@ -9,7 +9,7 @@ const homeTemplate = () => html`
 	<image-carousel></image-carousel>
 	
 	<article>
-		<div id="goal-div" class="fade-in fadeOut">
+		<div id="goal-div">
 			<h1>What is our goal?</h1>
 			<hr>
 			<p>
@@ -38,15 +38,20 @@ function startObserving(nestedShadowRoot) {
 	const fadeEl = nestedShadowRoot.querySelector('#goal-div');
 	observer.observe(fadeEl);
 
+	let fadeInsCounter = 0;
+
 	function observerCallback(entries) {
 		const goalDiv = entries[0];
 
 		if (goalDiv.isIntersecting) {
-			//? fade in observed element that are in view
-			goalDiv.target.classList.replace('fadeOut', 'fadeIn');
-		} else {
-			//? fade out observed element that are not in view
-			goalDiv.target.classList.replace('fadeIn', 'fadeOut');
+			if (fadeInsCounter == 0) { //! Check if this fade-in is the initial fade-in, which happens when the page loads.
+				fadeInsCounter++;
+				return;
+			}
+			
+			//? fade in observed element which is in view
+			goalDiv.target.classList.add('fadeIn');
+			fadeInsCounter++;
 		}
 	}
 }
