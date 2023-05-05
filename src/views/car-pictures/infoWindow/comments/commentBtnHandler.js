@@ -1,35 +1,18 @@
-import { render as litRender } from "/src/lib/lit-html.js";
-import { startObservingComments } from "./commentsObserver.js";
-import { commentTemplate, getCommentWindowTemplate } from "../infoWindowTemplates.js";
-import { getCommentsDivClickHandler } from "./commentsDivClickHandler.js";
-import { getPublishCommentInputHandler, publishCommentBtnHandler } from "./publishCommentHandlers.js";
-import { getMoreInfoWindowCommentClickListener } from "./moreInfoWindowCommentClickListener.js";
+import { refreshComments, commentsData } from "./refreshComments.js";
 
-export function commentBtnHandler(ev, posts, ctx, showOrHideWindow, miscState) {
+export function commentBtnHandler(ev, posts, ctx, showOrHideWindow, miscState) { //? something like an entry point for the whole comment thing
 	ev.preventDefault();
 
-	const cardObjectId = ev.target.dataset.objectId;
-	const selectedPost = Object.values(posts).find(postObj => postObj.objectId === cardObjectId);
-	const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
-	moreInfoWindow.classList.add('dimmed');
+	commentsData.cardObjectId = ev.target.dataset.objectId;
+	commentsData.selectedPost = Object.values(posts).find(postObj => postObj.objectId === commentsData.cardObjectId);
+	commentsData.moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
+	commentsData.showOrHideWindow = showOrHideWindow;
+	commentsData.ctx = ctx;
+	commentsData.ctx.refreshComments = refreshComments;
+	commentsData.miscState = miscState
+	
+	commentsData.moreInfoWindow.classList.add('dimmed');
 
-	const [commentWindowTemplate, commentsTemplatePromise] = 
-	getCommentWindowTemplate(
-		selectedPost, 
-		() => showOrHideWindow(moreInfoWindow), 
-		publishCommentBtnHandler, 
-		getCommentsDivClickHandler(miscState), 
-		getPublishCommentInputHandler(), 
-		ctx
-	);
-
-	litRender(commentWindowTemplate, moreInfoWindow);
-
-	//? we wait for the comments to appear and then we start observing them
-	commentsTemplatePromise.then(() => startObservingComments([...moreInfoWindow.querySelectorAll('p.comment-text')]));
-
-	moreInfoWindow.addEventListener('click', 
-	miscState.moreInfoWindowCommentClickListener = getMoreInfoWindowCommentClickListener(commentTemplate));
-
-	showOrHideWindow(moreInfoWindow);
+	refreshComments();
+	commentsData.showOrHideWindow(commentsData.moreInfoWindow);
 }

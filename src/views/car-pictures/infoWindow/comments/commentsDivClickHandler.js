@@ -1,6 +1,7 @@
+import { deleteComment } from "/src/api/comments.js";
 import { likeComment, unlikeComment } from "/src/api/comments.js";
 
-export function getCommentsDivClickHandler(miscState) {
+export function getCommentsDivClickHandler(miscState, ctx) {
 	return async (ev) => {
 		ev.preventDefault();
 		if (ev.target.classList.contains('comment-reply-btn')) {
@@ -51,7 +52,18 @@ export function getCommentsDivClickHandler(miscState) {
 			}
 			
 			miscState.commentMoreBtnClicked = !miscState.commentMoreBtnClicked;
-		}			
+		} else if (ev.target.classList.contains('comment-delete-btn')) {
+			ev.target.disabled = true;
+
+			try {
+				await deleteComment(ev.target.dataset.objectId);
+				ev.target.removeAttribute('disabled');
+				ctx.refreshComments()
+			} catch (error) {
+				alert(error);
+				throw error;
+			}
+		}		
 		
 		if (!ev.target.classList.contains('comment-reply-btn')) {
 			const focusedComment = ev.target.closest('#comments')?.querySelector('.focused-comment');

@@ -1,5 +1,6 @@
 import { render as litRender } from "/src/lib/lit-html.js";
 import { commentBtnHandler } from "./comments/commentBtnHandler.js";
+import { extraInfoTemplate } from "./infoWindowTemplates.js";
 
 const miscState = { //? object is stored in the dynamic memory (heap) and its properties can be dynamicly modified
 	moreInfoWindowCommentClickListener: null,
@@ -32,7 +33,7 @@ export function sectionClickHandler(ev, posts, ctx) {
 		const moreInfoWindow = ctx.nestedShadowRoot.querySelector('#more-info-window');
 		moreInfoWindow.classList.remove('dimmed');
 
-		litRender(infoWindowTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow)), moreInfoWindow);
+		litRender(extraInfoTemplate(selectedPost, () => showOrHideWindow(moreInfoWindow)), moreInfoWindow);
 		showOrHideWindow(moreInfoWindow);
 	} else if (ev.target.classList.contains("comment-btn")) {
 		commentBtnHandler(ev, posts, ctx, showOrHideWindow, miscState);

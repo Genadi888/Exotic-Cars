@@ -4,7 +4,7 @@ import { until } from "/src/lib/directives/until.js";
 import { html, render as litRender } from "/src/lib/lit-html.js";
 import { startObservingComments } from "./commentsObserver.js";
 
-export function getMoreInfoWindowCommentClickListener(commentTemplate) {
+export function getInfoWindowCommentClickListener(commentTemplate, ctx) {
 	return async ev => {
 		if (ev.target.getAttribute('for') == 'overflow-control-btn') {
 			const commentTextWrapper = ev.target.parentElement;

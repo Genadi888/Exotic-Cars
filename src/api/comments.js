@@ -17,7 +17,11 @@ export async function createComment(comment, ctx, idOfRepliedComment, ownerNameO
 		comment.postId = postId;
 	}
 
-	return api.post(`/Comments`, comment);
+	return api.post(`/functions/createComment`, comment);
+}
+
+export async function deleteComment(objectId) {
+	return api.del(`/Comments/${objectId}`);
 }
 
 export async function likeComment(commentId) {
