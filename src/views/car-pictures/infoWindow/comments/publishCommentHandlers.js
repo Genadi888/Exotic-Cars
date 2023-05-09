@@ -1,6 +1,6 @@
-import { createComment } from "/src/api/comments.js";
+import { createOrEditComment } from "/src/api/comments.js";
 
-export function getPublishCommentBtnHandler(ctx, cardObjectId) {
+export function getPublishCommentBtnHandler(ctx, postObjectId) {
 	return async ev => {
 		ev.preventDefault();
 		const button = ev.target; //? we save reference to the element in a variable, because later ev.target becomes something else
@@ -9,11 +9,19 @@ export function getPublishCommentBtnHandler(ctx, cardObjectId) {
 		button.disabled = true;
 	
 		try {
-			await createComment(
-				{ commentText: textarea.value.trim() }, 
-				ctx, button.dataset.repliedCommentId || null, 
-				button.dataset.ownerNameOfRepliedComment || null, 
-				button.dataset.repliedCommentId === undefined ? cardObjectId : null //? if repliedCommentId is missing, then the comment is not a reply
+			const commentObj = { commentText: textarea.value.trim() };
+
+			if ('edit' in button.dataset) {
+				commentObj.objectId = button.dataset.commentObjectId; //? we need the objectId to edit the comment
+			}
+			
+			await createOrEditComment(
+				commentObj,
+				ctx,
+				button.dataset.repliedCommentId || null, //? repliedCommentId is always an id of a main comment
+				button.dataset.ownerNameOfRepliedComment || null,
+				!('repliedCommentId' in button.dataset) ? postObjectId : null, //? If repliedCommentId is missing, then the comment is not a reply.
+				'edit' in button.dataset || null
 			);
 	
 			button.blur();
@@ -23,9 +31,11 @@ export function getPublishCommentBtnHandler(ctx, cardObjectId) {
 	
 			delete button.dataset.repliedCommentId;
 			delete button.dataset.ownerNameOfRepliedComment;
+			delete button.dataset.edit;
 	
 			ctx.refreshComments();
 		} catch (error) {
+			button.removeAttribute('disabled');
 			alert(error);
 			throw error;
 		}

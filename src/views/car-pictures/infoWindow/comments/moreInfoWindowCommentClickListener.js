@@ -21,10 +21,10 @@ export function getInfoWindowCommentClickListener(commentTemplate, ctx) {
 		} else if (ev.target.classList.contains('show-replies-lines')) {
 			const repliesDiv = ev.target.parentElement.querySelector('.comment-replies');
 
-			if (repliesDiv.style.display == 'none' || repliesDiv.style.display == '') {
+			if (getComputedStyle(repliesDiv).display == 'none') {
 				ev.target.textContent = 'Hide replies';
 				repliesDiv.style.display = 'block';
-			} else if (repliesDiv.style.display == 'block') {
+			} else if (getComputedStyle(repliesDiv).display == 'block') {
 				ev.target.textContent = 'Show replies';
 				repliesDiv.style.display = 'none';
 			}

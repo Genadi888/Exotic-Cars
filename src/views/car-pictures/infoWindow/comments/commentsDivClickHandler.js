@@ -14,7 +14,7 @@ export function getCommentsDivClickHandler(miscState, ctx) {
 	
 			publishCommentSpan.querySelector('textarea#comment-input').focus();
 			btn.textContent = 'Reply';
-			btn.dataset.repliedCommentId = ev.target.dataset.objectId; //? we attach the id of the replied comment to the dataset so we can easily get it in "publishCommentBtnHandler"
+			btn.dataset.repliedCommentId = ev.target.dataset.objectId; //? we attach the id of the main comment to the dataset so we can easily get it in "publishCommentBtnHandler"
 			btn.dataset.ownerNameOfRepliedComment = ev.target.dataset.ownerName; //? we attach the owner's name of the replied comment to the dataset so we can easily get it in "publishCommentBtnHandler"
 		} else if (ev.target.classList.contains('comment-like-btn') && ctx.user?.objectId != ev.target.dataset.ownerObjectId) {
 			const likeBtn = ev.target;
@@ -63,6 +63,21 @@ export function getCommentsDivClickHandler(miscState, ctx) {
 				alert(error);
 				throw error;
 			}
+		} else if (ev.target.classList.contains('comment-edit-btn')) {
+			ev.target.disabled = true;
+
+			const publishCommentSpan = ev.target.closest('#comment-section').querySelector('#publish-comment');
+			const btn = publishCommentSpan.querySelector('.btn-primary');
+			const comment = ev.target.closest('.comment');
+			const commentInput = publishCommentSpan.querySelector('#comment-input');
+	
+			commentInput.value = comment.querySelector('p.comment-text').textContent;
+			commentInput.focus();
+
+			btn.textContent = 'Edit';
+			btn.dataset.edit = true;
+			btn.dataset.commentObjectId = ev.target.dataset.objectId;
+			btn.removeAttribute('disabled');
 		}		
 		
 		if (!ev.target.classList.contains('comment-reply-btn')) {

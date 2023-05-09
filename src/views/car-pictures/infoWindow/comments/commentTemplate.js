@@ -28,9 +28,8 @@ export const commentTemplate = (comment, needsToBeAReply, ctx) => {
 							class="comment-like-btn ${comment.userHasLikedThisComment ? 'user-has-liked-comment' : ''} 
 							${ctx.user?.objectId === comment.owner.objectId || !ctx.user ? 'disabled-comment-like-btn' : ''}">
 						</span>
-						<!-- <img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn"> -->
+
 						<!-- data-object-Id is comment.idOfRepliedComment so that every reply of this reply is placed in the main comment's reply section -->
-						
 						${ctx.user ? html`
 							<img src="/images/plus-square.svg" data-owner-Name="${comment.ownerName}" data-object-Id="${comment.idOfRepliedComment}" title="reply" alt="reply" class="comment-reply-btn">
 						` : null}
@@ -43,8 +42,13 @@ export const commentTemplate = (comment, needsToBeAReply, ctx) => {
 					<ul tabindex="1" class="extra-comment-actions">
 						${ 
 							ctx.user.objectId !== comment.owner.objectId ? 
-							html`<li class="comment-report-btn">Report</li>` :  
-							html`<li class="comment-delete-btn">Delete</li>`
+							html`
+								<li><button class="comment-report-btn btn btn-danger" data-object-Id="${comment.objectId}">Report</button></li>
+							` :  
+							html`
+								<li><button class="comment-delete-btn btn btn-danger" data-object-Id="${comment.objectId}">Delete</button></li>
+								<li><button class="comment-edit-btn btn" data-object-Id="${comment.objectId}">Edit</button></li>
+							`
 						}
 					</ul>
 				</div>
@@ -75,7 +79,6 @@ export const commentTemplate = (comment, needsToBeAReply, ctx) => {
 							class="comment-like-btn ${comment.userHasLikedThisComment ? 'user-has-liked-comment' : ''} 
 							${ctx.user?.objectId === comment.owner.objectId || !ctx.user ? 'disabled-comment-like-btn' : ''}">
 						</span>
-						<!-- <img src="/images/flag.svg" title="report" alt="report" class="comment-report-btn"> -->
 						
 						${ctx.user ? html`
 							<img src="/images/plus-square.svg" data-object-Id="${comment.objectId}" title="reply" alt="reply" class="comment-reply-btn">
@@ -89,8 +92,13 @@ export const commentTemplate = (comment, needsToBeAReply, ctx) => {
 					<ul tabindex="1" class="extra-comment-actions">
 						${ 
 							ctx.user.objectId !== comment.owner.objectId ? 
-							html`<li><button class="comment-report-btn btn btn-danger" data-object-Id="${comment.objectId}">Report</button></li>` :  
-							html`<li><button class="comment-delete-btn btn btn-danger" data-object-Id="${comment.objectId}">Delete</button></li>`
+							html`
+								<li><button class="comment-report-btn btn btn-danger" data-object-Id="${comment.objectId}">Report</button></li>
+							` :  
+							html`
+								<li><button class="comment-delete-btn btn btn-danger" data-object-Id="${comment.objectId}">Delete</button></li>
+								<li><button class="comment-edit-btn btn" data-object-Id="${comment.objectId}">Edit</button></li>
+							`
 						}
 					</ul>
 				</div>

@@ -1,7 +1,7 @@
 import * as api from './api.js';
 import { addEntryWithUserPointer } from './data.js';
 
-export async function createComment(comment, ctx, idOfRepliedComment, ownerNameOfRepliedComment, postId) {
+export async function createOrEditComment(comment, ctx, idOfRepliedComment, ownerNameOfRepliedComment, postId, edit) {
 	addEntryWithUserPointer(comment, 'owner');
 	// console.log(comment);
 	
@@ -13,11 +13,11 @@ export async function createComment(comment, ctx, idOfRepliedComment, ownerNameO
 	if (ownerNameOfRepliedComment) {
 		comment.ownerNameOfRepliedComment = ownerNameOfRepliedComment;
 	}
-	if (postId) {
+	if (postId && edit === null) { //? If the comment is being edited, there is no need to set a value to postId because the server ignores it in this case. 
 		comment.postId = postId;
 	}
 
-	return api.post(`/functions/createComment`, comment);
+	return api.post(`/functions/${edit ? 'edit' : 'create'}Comment`, comment);
 }
 
 export async function deleteComment(objectId) {
