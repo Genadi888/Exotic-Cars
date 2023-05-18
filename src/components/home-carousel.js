@@ -25,20 +25,24 @@ export function defineCarousel() {
 			}
 		}
 
-		get #imageSize() {
+		get imageSize() {
 			if (this.#_size == null) {
-				return new Promise(resolve => {
+				return new Promise((resolve, reject) => {
 					this.#carouselImages[0].addEventListener('load', () => {
 						this.#_size = this.#carouselImages[0].clientWidth;
 						resolve(this.#carouselImages[0].clientWidth);
-					})
+					}, { once: true });
+
+					this.#carouselImages[0].addEventListener('error', () => {
+						reject("An error has occured after loading the first image.");
+					}, { once: true });
 				})
 			} else {
 				return this.#_size;
 			}
 		}
 
-		set #imageSize(val) {
+		set imageSize(val) {
 			this.#_size = val;
 		}
 
@@ -71,8 +75,8 @@ export function defineCarousel() {
 
 		async #windowResize() {
 			this.#carouselSlide.style.transition = 'none';
-			this.#imageSize = this.#carouselImages[0].clientWidth;
-			this.#carouselSlide.style.transform = `translateX(${(-(await this.#imageSize) * this.#counter)}px)`;
+			this.imageSize = this.#carouselImages[0].clientWidth;
+			this.#carouselSlide.style.transform = `translateX(${(-(await this.imageSize) * this.#counter)}px)`;
 		}
 
 		async #onNext() {
@@ -81,7 +85,7 @@ export function defineCarousel() {
 			}
 			this.#counter++;
 			this.#carouselSlide.style.transition = `transform ${this.#transitionDelay} ease-in-out`;
-			this.#carouselSlide.style.transform = `translateX(${(-(await this.#imageSize) * this.#counter)}px)`;
+			this.#carouselSlide.style.transform = `translateX(${(-(await this.imageSize) * this.#counter)}px)`;
 		}
 
 		async #onPrev() {
@@ -90,7 +94,7 @@ export function defineCarousel() {
 			}
 			this.#counter--;
 			this.#carouselSlide.style.transition = `transform ${this.#transitionDelay} ease-in-out`;
-			this.#carouselSlide.style.transform = `translateX(${(-(await this.#imageSize) * this.#counter)}px)`;
+			this.#carouselSlide.style.transform = `translateX(${(-(await this.imageSize) * this.#counter)}px)`;
 		}
 
 		#disableActionsAndControlAutoNext(btn, timeoutId) {
@@ -160,11 +164,11 @@ export function defineCarousel() {
 				if (this.#carouselImages[this.#counter].id == 'lastClone') {
 					this.#carouselSlide.style.transition = 'none';
 					this.#counter = this.#carouselImages.length - 2;
-					this.#carouselSlide.style.transform = `translateX(${(-(await this.#imageSize) * this.#counter)}px)`;
+					this.#carouselSlide.style.transform = `translateX(${(-(await this.imageSize) * this.#counter)}px)`;
 				} else if (this.#carouselImages[this.#counter].id == 'firstClone') {
 					this.#carouselSlide.style.transition = 'none';
 					this.#counter = this.#carouselImages.length - this.#counter;
-					this.#carouselSlide.style.transform = `translateX(${(-(await this.#imageSize) * this.#counter)}px)`;
+					this.#carouselSlide.style.transform = `translateX(${(-(await this.imageSize) * this.#counter)}px)`;
 				}
 			})
 
@@ -194,10 +198,10 @@ export function defineCarousel() {
 			})
 
 			const autoResizeIntervalId = setInterval(async () => {
-				if (await this.#imageSize === this.#carouselImages[0].naturalWidth) {
+				if (await this.imageSize === this.#carouselImages[0].naturalWidth) {
 					this.#windowResize();
 					clearInterval(autoResizeIntervalId);
-				} else if (await this.#imageSize == 0) {
+				} else if (await this.imageSize == 0) {
 					this.#windowResize();
 					clearInterval(autoResizeIntervalId);
 				}

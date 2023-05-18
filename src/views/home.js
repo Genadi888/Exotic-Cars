@@ -21,11 +21,45 @@ const homeTemplate = () => html`
 	</article>
 `
 
-export function homeView(ctx) {
+export async function homeView(ctx) {
 	ctx.render(homeTemplate());
 
-	startObserving(ctx.nestedShadowRoot);
 	defineCarousel();
+
+	const carousel = ctx.nestedShadowRoot.querySelector('image-carousel');
+
+	await new Promise(resolve => {
+		setInterval(async () => {
+			if (await carousel.imageSize > 0) {
+				resolve(); //? We will resolve this promise after the car images have been rendered.
+			}
+		}, 100);
+	})
+
+	//? We start observing after the carousel has loaded completely.
+
+	startObserving(ctx.nestedShadowRoot);
+
+	/*
+		const resizeObserver = new ResizeObserver(async entries => {
+			const entry = entries[0];
+			const carousel = entry.target;
+			await carousel.imageSize
+			console.log(entry)
+
+			if (entry.contentRect.height > 200) {
+				console.log('start observing')
+				startObserving(ctx.nestedShadowRoot);
+			}
+		});
+
+		resizeObserver.observe(ctx.nestedShadowRoot.querySelector('image-carousel'));
+		window.addEventListener('load', () => {
+			// setTimeout(() => {
+			// }, 100);
+		})
+	*/
+
 }
 
 function startObserving(nestedShadowRoot) {
@@ -34,24 +68,15 @@ function startObserving(nestedShadowRoot) {
 		rootMargin: "0px",
 		threshold: 0.8
 	});
-
-	const fadeEl = nestedShadowRoot.querySelector('#goal-div');
-	observer.observe(fadeEl);
-
-	let fadeInsCounter = 0;
+	
+	observer.observe(nestedShadowRoot.querySelector('#goal-div'));
 
 	function observerCallback(entries) {
-		const goalDiv = entries[0];
+		const goalDiv = entries[0].target;
 
-		if (goalDiv.isIntersecting) {
-			if (fadeInsCounter == 0) { //! Check if this fade-in is the initial fade-in, which happens when the page loads.
-				fadeInsCounter++;
-				return;
-			}
-			
+		if (entries[0].isIntersecting) {
 			//? fade in observed element which is in view
-			goalDiv.target.classList.add('fadeIn');
-			fadeInsCounter++;
+			goalDiv.classList.add('fadeIn');
 		}
 	}
 }

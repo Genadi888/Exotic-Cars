@@ -41,7 +41,7 @@ export const commentTemplate = (comment, needsToBeAReply, ctx) => {
 
 					<ul tabindex="1" class="extra-comment-actions">
 						${ 
-							ctx.user.objectId !== comment.owner.objectId ? 
+							ctx.user?.objectId !== comment.owner.objectId ? 
 							html`
 								<li><button class="comment-report-btn btn btn-danger" data-object-Id="${comment.objectId}">Report</button></li>
 							` :  
@@ -91,7 +91,7 @@ export const commentTemplate = (comment, needsToBeAReply, ctx) => {
 
 					<ul tabindex="1" class="extra-comment-actions">
 						${ 
-							ctx.user.objectId !== comment.owner.objectId ? 
+							ctx.user?.objectId !== comment.owner.objectId ? 
 							html`
 								<li><button class="comment-report-btn btn btn-danger" data-object-Id="${comment.objectId}">Report</button></li>
 							` :  
