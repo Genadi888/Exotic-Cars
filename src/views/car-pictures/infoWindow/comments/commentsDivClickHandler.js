@@ -16,7 +16,7 @@ export function getCommentsDivClickHandler(miscState, ctx) {
 			btn.textContent = 'Reply';
 			btn.dataset.repliedCommentId = ev.target.dataset.objectId; //? we attach the id of the main comment to the dataset so we can easily get it in "publishCommentBtnHandler"
 			btn.dataset.ownerNameOfRepliedComment = ev.target.dataset.ownerName; //? we attach the owner's name of the replied comment to the dataset so we can easily get it in "publishCommentBtnHandler"
-		} else if (ev.target.classList.contains('comment-like-btn') && ctx.user?.objectId != ev.target.dataset.ownerObjectId) {
+		} else if (ev.target.classList.contains('comment-like-btn') && ctx.user && ctx.user?.objectId != ev.target.dataset.ownerObjectId) {
 			const likeBtn = ev.target;
 			const commentObjectId = ev.target.dataset.objectId;
 	

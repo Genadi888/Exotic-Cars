@@ -263,7 +263,7 @@ body>aside>ul>li>a:hover {
 	position: fixed;
 	transform: translateX(-50%) translateY(-50%);
 	left: 50%;
-	top: max(50%, 203px);
+	top: max(50%, 260px);
 
 	border-radius: 5px;
 	box-shadow: 1px 1px 14px 2px rgba(0, 0, 0, 0.75);
@@ -776,6 +776,10 @@ ul.extra-comment-actions:focus-within {
 	margin-top: 5px;
 }
 
+.reply-comment {
+	padding-right: 0px !important;
+}
+
 @media only screen and (max-width: 540px) {
 	.comment-replies-wrapper {
 		grid-column: 1 / -1 !important;
@@ -789,7 +793,7 @@ ul.extra-comment-actions:focus-within {
 
 	.show-replies-lines::before,
 	.show-replies-lines::after {
-		width: calc(100% - 54vw) !important;
+		width: calc(100% - 57vw) !important;
 	}
 }
 

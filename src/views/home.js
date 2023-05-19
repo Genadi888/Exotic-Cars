@@ -39,27 +39,6 @@ export async function homeView(ctx) {
 	//? We start observing after the carousel has loaded completely.
 
 	startObserving(ctx.nestedShadowRoot);
-
-	/*
-		const resizeObserver = new ResizeObserver(async entries => {
-			const entry = entries[0];
-			const carousel = entry.target;
-			await carousel.imageSize
-			console.log(entry)
-
-			if (entry.contentRect.height > 200) {
-				console.log('start observing')
-				startObserving(ctx.nestedShadowRoot);
-			}
-		});
-
-		resizeObserver.observe(ctx.nestedShadowRoot.querySelector('image-carousel'));
-		window.addEventListener('load', () => {
-			// setTimeout(() => {
-			// }, 100);
-		})
-	*/
-
 }
 
 function startObserving(nestedShadowRoot) {
