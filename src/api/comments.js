@@ -5,8 +5,6 @@ export async function createOrEditComment(comment, ctx, idOfRepliedComment, owne
 	addEntryWithUserPointer(comment, 'owner');
 	// console.log(comment);
 	
-	comment.ownerName = ctx.user.username;
-
 	if (idOfRepliedComment) {
 		comment.idOfRepliedComment = idOfRepliedComment;
 	}

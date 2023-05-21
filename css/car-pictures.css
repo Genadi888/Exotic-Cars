@@ -46,7 +46,70 @@ section {
 .card {
 	margin-top: 30px;
 	width: 55vw;
+	min-width: 250px;
 	border: none;
+}
+
+.card-title-span {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 0.5rem;
+}
+
+.card-title {
+	margin: 0px !important;
+	line-height: normal !important;
+}
+
+.card-owner-and-date {
+	box-sizing: border-box;
+	display: flex;
+    font-style: italic;
+    font-size: 15px;
+    line-height: normal;
+	min-width: fit-content;
+	min-width: -moz-fit-content;
+}
+
+.card-owner-and-date > hr {
+	display: none;
+}
+
+.card-owner-and-date small {
+	padding: 0 0.4em;
+}
+
+.card-owner-and-date > p {
+	margin: 0px;
+	min-width: max-content;
+	line-height: normal;
+}
+
+@media only screen and (max-width: 505px) {
+	.card-title-span {
+		margin-bottom: 5px;
+	}
+
+	.card-title {
+	    height: min-content;
+    	margin: 0;
+	}
+
+	.card-owner-and-date {
+		flex-direction: column !important;
+		text-align: center;
+		font-size: 13px;
+	}
+
+	.card-owner-and-date > hr {
+		display: initial !important;
+		margin: 4px 0px 0px;
+	}
+
+	.card-owner-and-date small {
+		display: none !important;
+	}
 }
 
 .card:last-child {
@@ -534,7 +597,9 @@ body>aside>ul>li>a:hover {
 	margin-bottom: 0px;
 	text-align: center;
 	height: fit-content;
+	height: -moz-fit-content;
 	width: fit-content;
+	width: -moz-fit-content;
 	max-width: 100%;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -551,6 +616,7 @@ body>aside>ul>li>a:hover {
 	padding-left: 2px;
 	width: 100%;
 	min-width: fit-content;
+	min-width: -moz-fit-content;
 	font-size: calc(10px + 1vmin);
 }
 
@@ -711,7 +777,9 @@ ul.extra-comment-actions:focus-within {
 
 .comment-like-btn-span {
 	width: fit-content;
+	width: -moz-fit-content;
 	height: fit-content;
+	height: -moz-fit-content;
 
 	display: flex;
 	align-self: center;
