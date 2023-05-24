@@ -1,7 +1,7 @@
 import { html } from "/src/lib/lit-html.js";
 
 export const cardTemplate = (carObj, user, deleteClickHandler, likeClickHandler, approveClickHandler, needApproval) => {
-	carObj.updatedAt = new Date(carObj.updatedAt).toDateString();
+	carObj.ownerUpdatedAt = new Date(carObj.ownerUpdatedAt).toDateString();
 
 	return html`
 		<div class="card border-0">
@@ -13,7 +13,7 @@ export const cardTemplate = (carObj, user, deleteClickHandler, likeClickHandler,
 						<p class="card-owner">${carObj.ownerName}</p>
 						<span><small> • </small></span>
 						<hr>
-						<p class="card-date">${carObj.updatedAt}</p>
+						<p class="card-date">${carObj.ownerUpdatedAt}</p>
 					</span>
 				</span>
 				<p class="card-text"><b>Engine:</b> ${carObj.engineInfo} <b>|</b> <b>Power:</b> ${carObj.power} <b>|</b>

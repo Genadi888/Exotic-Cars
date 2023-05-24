@@ -10,6 +10,11 @@ export async function getAllUnapprovedPosts() {
 	return allPosts;
 }
 
+export async function getCountOfUnapprovedPostsOfUser() {
+	const count = (await api.post('/functions/getCountOfUnapprovedPostsOfUser')).result;
+	return count;
+}
+
 export async function approvePost(objectId) {
 	return api.post('/functions/approvePost', { objectId });
 }

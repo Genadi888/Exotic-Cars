@@ -9,6 +9,7 @@ import { getApproveClickHandler, getDeleteHandler, getLikeClickHandler } from ".
 import { getSwitchToApprovalModeHandler } from "./posts/switchToApprovalModeHandler.js";
 import { cardTemplate } from "./posts/cardTemplate.js";
 import { getNoPostsTemplate } from "./posts/getNoPostsTemplate.js";
+import { getUnapprovedPostsMessageTemplate } from "./posts/unapprovedPostsMessageTemplate.js";
 
 export async function carPicturesView(ctx) {
 	let posts = null;
@@ -49,19 +50,23 @@ export async function carPicturesView(ctx) {
 	`
 
 	let sectionContentPromise = getSectionContentTemplate(getNoPostsTemplate, ctx.hash == 'approval-mode' ? 'unapproved' : null);
-	ctx.render(carPicturesTemplate(
-		ev => sectionClickHandler(ev, posts, ctx),
-		until(sectionContentPromise, loadingTemplate()),
-		ctx.user?.isModerator ? getSwitchToApprovalModeHandler(
-			ctx, 
-			getNoPostsTemplate,
-			loadingTemplate,
-			getSectionContentTemplate,
-			carPicturesTemplate,
-			sectionClickHandler,
-			posts)
-		: null
-	));
+
+	ctx.render(
+		carPicturesTemplate(
+			ev => sectionClickHandler(ev, posts, ctx),
+			until(sectionContentPromise, loadingTemplate()),
+			ctx.user?.isModerator ? getSwitchToApprovalModeHandler(
+				ctx, 
+				getNoPostsTemplate,
+				loadingTemplate,
+				getSectionContentTemplate,
+				carPicturesTemplate,
+				sectionClickHandler,
+				posts
+			) : null,
+			ctx.user ? until(getUnapprovedPostsMessageTemplate(sectionContentPromise), null) : null,
+		)
+	);
 
 	//? change to approval view if the hash contains "approval-mode"
 	if (ctx.hash == 'approval-mode') {

@@ -41,13 +41,42 @@ section {
 	min-height: 100vh;
 
 	overflow: hidden;
+
+	--card-width: 55vw;
+}
+
+#unapprovedPostsMessageContainer {
+    width: var(--card-width);
+	min-width: 250px;
+
+    margin-top: 34px;
+    padding: 13px;
+    
+	border: 5px dashed darkkhaki;
+    border-radius: 5px;
+    background-color: navajowhite;
+}
+
+#unapprovedPostsMessageContainer > p {
+	margin: 0 !important;
+}
+
+#unapprovedPostsMessageContainer > button {
+	float: right !important;
+}
+
+#unapprovedPostsMessageContainer > button,
+#unapprovedPostsMessageContainer > button:focus,
+#unapprovedPostsMessageContainer > button:active {
+	outline: none !important;
+	box-shadow: none !important;
 }
 
 .card {
-	margin-top: 30px;
-	width: 55vw;
-	min-width: 250px;
-	border: none;
+	margin-top: 30px !important;
+	width: var(--card-width) !important;
+	min-width: 250px !important;
+	border: none !important;
 }
 
 .card-title-span {
@@ -63,13 +92,14 @@ section {
 }
 
 .card-owner-and-date {
-	box-sizing: border-box;
 	display: flex;
+	min-width: fit-content;
+	min-width: -moz-fit-content;
+	margin-left: 20px;
+
     font-style: italic;
     font-size: 15px;
     line-height: normal;
-	min-width: fit-content;
-	min-width: -moz-fit-content;
 }
 
 .card-owner-and-date > hr {
@@ -207,8 +237,8 @@ section {
 }
 
 @media only screen and (max-width: 880px) {
-	.card {
-		width: 80vw;
+	section {
+		--card-width: 80vw;
 	}
 }
 
