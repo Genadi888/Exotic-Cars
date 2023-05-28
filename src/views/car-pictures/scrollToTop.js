@@ -6,7 +6,7 @@ export function setUpScrollToTop(ctx) {
 	window.addEventListener('scroll', () => {
 		if (window.scrollY > 1000) {
 			if (transitionAllowed) {
-				scrollToTopBtn.style.transition = 'opacity 1.2s ease-in-out';
+				scrollToTopBtn.style.transition = 'opacity 900ms ease-out';
 			}
 			scrollToTopBtn.style.opacity = 1;
 			scrollToTopBtn.style.cursor = 'pointer';
