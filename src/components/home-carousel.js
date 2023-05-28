@@ -26,25 +26,31 @@ export function defineCarousel() {
 		}
 
 		get imageSize() {
-			if (this.#_size == null) {
+			if (this.#_size === null) {
 				return new Promise((resolve, reject) => {
-					this.#carouselImages[0].addEventListener('load', () => {
-						console.log("Image loaded!")
-						this.#_size = this.#carouselImages[0].clientWidth;
-						resolve(this.#carouselImages[0].clientWidth);
-					}, { once: true });
+					const observer = new ResizeObserver(entries => {
+						const imageWidth = entries[0].contentRect.width;
+
+						if (imageWidth > 0) {
+							observer.disconnect();
+							this.#_size = imageWidth;
+							resolve(imageWidth);
+						}
+					});
+
+					observer.observe(this.#carouselImages[0]);
 
 					this.#carouselImages[0].addEventListener('error', () => {
 						reject("An error has occured after loading the first image.");
 					}, { once: true });
 				})
 			} else {
-				return this.#_size;
+				return Promise.resolve(this.#_size);
 			}
 		}
 
 		set imageSize(val) {
-			this.#_size = val;
+			this.#_size = val || null;
 		}
 
 		#timeoutId_next = null;
@@ -61,7 +67,7 @@ export function defineCarousel() {
 
 			window.addEventListener('focus', this.#bindedListeners.focus, { signal: this.#controller.signal });
 			window.addEventListener('blur', this.#bindedListeners.blur, { signal: this.#controller.signal });
-			window.addEventListener('resize', this.#bindedListeners.resize, { signal: this.#controller.signal })
+			window.addEventListener('resize', this.#bindedListeners.resize, { signal: this.#controller.signal });
 		}
 
 		#windowFocus() {
