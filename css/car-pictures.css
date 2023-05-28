@@ -59,6 +59,7 @@ section {
 
 #unapprovedPostsMessageContainer > p {
 	margin: 0 !important;
+	user-select: none;
 }
 
 #unapprovedPostsMessageContainer > button {
@@ -1070,6 +1071,13 @@ ul.extra-comment-actions:focus-within {
 	border-bottom-left-radius: 5px;
 
 	opacity: 0;
+
+	font-size: initial !important;
+}
+
+#go-to-top-link > img {
+	width: 3vmax;
+	min-width: 40px;
 }
 
 #no-posts {

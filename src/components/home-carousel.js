@@ -29,6 +29,7 @@ export function defineCarousel() {
 			if (this.#_size == null) {
 				return new Promise((resolve, reject) => {
 					this.#carouselImages[0].addEventListener('load', () => {
+						console.log("Image loaded!")
 						this.#_size = this.#carouselImages[0].clientWidth;
 						resolve(this.#carouselImages[0].clientWidth);
 					}, { once: true });
