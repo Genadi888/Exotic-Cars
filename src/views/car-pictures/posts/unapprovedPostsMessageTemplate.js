@@ -6,7 +6,7 @@ const unapprovedPostsMessageTemplate = (count, closeHandler) => html`
 		<button @click=${closeHandler} type="button" class="btn-close" aria-label="Close"></button>
 
 		<p>
-			You have ${count} ${count == 1 ? 'post' : 'posts'} that ${count == 1 ? 'is' : 'are'} waiting for moderator approval.
+			You have ${count} ${count == 1 ? 'post' : 'posts'} waiting for moderator approval.
 		</p>
 	</div>
 `
