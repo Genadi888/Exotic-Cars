@@ -1,6 +1,6 @@
 import page from "./lib/page.mjs";
 import { addLogout } from "./middlewares/logout.js";
-import { addRender } from "./middlewares/render.js";
+import { addRender } from "./middlewares/render/render.js";
 import { addSession } from "./middlewares/session.js";
 import { aboutUsView } from "./views/about-us.js";
 import { carPicturesView } from "./views/car-pictures/car-pictures.js";

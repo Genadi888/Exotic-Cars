@@ -1,6 +1,6 @@
 import { html } from "../lib/lit-html.js";
 
-export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandler) => html`
+export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandler, pictureMouseOverHandler, pictureMouseLeaveHandler, profileToolsMouseEnterHandler, profileToolsMouseLeaveHandler, profileToolsMouseClickHandler) => html`
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/navbar-and-footer.css">
@@ -30,21 +30,11 @@ export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandl
 					<a class="nav-link" href="/register">REGISTER</a>
 				</li>
 			`}
-			<li class="nav-item">
-				<ul class="social-media-list">
+			<li class="nav-item profile-tools-and-pic">
+				<img src="/images/user-pic.webp" alt="profile-pic" class="profile-pic">
+				<ul class="profile-tools">
 					<li>
-						<a href="https://www.facebook.com" target="_blank"><img src="/images/facebook.svg"
-								alt="facebook"></a>
-					</li>
-					<li>
-						<a href="https://www.instagram.com" target="_blank"><img src="/images/instagram.svg"
-								alt="instagram"></a>
-					</li>
-					<li>
-						<a href="https://twitter.com" target="_blank"><img src="/images/twitter.svg" alt="twitter"></a>
-					</li>
-					<li>
-						<a href="https://www.youtube.com" target="_blank"><img src="/images/youtube.svg" alt="youtube"></a>
+						<a class="nav-link" @click=${onLogout} href="javascript:void(0)">LOG OUT</a>
 					</li>
 				</ul>
 			</li>
@@ -76,36 +66,27 @@ export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandl
 					<li class="nav-item">
 						<a class="nav-link" href="/showrooms">SHOWROOMS</a>
 					</li>
-					${user ? html`
-						<li class="nav-item">
-							<a class="nav-link" @click=${onLogout} href="javascript:void(0)">LOG OUT</a>
-						</li>
-					` : html`
-						<li class="nav-item">
-							<a class="nav-link" href="/login">LOG IN</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/register">REGISTER</a>
-						</li>
-					`}
-					<li class="nav-item">
-						<ul class="social-media-list">
-							<li>
-								<a href="https://www.facebook.com" target="_blank"><img src="/images/facebook.svg"
-										alt="facebook"></a>
-							</li>
-							<li>
-								<a href="https://www.instagram.com" target="_blank"><img src="/images/instagram.svg"
-										alt="instagram"></a>
-							</li>
-							<li>
-								<a href="https://twitter.com" target="_blank"><img src="/images/twitter.svg"
-										alt="twitter"></a>
-							</li>
-							<li>
-								<a href="https://www.youtube.com" target="_blank"><img src="/images/youtube.svg"
-										alt="youtube"></a>
-							</li>
+					
+					<li class="nav-item profile-tools-and-pic">
+						<a @mouseover=${pictureMouseOverHandler} @mouseleave=${pictureMouseLeaveHandler} title="Click to view options" href="/edit-profile">
+							<img src="/images/user-pic.webp" alt="profile-pic" class="profile-pic">
+						</a>
+						<ul @click=${profileToolsMouseClickHandler} @mouseleave=${profileToolsMouseLeaveHandler} @mouseenter=${profileToolsMouseEnterHandler} class="profile-tools">
+							${user ? html`
+								<li>
+									<a class="nav-link" @click=${onLogout} href="javascript:void(0)">LOG OUT</a>
+								</li>
+								<li>
+									<a class="nav-link" href="/edit-profile">EDIT PROFILE</a>
+								</li>
+							` : html`
+								<li>
+									<a class="nav-link" href="/login">LOG IN</a>
+								</li>
+								<li>
+									<a class="nav-link" href="/register">REGISTER</a>
+								</li>
+							`}
 						</ul>
 					</li>
 				</ul>
