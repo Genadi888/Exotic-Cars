@@ -1,6 +1,6 @@
 import { render as litRender } from "../../lib/lit-html.js";
 import { layoutTemplate } from "../../views/layout.js";
-import { profileToolsObj } from "./profileToolsObj.js";
+import * as navProfileToolsObj from "./navProfileTools.js";
 
 export function addRender() {
 	let nestedShadowRoot = null;
@@ -13,11 +13,7 @@ export function addRender() {
 				ctx.onLogout,
 				ctx.user?.sessionToken,
 				getCollapseClickHandler(),
-				profileToolsObj.getPictureMouseOverHandler(),
-				profileToolsObj.getPictureMouseLeaveHandler(),
-				profileToolsObj.getProfileToolsMouseEnterHandler(),
-				profileToolsObj.getProfileToolsMouseLeaveHandler(),
-				profileToolsObj.getProfileToolsMouseClickHandler(),
+				navProfileToolsObj,
 			),
 			ctx.topShadowRoot
 		);

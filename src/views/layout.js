@@ -1,6 +1,6 @@
 import { html } from "../lib/lit-html.js";
 
-export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandler, pictureMouseOverHandler, pictureMouseLeaveHandler, profileToolsMouseEnterHandler, profileToolsMouseLeaveHandler, profileToolsMouseClickHandler) => html`
+export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandler, navProfileToolsObj) => html`
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/navbar-and-footer.css">
@@ -19,6 +19,9 @@ export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandl
 				<a class="nav-link" href="/showrooms">SHOWROOMS</a>
 			</li>
 			${user ? html`
+				<li>
+					<a class="nav-link" href="/edit-profile">EDIT PROFILE</a>
+				</li>
 				<li class="nav-item">
 					<a class="nav-link" @click=${onLogout} href="javascript:void(0)">LOG OUT</a>
 				</li>
@@ -30,14 +33,6 @@ export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandl
 					<a class="nav-link" href="/register">REGISTER</a>
 				</li>
 			`}
-			<li class="nav-item profile-tools-and-pic">
-				<img src="/images/user-pic.webp" alt="profile-pic" class="profile-pic">
-				<ul class="profile-tools">
-					<li>
-						<a class="nav-link" @click=${onLogout} href="javascript:void(0)">LOG OUT</a>
-					</li>
-				</ul>
-			</li>
 		</ul>
 	</div>
 	<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -68,16 +63,16 @@ export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandl
 					</li>
 					
 					<li class="nav-item profile-tools-and-pic">
-						<a @mouseover=${pictureMouseOverHandler} @mouseleave=${pictureMouseLeaveHandler} title="Click to view options" href="/edit-profile">
+						<a @mouseover=${navProfileToolsObj.pictureMouseOverHandler} @mouseleave=${navProfileToolsObj.pictureMouseLeaveHandler} title="Click to view options" href="/edit-profile">
 							<img src="/images/user-pic.webp" alt="profile-pic" class="profile-pic">
 						</a>
-						<ul @click=${profileToolsMouseClickHandler} @mouseleave=${profileToolsMouseLeaveHandler} @mouseenter=${profileToolsMouseEnterHandler} class="profile-tools">
+						<ul @click=${navProfileToolsObj.profileToolsMouseClickHandler} @mouseleave=${navProfileToolsObj.profileToolsMouseLeaveHandler} @mouseenter=${navProfileToolsObj.profileToolsMouseEnterHandler} class="profile-tools">
 							${user ? html`
 								<li>
-									<a class="nav-link" @click=${onLogout} href="javascript:void(0)">LOG OUT</a>
+									<a class="nav-link" href="/edit-profile">EDIT PROFILE</a>
 								</li>
 								<li>
-									<a class="nav-link" href="/edit-profile">EDIT PROFILE</a>
+									<a class="nav-link" @click=${onLogout} href="javascript:void(0)">LOG OUT</a>
 								</li>
 							` : html`
 								<li>
