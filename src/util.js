@@ -23,7 +23,7 @@ export function getUsernameInputHandler() {
 		const username = inputEl.value.trim();
 
 		timeout = setTimeout(() => {
-			if (username.length < 4) {
+			if (username.length > 0 && username.length < 4) {
 				inputEl.classList.add('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'block';
 				span.textContent = 'too short name';
@@ -51,7 +51,8 @@ export function getPasswordInputHandler() {
 		clearTimeout(timeout);
 
 		const inputEl = ev.currentTarget;
-		const span = inputEl.parentElement.querySelector('#second-invalid-span');
+		const span = inputEl.parentElement
+		.querySelector('#second-invalid-span, #first-invalid-password-span, #second-invalid-password-span');
 		const password = inputEl.value.trim();
 
 		timeout = setTimeout(() => {
@@ -67,6 +68,29 @@ export function getPasswordInputHandler() {
 				inputEl.classList.add('is-invalid');
 				span.style.display = 'block';
 				span.textContent = 'non-digit symbol required';
+			} else {
+				inputEl.classList.remove('is-invalid');
+				span.style.display = 'none';
+			}
+		}, 1000)
+	}
+}
+
+export function getEmailInputHandler() {
+	let timeout;
+
+	return ev => {
+		clearTimeout(timeout);
+
+		const inputEl = ev.currentTarget;
+		const span = inputEl.parentElement.querySelector('input[type="email"] + .invalid-span');
+		const email = inputEl.value.trim();
+
+		timeout = setTimeout(() => {
+			if (!email.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/) && email != '') {
+				inputEl.classList.add('is-invalid');
+				span.style.display = 'block';
+				span.textContent = 'invalid email';
 			} else {
 				inputEl.classList.remove('is-invalid');
 				span.style.display = 'none';
@@ -113,7 +137,8 @@ export function bindForm(callback) {
 		try {
 			await callback(asObject, event.target);
 		} catch (error) {
-			console.log(error.message);
+			console.error(error.message);
+			throw error;
 		} finally {
 			inputs.forEach(i => i.removeAttribute('disabled'));
 		}

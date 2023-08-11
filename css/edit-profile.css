@@ -6,10 +6,25 @@
 
 main {
 	height: 117vh;
-    background-color: #2F4F4F;
-    padding-top: max(75px, 12vmin);
-    overflow: auto;
+	background-color: #2F4F4F;
+	padding-top: max(75px, 12vmin);
+	overflow: auto;
 }
+
+input,
+input:active,
+input:focus,
+button,
+button:active,
+button:focus,
+a,
+a:active,
+a:focus {
+	outline: none !important;
+	box-shadow: none !important;
+	border-radius: 3px !important;
+}
+
 
 #edit-box-wrapper {
 	min-height: fit-content;
@@ -17,16 +32,16 @@ main {
 
 #edit-box {
 	margin: auto;
-    width: 62vw;
-    background-color: rgba(0, 0, 0, 0.7);
+	width: 62vw;
+	background-color: rgba(0, 0, 0, 0.7);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
-    padding: 15px;
-    border-radius: 5px;
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    justify-content: space-between;
+	padding: 15px;
+	border-radius: 5px;
+	display: flex;
+	gap: 10px;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 #edit-box label {
@@ -62,12 +77,12 @@ main {
 }
 
 #password-change-btn {
-	background-color: coral;
+	background-color: #FF5722;
 	color: white;
 }
 
 #password-change-btn:hover {
-	background-color: rgb(231, 97, 49);
+	background-color: #d14114;
 }
 
 .password-change-section {
@@ -76,10 +91,34 @@ main {
 
 .password-change-section.active {
 	display: initial !important;
-    width: 90%;
-    align-self: center;
+	width: 90%;
+	align-self: center;
 }
 
 #new-password-div {
 	margin-top: 7px;
+}
+
+.is-invalid,
+.is-invalid:active,
+.is-invalid:focus {
+	border: solid 2px #dc3545 !important;
+}
+
+.invalid-span {
+	color: red;
+	font-size: 12px;
+	display: none;
+
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	pointer-events: none;
+}
+
+#error-div {
+	color: white;
+    background-color: #e11c1c;
+    border-radius: 3px;
+    text-align: center;
 }

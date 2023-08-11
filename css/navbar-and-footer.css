@@ -81,7 +81,14 @@
 
 .profile-pic {
 	width: 50px;
-	cursor: pointer;
+}
+
+#profile-image-link {
+	cursor: default;
+}
+
+#profile-image-link[href="/edit-profile"] {
+	cursor: pointer !important;
 }
 
 .profile-tools-active {

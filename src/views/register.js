@@ -1,6 +1,6 @@
 import { register } from "../api/users.js";
 import { html } from "../lib/lit-html.js";
-import { getPasswordInputHandler, getUsernameInputHandler, getRegisterFormInputHandler, bindForm } from "../util.js";
+import { getPasswordInputHandler, getUsernameInputHandler, getRegisterFormInputHandler, bindForm, getEmailInputHandler } from "../util.js";
 
 const registerTemplate = (getUsernameInputHandler, getPasswordInputHandler, getEmailInputHandler, getLoginOrRegisterFormInputHandler, onSubmit, error) => html`
 	<link rel="stylesheet" href="/css/register.css">
@@ -59,29 +59,6 @@ export function registerView(ctx) {
 					error.message
 				)
 			);
-		}
-	}
-
-	function getEmailInputHandler() {
-		let timeout;
-
-		return ev => {
-			clearTimeout(timeout);
-
-			const inputEl = ev.currentTarget;
-			const span = inputEl.parentElement.querySelector('#third-invalid-span');
-			const email = inputEl.value.trim();
-
-			timeout = setTimeout(() => {
-				if (!email.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/)) {
-					inputEl.classList.add('is-invalid');
-					span.style.display = 'block';
-					span.textContent = 'invalid email';
-				} else {
-					inputEl.classList.remove('is-invalid');
-					span.style.display = 'none';
-				}
-			}, 1000)
 		}
 	}
 }
