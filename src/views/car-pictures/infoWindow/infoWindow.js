@@ -11,15 +11,16 @@ function showOrHideWindow(moreInfoWindow) {
 	const delay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '0.5s';
 	moreInfoWindow.style.transition = `opacity ${delay} ease-in-out`;
 
-	if (+moreInfoWindow.style.opacity === 0) {
+	if (+getComputedStyle(moreInfoWindow).opacity === 0) {
 		moreInfoWindow.style['pointer-events'] = 'unset';
 		moreInfoWindow.style.opacity = 1;
 	} else {
-		moreInfoWindow.addEventListener('transitionend', ev => {
-			if (ev.propertyName == 'opacity' && moreInfoWindow.style.opacity == 0) {
-				moreInfoWindow.style['pointer-events'] = 'none';
-			}
-		});
+		//? here we clean up the publishComment section
+		moreInfoWindow.querySelector('textarea').value = "";
+		const dataset = moreInfoWindow.querySelector('#publish-comment>.btn-primary').dataset;
+		Object.keys(dataset).forEach(key => delete dataset[key]);
+
+		moreInfoWindow.style['pointer-events'] = 'none';
 		moreInfoWindow.style.opacity = 0;
 		moreInfoWindow.removeEventListener('click', miscState.moreInfoWindowCommentClickListener);
 	}

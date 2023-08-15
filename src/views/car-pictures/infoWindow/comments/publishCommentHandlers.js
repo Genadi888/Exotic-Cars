@@ -57,14 +57,18 @@ export function getPublishCommentInputHandler() {
 			timeout = setTimeout(() => {
 				const span = textarea.parentElement.querySelector('#textarea-invalid-span');
 
-				if (!textarea.value.match(/[\w'".-]{2,}/g) || textarea.value == '') {
+				if (!textarea.value.match(/[\w'".-]{2,}/g) && textarea.value != '') {
 					textarea.classList.add('is-invalid');
 					span.style.display = 'unset';
 					span.textContent = 'write at least one word';
-				} else {
+				} else if (textarea.value.match(/[\w'".-]{2,}/g)) {
 					textarea.classList.remove('is-invalid');
 					span.style.display = 'none';
 					button.removeAttribute('disabled');
+				} else if (textarea.value == '') {
+					textarea.classList.remove('is-invalid');
+					span.style.display = 'none';
+					button.disabled = true;
 				}
 			}, 1000);
 		}
