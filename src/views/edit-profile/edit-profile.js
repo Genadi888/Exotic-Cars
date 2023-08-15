@@ -15,6 +15,7 @@ export function editProfileView(ctx) {
 				getEditProfileFormInputHandler(),
 				bindForm(onSubmit),
 				error,
+				ctx.user,
 			)
 		);
 

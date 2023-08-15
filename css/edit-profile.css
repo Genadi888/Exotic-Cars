@@ -63,6 +63,10 @@ a:focus {
 		font-size: 3vmax !important;
 		margin-bottom: 2vmin !important;
 	}
+
+	main {
+		padding-top: 2vw !important;
+	}
 }
 
 @media only screen and (max-width: 900px) {

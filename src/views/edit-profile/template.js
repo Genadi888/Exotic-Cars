@@ -1,6 +1,6 @@
 import { html } from "../../lib/lit-html.js";
 
-export const editProfileTemplate = (togglePasswordSection, emailInputHandler, usernameInputHandler, editProfileFormInputHandler, onSubmit, errorMsg) => html`
+export const editProfileTemplate = (togglePasswordSection, emailInputHandler, usernameInputHandler, editProfileFormInputHandler, onSubmit, errorMsg, user) => html`
 	<link rel="stylesheet" href="/css/edit-profile.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -14,7 +14,7 @@ export const editProfileTemplate = (togglePasswordSection, emailInputHandler, us
 					<input type="file" name="image" id="drop-zone-input" accept=".jpg,.jpeg,.png,">
 					<label id="first-image-label">Click here to upload image</label>
 					<div id="image-wrapper">
-						<img src="/images/user-pic.webp" alt="user-pic">
+						<img src="${user?.profilePicture || "/images/user-pic.webp"}" alt="user-pic">
 					</div>
 					<label id="second-image-label">Drop image here</label>
 				</div>

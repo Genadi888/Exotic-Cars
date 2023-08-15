@@ -1,9 +1,42 @@
 /* ? we use this file for multiple pages' navbars and footers */
 
+nav {
+	--image-relative-size: 4vw;
+}
+
+@media only screen and (min-width: 1440px) {
+	nav * {
+		font-size: calc(15px + 0.5vw) !important;
+	}
+	
+	nav img {
+		width: var(--image-relative-size) !important;
+		height: var(--image-relative-size);
+		aspect-ratio: 1 / 1;
+	}
+
+	nav > .container-fluid > a:first-child {
+		height: var(--image-relative-size);
+	}
+
+	.profile-tools {
+		top: max(calc(5.4vw), 85px) !important;
+	}
+}
+
 .navbar-nav {
-	position: absolute;
-	right: 30px;
+	/* position: absolute; */
+	margin-right: 30px;
 	align-items: center;
+}
+
+.navbar-collapse {
+	justify-content: flex-end;
+}
+
+nav > .container-fluid > a {
+	margin-left: 0.5%;
+	margin-right: 0.5%;
 }
 
 #drop-down-menu-container > div {
@@ -89,6 +122,7 @@
 }
 
 .profile-pic {
+	border-radius: 5px;
 	width: 50px;
 }
 
@@ -108,11 +142,6 @@
 
 #inline-navbar-nav>li:last-child {
 	margin-left: 20px;
-}
-
-nav > .container-fluid > a {
-	margin-left: 0.5%;
-	margin-right: 0.5%;
 }
 
 /* ? below is the code for the footer and its elements */
