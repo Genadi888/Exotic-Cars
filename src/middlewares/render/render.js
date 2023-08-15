@@ -12,41 +12,34 @@ export function addRender() {
 				ctx.topShadowRoot,
 				ctx.onLogout,
 				ctx.user,
-				getCollapseClickHandler(),
+				collapseClickHandler,
 				navProfileToolsObj,
 			),
 			ctx.topShadowRoot
 		);
 
-		function getCollapseClickHandler() {
-			let clickedNavBtn = false;
-			const transitionDelay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '1s';
+		function collapseClickHandler(ev) {
+			const transitionDelay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '600ms';
 
-			return (ev) => {
-				const menuContainer = ctx.topShadowRoot.querySelector('#drop-down-menu-container');
-				const button = ctx.topShadowRoot.querySelector('#collapse-button');
-				menuContainer.style.transition = `transform ${transitionDelay} ease-in-out`;
+			const menuContainer = ctx.topShadowRoot.querySelector('#drop-down-menu-container');
+			const menuContainerStyle = getComputedStyle(menuContainer);
+			const collapseButton = ctx.topShadowRoot.querySelector('#collapse-button');
+			menuContainer.style.transition = `transform ${transitionDelay} ease-in-out`;
 
-				if (!clickedNavBtn && ev.currentTarget.tagName !== 'A') {
-					menuContainer.style.transform = 'translateY(0%)';
-					clickedNavBtn = true;
-					button.disabled = true;
-				} else {
-					menuContainer.style.transform = 'translateY(-100%)';
-					clickedNavBtn = false;
-
-					if (ev.currentTarget.tagName !== 'A') {
-						button.disabled = true;
-					}
-				}
-
-				menuContainer.addEventListener('transitionend', ev => {
-					if (ev.propertyName != 'transform') {
-						return;
-					}
-					button.removeAttribute('disabled');
-				})
+			if (menuContainerStyle.transform == 'matrix(1, 0, 0, 1, 0, -200)' 
+			&& ev.currentTarget.tagName !== 'A') { //? the menu can't be opened by clicking on a link
+				menuContainer.style.transform = 'translateY(0%)';
+				collapseButton.disabled = true;
+			} else if (menuContainerStyle.transform == 'matrix(1, 0, 0, 1, 0, 0)') {
+				menuContainer.style.transform = 'translateY(-100%)';
+				collapseButton.disabled = true;
 			}
+
+			menuContainer.addEventListener('transitionend', ev => {
+				if (ev.propertyName === 'transform') {
+					collapseButton.removeAttribute('disabled');
+				}
+			});
 		}
 
 		ctx.render = (templateResult) => {
