@@ -16,7 +16,11 @@ export async function addProfilePicSubmition(editImageDiv) {
 
 	dropZoneElement.addEventListener('dragover', ev => {
 		ev.preventDefault();
-		dropZoneElement.classList.add('edit-image--over');
+
+		//? we check if the animation had started
+		if (!dropZoneElement.classList.contains('edit-image--over')) {
+			dropZoneElement.classList.add('edit-image--over');
+		}
 	});
 
 	//? here I am adding event listeners for the "dragleave" and "dragend" events

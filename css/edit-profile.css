@@ -81,33 +81,51 @@ a:focus {
 	position: relative;
 }
 
-.edit-image--over {
-	/* TODO */
+@keyframes fontAnimation {
+	0% {
+		transform: rotate(-10deg);
+	}
+
+	50% {
+		transform: rotate(10deg);
+	}
+
+	100% {
+		transform: rotate(-10deg);
+	}
+}
+
+@media not (prefers-reduced-motion) {
+	.edit-image--over>label {
+		transform: rotate(0deg);
+		animation: fontAnimation 2s ease-in-out infinite;
+	}
 }
 
 #image-wrapper {
 	position: relative;
-    width: max(100px, 22%);
+	width: max(100px, 22%);
 }
 
 #image-wrapper::after {
 	position: absolute;
-    overflow: hidden;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    max-height: 22%;
-    padding-left: 3%;
-    content: attr(data-label);
-    background: rgba(0, 0, 0, 0.75);
-    text-align: center;
-    color: white;
+	overflow: hidden;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	max-height: 22%;
+	padding-left: 3%;
+	content: attr(data-label);
+	background: rgba(0, 0, 0, 0.75);
+	text-align: center;
+	color: white;
 }
 
 #edit-image>label {
 	width: 20%;
 	text-align: center;
 	user-select: none;
+	pointer-events: none;
 }
 
 #first-image-label {
@@ -120,7 +138,7 @@ a:focus {
 
 #edit-image img {
 	width: 100%;
-    aspect-ratio: 1 / 1;
+	aspect-ratio: 1 / 1;
 }
 
 #drop-zone-input {
