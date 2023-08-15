@@ -19,7 +19,7 @@ export async function createOrEditComment(comment, ctx, idOfRepliedComment, owne
 }
 
 export async function deleteComment(objectId) {
-	return api.del(`/Comments/${objectId}`);
+	return api.post(`/functions/deleteComment`, { objectId });
 }
 
 export async function likeComment(commentId) {
