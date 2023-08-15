@@ -69,6 +69,10 @@ export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandl
 						<ul @click=${navProfileToolsObj.profileToolsMouseClickHandler} @mouseleave=${navProfileToolsObj.profileToolsMouseLeaveHandler} @mouseenter=${navProfileToolsObj.profileToolsMouseEnterHandler} class="profile-tools">
 							${user ? html`
 								<li>
+									<p>${user.username}</p>
+									<hr>
+								</li>
+								<li>
 									<a class="nav-link" href="/edit-profile">EDIT PROFILE</a>
 								</li>
 								<li>
