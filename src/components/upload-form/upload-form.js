@@ -2,7 +2,7 @@ import { render as litRender } from "/src/lib/lit-html.js";
 import { inputEventHandlers } from "./inputEventHandlers.js";
 import { formTemplate } from "./formTemplate.js";
 import { createPost, editPost, getPostById } from "../../api/posts.js";
-import { encodeImages } from "./encodeImages.js";
+import { encodeImages } from "../../util.js";
 import { until } from "../../lib/directives/until.js";
 import { html } from "/src/lib/lit-html.js";
 
@@ -46,7 +46,7 @@ export function defineCreateUploadForm(ctx) {
 			const speedUnit = [...form.querySelectorAll('.speed-unit-radios')].find(el => el.checked).value;
 			const weightUnit = [...form.querySelectorAll('.weight-radios')].find(el => el.checked).value;
 
-			const imagesArr = await encodeImages([...formData.getAll('images')]);
+			const imagesArr = await encodeImages([...formData.getAll('images')], 640, 360);
 
 			const objToSubmit = {
 				images: imagesArr,

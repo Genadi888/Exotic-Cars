@@ -21,18 +21,24 @@ export async function register(username, password, email) {
 	return result;
 }
 
-export async function editUser(username) {
+export async function editUser(username, imageURl) {
 	const userData = getUserData();
-	const results = [];
 
-	results[0] = await api.put(`/users/${userData.objectId}`, { username });
+	const objToSend = {};
 
-	return results;
+	if (username) {
+		objToSend.username = username;
+	}
+	if (imageURl) {
+		objToSend.profilePicture = imageURl;
+	}
+
+	return await api.put(`/users/${userData.objectId}`, objToSend);
 }
 
 export async function logout() {
 	const userPointer = createPointer('_User', getUserData().objectId);
-	deleteUserData(); //TODO: Need to fix the logout bug!
+	deleteUserData();
 	await api.post('/functions/logout', { userPointer });
 }
 

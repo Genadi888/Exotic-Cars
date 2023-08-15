@@ -7,7 +7,7 @@
 main {
 	height: 117vh;
 	background-color: #2F4F4F;
-	padding-top: max(75px, 12vmin);
+	padding-top: max(75px, 6vmin);
 	overflow: auto;
 }
 
@@ -32,6 +32,7 @@ a:focus {
 
 #edit-box {
 	margin: auto;
+	margin-bottom: 15px;
 	width: 62vw;
 	background-color: rgba(0, 0, 0, 0.7);
 	backdrop-filter: blur(10px);
@@ -51,14 +52,20 @@ a:focus {
 @media only screen and (min-width: 1440px) {
 	#edit-box {
 		padding: calc(2vmax - 3px);
+		gap: 20px;
 	}
 
-	#edit-box * {
+	*:not(#main-header) {
 		font-size: calc(2vmax - 3px) !important;
+	}
+
+	#main-header {
+		font-size: 3vmax !important;
+		margin-bottom: 2vmin !important;
 	}
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
 	#edit-box {
 		width: 88vw;
 	}
@@ -66,14 +73,58 @@ a:focus {
 
 #edit-image {
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	background-color: #000000c9;
-	padding: 12px 0;
+	padding: max(10px, 2vmin) 0;
 	border-radius: 5px;
+	align-items: center;
+	position: relative;
 }
 
-#edit-image>img {
-	width: 28%;
+.edit-image--over {
+	/* TODO */
+}
+
+#image-wrapper {
+	position: relative;
+    width: max(100px, 22%);
+}
+
+#image-wrapper::after {
+	position: absolute;
+    overflow: hidden;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-height: 22%;
+    padding-left: 3%;
+    content: attr(data-label);
+    background: rgba(0, 0, 0, 0.75);
+    text-align: center;
+    color: white;
+}
+
+#edit-image>label {
+	width: 20%;
+	text-align: center;
+	user-select: none;
+}
+
+#first-image-label {
+	left: 0;
+}
+
+#second-image-label {
+	right: 0;
+}
+
+#edit-image img {
+	width: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+#drop-zone-input {
+	display: none;
 }
 
 #password-change-btn {
@@ -118,7 +169,13 @@ a:focus {
 
 #error-div {
 	color: white;
-    background-color: #e11c1c;
-    border-radius: 3px;
-    text-align: center;
+	background-color: #e11c1c;
+	border-radius: 3px;
+	text-align: center;
+}
+
+#main-header {
+	text-align: center;
+	color: white;
+	margin-bottom: calc(1vmax + 2px);
 }

@@ -11,7 +11,7 @@ export function addRender() {
 			layoutTemplate(
 				ctx.topShadowRoot,
 				ctx.onLogout,
-				ctx.user?.sessionToken,
+				ctx.user,
 				getCollapseClickHandler(),
 				navProfileToolsObj,
 			),

@@ -64,7 +64,7 @@ export const layoutTemplate = (topShadowRoot, onLogout, user, collapseClickHandl
 					
 					<li class="nav-item profile-tools-and-pic">
 						<a id="profile-image-link" href="${user ? '/edit-profile' : ''}" @mouseover=${navProfileToolsObj.pictureMouseOverHandler} @mouseleave=${navProfileToolsObj.pictureMouseLeaveHandler} title="Click to view options">
-							<img src="/images/user-pic.webp" alt="profile-pic" class="profile-pic">
+							<img src="${user?.profilePicture || "/images/user-pic.webp"}" alt="profile-pic" class="profile-pic">
 						</a>
 						<ul @click=${navProfileToolsObj.profileToolsMouseClickHandler} @mouseleave=${navProfileToolsObj.profileToolsMouseLeaveHandler} @mouseenter=${navProfileToolsObj.profileToolsMouseEnterHandler} class="profile-tools">
 							${user ? html`

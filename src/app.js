@@ -5,7 +5,7 @@ import { addSession } from "./middlewares/session.js";
 import { aboutUsView } from "./views/about-us.js";
 import { carPicturesView } from "./views/car-pictures/car-pictures.js";
 import { editPostView } from "./views/edit-post.js";
-import { editProfileView } from "./views/edit-profile.js";
+import { editProfileView } from "./views/edit-profile/edit-profile.js";
 import { homeView } from "./views/home.js";
 import { loginView } from "./views/login.js";
 import { registerView } from "./views/register.js";
