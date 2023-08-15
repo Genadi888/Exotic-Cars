@@ -3,7 +3,8 @@ let workerExists = false;
 
 export function pictureMouseOverHandler(ev) {
 	const toolsList = ev.currentTarget.parentElement.querySelector('.profile-tools');
-	toolsList.style.transition = 'opacity ease-in-out 200ms';
+	const transitionDelay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '200ms';
+	toolsList.style.transition = `opacity ease-in-out ${transitionDelay}`;
 	toolsList.classList.add('profile-tools-active');
 }
 
