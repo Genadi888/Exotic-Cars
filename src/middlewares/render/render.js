@@ -19,14 +19,15 @@ export function addRender() {
 		);
 
 		function collapseClickHandler(ev) {
-			const transitionDelay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '600ms';
-
+			const transitionDelay = window.matchMedia('(prefers-reduced-motion)').matches ? '1ms' : '500ms';
+			
 			const menuContainer = ctx.topShadowRoot.querySelector('#drop-down-menu-container');
 			const menuContainerStyle = getComputedStyle(menuContainer);
+
 			const collapseButton = ctx.topShadowRoot.querySelector('#collapse-button');
 			menuContainer.style.transition = `transform ${transitionDelay} ease-in-out`;
-
-			if (menuContainerStyle.transform == 'matrix(1, 0, 0, 1, 0, -200)' 
+			
+			if (menuContainerStyle.transform !== 'matrix(1, 0, 0, 1, 0, 0)' 
 			&& ev.currentTarget.tagName !== 'A') { //? the menu can't be opened by clicking on a link
 				menuContainer.style.transform = 'translateY(0%)';
 				collapseButton.disabled = true;
