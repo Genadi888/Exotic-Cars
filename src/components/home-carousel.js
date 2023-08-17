@@ -56,6 +56,7 @@ export function defineCarousel() {
 		#timeoutId_next = null;
 		#timeoutId_prev = null;
 		#intervalId_autoNext = null;
+		#autoResizeIntervalId = null;
 
 		#initialX = null;
 
@@ -155,7 +156,8 @@ export function defineCarousel() {
 			this.#prevBtn = this.shadowRoot.querySelector('#prevBtn');
 			this.#nextBtn = this.shadowRoot.querySelector('#nextBtn');
 
-			this.#windowResize();
+			console.log('after render')
+			await this.#windowResize();
 
 			this.#prevBtn.addEventListener('click', () => {
 				this.#disableActionsAndControlAutoNext(this.#prevBtn, this.#timeoutId_prev);
@@ -204,13 +206,12 @@ export function defineCarousel() {
 				}, 500);
 			})
 
-			const autoResizeIntervalId = setInterval(async () => {
+			this.#autoResizeIntervalId = setInterval(async () => {
+				console.log('auto_resize')
 				if (await this.imageSize === this.#carouselImages[0].naturalWidth) {
-					this.#windowResize();
-					clearInterval(autoResizeIntervalId);
+					await this.#windowResize();
 				} else if (await this.imageSize == 0) {
-					this.#windowResize();
-					clearInterval(autoResizeIntervalId);
+					await this.#windowResize();
 				}
 			}, 100);
 
@@ -225,6 +226,7 @@ export function defineCarousel() {
 			this.#controller.abort();
 			this.#windowBlur(); //? we use this to clear some timeouts
 			clearInterval(this.#intervalId_autoNext);
+			clearInterval(this.#autoResizeIntervalId);
 		}
 	}
 
