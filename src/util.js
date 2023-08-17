@@ -32,7 +32,8 @@ export function getUsernameInputHandler() {
 				span.style.display = 'block';
 				span.textContent = 'too short words';
 			} else if (username.match(/[\r\n~`!%^&*()=+\[{\]}\|:;\",<.>/?]/g) ||
-				(username.includes("'") && !username.match(/^([a-zA-Z]+(?:'[a-zA-Z])?[a-zA-Z]*)$/g))) {
+				(username.includes("'") && !username.match(/^([a-zA-Z]+(?:'[a-zA-Z])?[a-zA-Z]*)$/g))
+				&& username.length > 0) {
 				inputEl.classList.add('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'block';
 				span.textContent = 'invalid symbols';
@@ -56,20 +57,20 @@ export function getPasswordInputHandler() {
 		const password = inputEl.value.trim();
 
 		timeout = setTimeout(() => {
-			if (password.length < 8) {
-				inputEl.classList.add('is-invalid');
+			if (password.length > 0 && password.length < 8) {
+				inputEl.classList.add('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'block';
 				span.textContent = 'too short password';
-			} else if (!password.match(/\d/g)) {
-				inputEl.classList.add('is-invalid');
+			} else if (!password.match(/\d/g) && password.length > 0) {
+				inputEl.classList.add('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'block';
 				span.textContent = 'digit required';
-			} else if (!password.match(/\D/g)) {
-				inputEl.classList.add('is-invalid');
+			} else if (!password.match(/\D/g) && password.length > 0) {
+				inputEl.classList.add('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'block';
 				span.textContent = 'non-digit symbol required';
 			} else {
-				inputEl.classList.remove('is-invalid');
+				inputEl.classList.remove('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'none';
 			}
 		}, 1000)
