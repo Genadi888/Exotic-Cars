@@ -27,7 +27,7 @@ export function getUsernameInputHandler() {
 				inputEl.classList.add('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'block';
 				span.textContent = 'too short name';
-			} else if (username.split(' ').some(word => word.length < 2)) {
+			} else if (username.length > 0 && username.split(' ').some(word => word.length < 2)) {
 				inputEl.classList.add('is-invalid', 'mandatory-is-invalid');
 				span.style.display = 'block';
 				span.textContent = 'too short words';
@@ -100,47 +100,47 @@ export function getEmailInputHandler() {
 	}
 }
 
-export function getRegisterFormInputHandler() {
-	let timeout;
+// export function getRegisterFormInputHandler() {
+// 	let timeout;
 
-	return ev => {
-		clearTimeout(timeout);
+// 	return ev => {
+// 		clearTimeout(timeout);
 
-		const form = ev.currentTarget;
-		const submitBtn = form.querySelector('input[type="submit"]');
-		submitBtn.disabled = true;
+// 		const form = ev.currentTarget;
+// 		const submitBtn = form.querySelector('input[type="submit"]');
+// 		submitBtn.disabled = true;
 
-		timeout = setTimeout(() => {
-			const fieldsAreNotEmpty = [...form.querySelectorAll('input#username, input#password')].every(el => el.value != '');
+// 		timeout = setTimeout(() => {
+// 			const fieldsAreNotEmpty = [...form.querySelectorAll('input#username, input#password')].every(el => el.value != '');
 
-			if (!form.querySelector('.mandatory-is-invalid') && fieldsAreNotEmpty) {
-				submitBtn.removeAttribute('disabled');
-			}
-			else {
-				submitBtn.disabled = true;
-			}
-		}, 1000)
-	}
-}
+// 			if (!form.querySelector('.mandatory-is-invalid') && fieldsAreNotEmpty) {
+// 				submitBtn.removeAttribute('disabled');
+// 			}
+// 			else {
+// 				submitBtn.disabled = true;
+// 			}
+// 		}, 1000)
+// 	}
+// }
 
 export function bindForm(callback) {
-	return async function (event) {
-		event.preventDefault();
-		const formData = new FormData(event.target);
+	return async function (ev) {
+		ev.preventDefault();
+		const formData = new FormData(ev.target);
 		const asObject = 
 		Object.fromEntries(
 			[...formData.entries()]
 			.map(([k, v]) => [k, v.trim !== undefined ? v.trim() : v])
 		);
 
-		if (event.target.querySelector('.remember-me')?.checked) {
+		if (ev.target.querySelector('.remember-me')?.checked) {
 			asObject.remember = true;
 		}
-		const inputs = [...event.target.querySelectorAll('input, button, textarea, select')];
+		const inputs = [...ev.target.querySelectorAll('input, button, textarea, select')];
 		inputs.forEach(i => i.disabled = true);
 
 		try {
-			await callback(asObject, event.target);
+			await callback(asObject, ev.target);
 		} catch (error) {
 			console.error(error.message);
 			throw error;

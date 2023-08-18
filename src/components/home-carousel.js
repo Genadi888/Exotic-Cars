@@ -156,7 +156,6 @@ export function defineCarousel() {
 			this.#prevBtn = this.shadowRoot.querySelector('#prevBtn');
 			this.#nextBtn = this.shadowRoot.querySelector('#nextBtn');
 
-			console.log('after render')
 			await this.#windowResize();
 
 			this.#prevBtn.addEventListener('click', () => {
@@ -207,7 +206,6 @@ export function defineCarousel() {
 			})
 
 			this.#autoResizeIntervalId = setInterval(async () => {
-				console.log('auto_resize')
 				if (await this.imageSize === this.#carouselImages[0].naturalWidth) {
 					await this.#windowResize();
 				} else if (await this.imageSize == 0) {

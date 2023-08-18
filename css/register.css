@@ -102,3 +102,7 @@ input:focus {
 		color: #0883b5;
 	}
 }
+
+.form-check {
+	margin-top: 10px;
+}
