@@ -16,9 +16,15 @@ function showOrHideWindow(moreInfoWindow) {
 		moreInfoWindow.style.opacity = 1;
 	} else {
 		//? here we clean up the publishComment section
-		moreInfoWindow.querySelector('textarea').value = "";
-		const dataset = moreInfoWindow.querySelector('#publish-comment>.btn-primary').dataset;
-		Object.keys(dataset).forEach(key => delete dataset[key]);
+
+		if (moreInfoWindow.querySelector('textarea')) {
+			moreInfoWindow.querySelector('textarea').value = "";
+		}
+
+		if (moreInfoWindow.querySelector('#publish-comment')) {
+			const dataset = moreInfoWindow.querySelector('#publish-comment>.btn-primary').dataset;
+			Object.keys(dataset).forEach(key => delete dataset[key]);
+		}
 
 		moreInfoWindow.style['pointer-events'] = 'none';
 		moreInfoWindow.style.opacity = 0;

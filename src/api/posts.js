@@ -24,7 +24,6 @@ export async function getPostById(id) {
 }
 
 export async function createPost(post) {
-	addEntryWithUserPointer(post, 'owner');
 	return api.post('/functions/createPost', post);
 }
 
@@ -33,7 +32,6 @@ export async function deletePost(postId) {
 }
 
 export async function editPost(newPost) {
-	addEntryWithUserPointer(newPost, 'owner');
 	return api.post(`/functions/editPost`, newPost);
 }
 
