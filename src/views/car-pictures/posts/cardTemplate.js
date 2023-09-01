@@ -3,6 +3,8 @@ import { html } from "/src/lib/lit-html.js";
 export const cardTemplate = (carObj, user, deleteClickHandler, likeClickHandler, approveClickHandler, needApproval) => {
 	carObj.ownerUpdatedAt = new Date(carObj.ownerUpdatedAt).toDateString();
 
+	// console.log(carObj)
+
 	return html`
 		<div class="card border-0">
 			<img src=${carObj.images[0]} class="card-img-top" alt=${carObj.carName}>

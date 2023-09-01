@@ -1,18 +1,24 @@
 import * as api from './api.js';
 import { addEntryWithUserPointer } from './data.js';
 
-export async function getAllPosts(ctx) {
-	return (await api.post('/functions/getPosts')).result;
+export async function* get2PostObjects() {
+	const postsCount = await getApprovedPostsCount();
+
+	for (let i = 0; i < postsCount; i += 2) {
+		yield (await api.post('/functions/get2Posts', { skip: i })).result;
+	}
+}
+
+async function getApprovedPostsCount() {
+	return (await api.post('/functions/getApprovedPostsCount')).result
 }
 
 export async function getAllUnapprovedPosts() {
-	const allPosts = (await api.post('/functions/getUnapprovedPosts')).result;
-	return allPosts;
+	return (await api.post('/functions/getUnapprovedPosts')).result;
 }
 
 export async function getCountOfUnapprovedPostsOfUser() {
-	const count = (await api.post('/functions/getCountOfUnapprovedPostsOfUser')).result;
-	return count;
+	return (await api.post('/functions/getCountOfUnapprovedPostsOfUser')).result;
 }
 
 export async function approvePost(objectId) {
