@@ -8,6 +8,7 @@ import { getNoPostsTemplate } from "./posts/getNoPostsTemplate.js";
 import { getUnapprovedPostsMessageTemplate } from "./posts/unapprovedPostsMessageTemplate.js";
 import { getSectionContentTemplate } from "./posts/sectionContentTemplate.js";
 import { setUpMiscStuff } from "./posts/setUpMiscStuff.js";
+import { startObservingTheThirdLastCard } from "./posts/startObservingTheThirdLastCard.js";
 
 export async function carPicturesView(ctx) {
 	const posts = [];
@@ -16,6 +17,7 @@ export async function carPicturesView(ctx) {
 		asyncPostsGeneratorIsDone: false,
 	}
 	let miscStuffSetUp = false;
+	let portionsRendered = 0;
 
 	const loadingTemplate = () => html`
 		<h1 id="loading">Loading posts<div class="loader"></div></h1>
@@ -64,9 +66,14 @@ export async function carPicturesView(ctx) {
 
 		await sectionContentPromise; //? we wait for the two cards to show up on the screen and for the loading to finish
 
-		if (!generatorsObject.asyncPostsGeneratorIsDone) { 
+		portionsRendered++;
+
+		if (!generatorsObject.asyncPostsGeneratorIsDone && portionsRendered < 3) { 
 			//? If there is more content coming from the generator, render two more cards.
 			renderNew();
+		} else if (portionsRendered == 3) {
+			portionsRendered = 0;
+			startObservingTheThirdLastCard(ctx, renderNew);
 		}
 	}
 	
