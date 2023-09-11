@@ -5,8 +5,34 @@ export async function* get2PostObjects() {
 	const postsCount = await getApprovedPostsCount();
 
 	for (let i = 0; i < postsCount; i += 2) {
-		yield (await api.post('/functions/get2Posts', { skip: i })).result;
+		const result = (await api.post('/functions/get2Posts', { skip: i })).result;
+
+		if (result.length == 0) {
+			//? If we didn't get any posts from server, return an empty array and signal the end of this generator.
+			return []; 
+		} else {
+			yield result; //? Otherwise, yield the result and wait for the next call.
+		}
 	}
+}
+
+export async function* get2UnapprovedPostObjects() {
+	const postsCount = await getUnapprovedPostsCount();
+
+	for (let i = 0; i < postsCount; i += 2) {
+		const result = (await api.post('/functions/get2UnapprovedPosts', { skip: i })).result;
+
+		if (result.length == 0) {
+			//? If we didn't get any posts from server, return an empty array and signal the end of this generator.
+			return [];
+		} else {
+			yield result; //? Otherwise, yield the result and wait for the next call.
+		}
+	}
+}
+
+async function getUnapprovedPostsCount() {
+	return (await api.post('/functions/getUnapprovedPostsCount')).result
 }
 
 async function getApprovedPostsCount() {

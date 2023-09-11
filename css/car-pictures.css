@@ -43,6 +43,7 @@ section {
 	overflow: hidden;
 
 	--card-width: 55vw;
+	--card-margin-top: 30px;
 }
 
 #unapprovedPostsMessageContainer {
@@ -74,7 +75,7 @@ section {
 }
 
 .card {
-	margin-top: 30px !important;
+	margin-top: var(--card-margin-top) !important;
 	width: var(--card-width) !important;
 	min-width: 250px !important;
 	border: none !important;

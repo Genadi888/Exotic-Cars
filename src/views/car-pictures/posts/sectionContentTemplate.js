@@ -6,19 +6,24 @@ import { getApproveClickHandler, getDeleteHandler, getLikeClickHandler } from ".
 export async function getSectionContentTemplate (getNoPostsTemplate, postsType, posts, generatorsObject, ctx) {
 	try {
 		if (postsType == 'unapproved') {
-			posts = await getAllUnapprovedPosts();
+			const generatorReturnedObject = await generatorsObject.asyncUnapprovedPostsGenerator.next();
+			generatorsObject.asyncUnapprovedPostsGeneratorIsDone = generatorReturnedObject.done;
+
+			if (generatorReturnedObject.value) {
+				const twoPosts = generatorReturnedObject.value;
+				for (const post of twoPosts) {
+					posts.push(post);
+				}
+			}
 		} else {
 			const generatorReturnedObject = await generatorsObject.asyncPostsGenerator.next();
-			console.log(generatorReturnedObject)
 			generatorsObject.asyncPostsGeneratorIsDone = generatorReturnedObject.done;
-			if (generatorsObject.asyncPostsGeneratorIsDone) {
-				return null;
-			}
 
-			const twoPosts = generatorReturnedObject.value;
-
-			for (const post of twoPosts) {
-				posts.push(post);
+			if (generatorReturnedObject.value) {
+				const twoPosts = generatorReturnedObject.value;
+				for (const post of twoPosts) {
+					posts.push(post);
+				}
 			}
 		}
 	} catch (error) {
