@@ -5,12 +5,6 @@ import { createPointer } from './data.js';
 export async function login(username, password, remember) {
 	const result = await api.post('/login', { username, password });
 
-	const userData = {
-		username: result.username,
-		id: result.objectId,
-		sessionToken: result.sessionToken
-	}
-
 	setUserData(result, remember);
 
 	return result;

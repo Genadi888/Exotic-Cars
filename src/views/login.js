@@ -1,8 +1,8 @@
 import { login, resetPassword } from "../api/users.js";
 import { html } from "../lib/lit-html.js";
-import { getPasswordInputHandler, getUsernameInputHandler, bindForm } from "../util.js";
+import { bindForm } from "../util.js";
 
-const loginTemplate = (usernameInputHandler, passwordInputHandler, emailInputHandler, onSubmit, onForgotPasswordClick, resetPass, formInputHandler, error) => html`
+const loginTemplate = (emailInputHandler, onSubmit, onForgotPasswordClick, resetPass, formInputHandler, error) => html`
 	<link rel="stylesheet" href="/css/login.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -13,11 +13,11 @@ const loginTemplate = (usernameInputHandler, passwordInputHandler, emailInputHan
 			${error ? html`<span class="server-error-msg">${error}</span>` : null}
 			<div class="inputs">
 				<label for="username">Username:</label>
-				<input @input=${usernameInputHandler} class="form-control" type="text" name="username" id="username">
+				<input class="form-control" type="text" name="username" id="username">
 				<span class="invalid-span" id="first-invalid-span"></span>
 	
 				<label for="password">Password:</label>
-				<input @input=${passwordInputHandler} class="form-control" type="password" name="password" id="password">
+				<input class="form-control" type="password" name="password" id="password">
 				<span class="invalid-span" id="second-invalid-span"></span>
 	
 				<div class="form-check">
@@ -48,13 +48,11 @@ const loginTemplate = (usernameInputHandler, passwordInputHandler, emailInputHan
 export function loginView(ctx) {
 	ctx.render(
 		loginTemplate(
-			getUsernameInputHandler(),
-			getPasswordInputHandler(),
 			getEmailInputHandler(),
 			bindForm(onSubmit),
 			onForgotPasswordClick,
 			onResetPasswordBtnClick,
-			getFormInputHandler(),
+			formInputHandler,
 		)
 	);
 
@@ -66,13 +64,11 @@ export function loginView(ctx) {
 		} catch (error) {
 			ctx.render(
 				loginTemplate(
-					getUsernameInputHandler(),
-					getPasswordInputHandler(),
 					getEmailInputHandler(),
 					bindForm(onSubmit),
 					onForgotPasswordClick,
 					onResetPasswordBtnClick,
-					getFormInputHandler(),
+					formInputHandler,
 					error.message
 				)
 			);
@@ -82,7 +78,20 @@ export function loginView(ctx) {
 
 	function onForgotPasswordClick(ev) {
 		const div = ev.currentTarget.parentElement.querySelector('.password-reset-div');
-		div.style.display = div.style.display == '' || div.style.display == 'none' ? 'block' : 'none';
+		const emailInput = div.querySelector('input[type="email"]');
+
+		const divStyles = getComputedStyle(div);
+
+		if (divStyles.display == 'block') {
+			emailInput.value = '';
+
+			//? we dispatch this event in order to trigger the form's input listener and unlock the submit button
+			emailInput.dispatchEvent(new Event("input", { bubbles: true, cancelable: true })); 
+			
+			div.style.display = 'none';
+		} else {
+			div.style.display = 'block';
+		}
 	}
 
 	async function onResetPasswordBtnClick(ev) {
@@ -99,11 +108,18 @@ export function loginView(ctx) {
 		}
 	}
 
+	let emailInputHandlerTimeoutPromiseResolve = null;
+	let emailInputHandlerTimeoutPromise = null;
+
 	function getEmailInputHandler() {
 		let timeout;
 
 		return ev => {
 			clearTimeout(timeout);
+
+			emailInputHandlerTimeoutPromise = new Promise((resolve) => {
+				emailInputHandlerTimeoutPromiseResolve = resolve;
+			})
 
 			const inputEl = ev.currentTarget;
 			const span = inputEl.parentElement.parentElement.querySelector('#third-invalid-span');
@@ -112,44 +128,48 @@ export function loginView(ctx) {
 			const email = inputEl.value.trim();
 
 			timeout = setTimeout(() => {
-				if (!email.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/)) {
+				emailInputHandlerTimeoutPromiseResolve()
+
+				if (!email.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/) && email !== '') {
 					inputEl.classList.add('is-invalid');
 					span.style.display = 'block';
 					span.textContent = 'invalid email';
 				} else {
 					inputEl.classList.remove('is-invalid');
 					span.style.display = 'none';
-					submitBtn.removeAttribute('disabled');
+
+					if (email !== '') {
+						submitBtn.removeAttribute('disabled');
+					}
 				}
 			}, 1000)
 		}
 	}
 
-	function getFormInputHandler() {
-		let timeout;
+	async function formInputHandler(ev) {
+		if (ev.target.type == 'checkbox') {
+			return;
+		}
+		
+		const form = ev.currentTarget;
 
-		return ev => {
-			clearTimeout(timeout);
+		const submitBtn = form.querySelector('input[type="submit"]');
+		submitBtn.disabled = true;
 
-			if (ev.target.type == 'checkbox') {
-				return;
-			}
-			
-			const form = ev.currentTarget;
-			const submitBtn = form.querySelector('input[type="submit"]');
+		const passwordResetDiv = form.querySelector(".password-reset-div");
+		if (getComputedStyle(passwordResetDiv).display !== 'none') {
+			//? If passwordResetDiv is visible, we wait for the email input handler validation.
+			await emailInputHandlerTimeoutPromise;
+		}
+
+		const fieldsAreNotEmpty = [...form.querySelectorAll('input#username, input#password')]
+			.every(el => el.value !== '');
+		const hasInvalid = Boolean(form.querySelector('.is-invalid'));
+
+		if (hasInvalid || !fieldsAreNotEmpty) {
 			submitBtn.disabled = true;
-
-			timeout = setTimeout(() => {
-				const fieldsAreNotEmpty = [...form.querySelectorAll('input#username, input#password')]
-					.every(el => el.value !== '');
-				const hasInvalid = Boolean(form.querySelector('.mandatory-is-invalid'));
-	
-				if (hasInvalid || !fieldsAreNotEmpty) {
-					submitBtn.disabled = true;
-				} else {
-					submitBtn.removeAttribute('disabled');
-				}
-			}, 1000)
+		} else {
+			submitBtn.removeAttribute('disabled');
 		}
 	}
 }
