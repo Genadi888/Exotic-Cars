@@ -1,89 +1,42 @@
-import { html } from "../../lib/lit-html.js";
-import { until } from "../../lib/directives/until.js";
-import { get2PostObjects, get2UnapprovedPostObjects } from "../../api/posts.js";
-import { sectionClickHandler } from "./infoWindow/infoWindow.js";
-import { carPicturesTemplate } from "./carPicturesTemplate.js";
-import { getSwitchToApprovalModeHandler } from "./posts/switchToApprovalModeHandler.js";
-import { getNoPostsTemplate } from "./posts/getNoPostsTemplate.js";
-import { getUnapprovedPostsMessageTemplate } from "./posts/unapprovedPostsMessageTemplate.js";
-import { getSectionContentTemplate } from "./posts/sectionContentTemplate.js";
-import { setUpMiscStuff } from "./posts/setUpMiscStuff.js";
-import { startObservingTheThirdLastCard } from "./posts/startObservingTheThirdLastCard.js";
+import { renderNew, resetState } from "./renderNew.js";
 
 export async function carPicturesView(ctx) {
-	const loadingTemplate = () => html`
-		<h1 id="loading">Loading posts<div class="loader"></div>
-		</h1>
-	`
+	if (!ctx.user?.isModerator && ctx.hash == 'approval-mode') {
+		ctx.page.redirect('/car-pictures');
+		return;
+	}
+
 	const posts = [];
-	const generatorsObject = {
-		asyncPostsGenerator: get2PostObjects(),
-		asyncPostsGeneratorIsDone: false,
-		asyncUnapprovedPostsGenerator: get2UnapprovedPostObjects(),
-		asyncUnapprovedPostsGeneratorIsDone: false,
-	}
-	let miscStuffSetUp = false;
-	let portionsRendered = 0;
+	resetState(posts);
 
-	async function renderNew() {
-		if (generatorsObject.asyncPostsGeneratorIsDone
-			|| generatorsObject.asyncUnapprovedPostsGeneratorIsDone) {
-			//? If one of the generators is exhausted, don't bother rendering anything.
-			return;
+	ctx.carPicturesController = new AbortController();
+	window.addEventListener('popstate', () => {
+		resetState(posts, ctx.user?.isModerator);
+
+		const srchRegex = /(?<=search=)(?<srchStr>.*?)(?=&|$)/m;
+
+		const queryStr = window.location.search.slice(1);
+
+		let urlSrchText = null; //? this text will be used in renderNew for auto search when first rendering
+		if (queryStr) {
+			urlSrchText = srchRegex.exec(decodeURIComponent(queryStr)).groups.srchStr.trim();
 		}
 
-		const sectionContentPromise = getSectionContentTemplate(
-			getNoPostsTemplate,
-			ctx.hash == 'approval-mode' ? 'unapproved' : null,
-			posts,
-			generatorsObject,
-			ctx,
-		);
+		//? (in getSectionContentTemplate) the window path may change while some post promises are still pending so we create this variable to prevent the rendering of posts in a wrong view
+		let windowPath = window.location.href.replace(window.location.origin, '');
+		windowPath = window.location.hash ? windowPath : windowPath.replace("#", '');
 
-		if (posts.length > 0) {
-			//? If we already have 2 posts, the displaying of the "loading" template is avoided and the posts are shown after they have loaded.
-			await sectionContentPromise;
-		}
-
-		/*
-			? After awaiting the sectionContentPromise and resuming the execution of this async function,
-			? we check if the page's hash is different from the hash in the "ctx" object 
-			? (the post mode has been switched to something else 
-			? while the sectionContentPromise was still in "pending" state). 
-			? If this is the case we won't bother rendering anything into the section.
-		*/
-		if (window.location.hash.slice(1) !== ctx.hash) {
-			return;
-		}
-
-		ctx.render(
-			carPicturesTemplate(
-				ev => sectionClickHandler(ev, posts, ctx),
-				until(sectionContentPromise, loadingTemplate()),
-				ctx.user?.isModerator ? getSwitchToApprovalModeHandler(ctx) : null,
-				ctx.user ? until(getUnapprovedPostsMessageTemplate(sectionContentPromise), null) : null,
-				ctx,
-			)
-		);
-
-		if (!miscStuffSetUp) {
-			setUpMiscStuff(ctx, sectionContentPromise);
-			miscStuffSetUp = true;
-		}
-
-		await sectionContentPromise; //? we wait for the two cards to show up on the screen
-
-		portionsRendered++;
-
-		if (portionsRendered < 2) {
-			renderNew(); //? render one more portion
-		} else {
-			portionsRendered = 0;
-			startObservingTheThirdLastCard(ctx, renderNew); //? When user sees the third card, repeat the rendering cycle.
-		}
-	}
+		renderNew(ctx, posts, urlSrchText ? [] : null, urlSrchText || null, windowPath);
+	}, { signal: ctx.carPicturesController.signal });
 
 	if (posts.length == 0) { //? If there are no posts, start rendering them.
-		renderNew();
+		const srchRegex = /(?<=search=)(?<srchStr>.*?)(?=&|$)/m;
+
+		let urlSrchText = null; //? this text will be used in renderNew for auto search when first rendering
+		if (ctx.querystring) {
+			urlSrchText = srchRegex.exec(decodeURIComponent(ctx.querystring)).groups.srchStr.trim();
+		}
+
+		renderNew(ctx, posts, urlSrchText ? [] : null, urlSrchText || null);
 	}
 }

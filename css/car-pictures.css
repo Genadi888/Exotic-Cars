@@ -18,9 +18,9 @@ section {
 }
 
 .approval-btn {
-	margin-top: 29px;
+	/* margin-top: 29px; */
 	align-self: flex-start;
-	margin-left: 15px;
+	/* margin-left: 15px; */
 }
 
 #button-and-posts-separating-line {
@@ -29,13 +29,48 @@ section {
 	color: azure;
 }
 
+#aboveTopLineDiv {
+	display: flex;
+    width: 95%;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 16px;
+}
+
+#aboveTopLineDiv > form {
+	width: 50%;
+	margin: 0 !important;
+}
+
+#aboveTopLineDiv > form > input.form-control{
+	width: 50%;
+	outline: none !important;
+	box-shadow: unset !important;
+}
+
+#aboveTopLineDiv > form > .btn {
+	border-radius: 0px !important;
+}
+
+#aboveTopLineDiv > form > .btn:last-child {
+	border-top-right-radius: 3px !important;
+	border-bottom-right-radius: 3px !important;
+}
+
+/* TODO: Back4app remove post from Redis */
+
+#aboveTopLineDiv > form > .btn-secondary{
+	border-top-left-radius: 0px !important;
+	border-bottom-left-radius: 0px !important;
+}
+
 section {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	align-items: center;
 
-	margin-top: 55px;
+	margin-top: 66px;
 	padding-bottom: 2%;
 	height: auto;
 	min-height: 100vh;
@@ -46,11 +81,17 @@ section {
 	--card-margin-top: 30px;
 }
 
+@media only screen and (min-width: 1440px) {
+	section {
+		margin-top: calc(4.4vw) !important;
+	}
+}
+
 #unapprovedPostsMessageContainer {
     width: var(--card-width);
 	min-width: 250px;
 
-    margin-top: 34px;
+    /* margin-top: 34px; */
     padding: 13px;
     
 	border: 5px dashed darkkhaki;
@@ -75,7 +116,7 @@ section {
 }
 
 .card {
-	margin-top: var(--card-margin-top) !important;
+	margin-top: 14px !important;
 	width: var(--card-width) !important;
 	min-width: 250px !important;
 	border: none !important;
@@ -1098,6 +1139,7 @@ ul.extra-comment-actions:focus-within {
 	user-select: none;
 	pointer-events: none;
 	justify-self: center;
+	text-align: center;
 }
 
 .loader {
@@ -1164,6 +1206,14 @@ ul.extra-comment-actions:focus-within {
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+#loader-wrapper {
+	width: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ? Custom scrollbar */

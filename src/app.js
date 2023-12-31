@@ -13,6 +13,13 @@ import { sharePhotosView } from "./views/share-photos.js";
 import { showroomsView } from "./views/showrooms.js";
 import { verifyView } from "./views/verify.js";
 
+sessionStorage.removeItem('popstateChanges');
+
+window.addEventListener('popstate', () => {
+	let popstateChanges = Number(sessionStorage.getItem('popstateChanges') || 0);
+	sessionStorage.setItem('popstateChanges', ++popstateChanges);
+});
+
 const main = document.querySelector('#main');
 const root = main.attachShadow({ mode: 'open' });
 
@@ -32,14 +39,18 @@ page((ctx, next) => {
 page('/index.html', '/');
 page('/', homeView);
 page('/car-pictures', carPicturesView);
+page.exit('/car-pictures', (ctx, next) => { 
+	ctx.carPicturesController?.abort();
+	next();
+});
 page('/about-us', aboutUsView);
 page('/showrooms', showroomsView);
 page('/share-photos', sharePhotosView);
 page('/share-photos:id', editPostView);
 
-page.exit('/share-photos', exitFunction);
-page.exit('/share-photos:id', exitFunction);
-function exitFunction(ctx, next) {
+page.exit('/share-photos', sharePhotosExitFunction);
+page.exit('/share-photos:id', sharePhotosExitFunction);
+function sharePhotosExitFunction(ctx, next) {
 	ctx.controller.abort(); //? remove navbar's listener for click event after user leaves "share-photos"
 	sessionStorage.removeItem('userHasUnsavedData');
 	next();

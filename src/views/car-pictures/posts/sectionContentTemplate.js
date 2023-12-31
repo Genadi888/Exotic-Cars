@@ -2,32 +2,24 @@ import { html } from "../../../lib/lit-html.js";
 import { repeat } from "../../../lib/directives/repeat.js";
 import { cardTemplate } from "./cardTemplate.js";
 import { getApproveClickHandler, getDeleteHandler, getLikeClickHandler } from "./postActions.js";
+import { populatePostsArr } from "./populatePostsArr.js";
 
-export async function getSectionContentTemplate (getNoPostsTemplate, postsType, posts, generatorsObject, ctx) {
+export async function getSectionContentTemplate (getNoPostsTemplate, postsType, posts, generatorsObject, ctx, arrOfPostObjectIds, pageUrlSrchTextPromise, windowPath) {
+	//? the popstate may change while some post promises are still pending so we create this variable to prevent the rendering of posts in a wrong view
+	let initialPopstateChanges = Number(sessionStorage.getItem('popstateChanges') || 0); 
+	
+	//? the window path may change while some post promises are still pending so we create this variable to prevent the rendering of posts in a wrong view
+	const prevWindowPath = windowPath || ctx.canonicalPath;
+
+	if (pageUrlSrchTextPromise) {
+		await pageUrlSrchTextPromise; //? we wait for the searching of post object ids and the initialization of srch. gens. to finish
+	}
+
 	try {
-		if (postsType == 'unapproved') {
-			const generatorReturnedObject = await generatorsObject.asyncUnapprovedPostsGenerator.next();
-			generatorsObject.asyncUnapprovedPostsGeneratorIsDone = generatorReturnedObject.done;
-
-			if (generatorReturnedObject.value) {
-				const twoPosts = generatorReturnedObject.value;
-				for (const post of twoPosts) {
-					posts.push(post);
-				}
-			}
-		} else {
-			const generatorReturnedObject = await generatorsObject.asyncPostsGenerator.next();
-			generatorsObject.asyncPostsGeneratorIsDone = generatorReturnedObject.done;
-
-			if (generatorReturnedObject.value) {
-				const twoPosts = generatorReturnedObject.value;
-				for (const post of twoPosts) {
-					posts.push(post);
-				}
-			}
-		}
+		//? The following function may return a rejected promise, if views changed while some post promises were still pending.
+		await populatePostsArr(ctx, posts, generatorsObject, postsType, initialPopstateChanges, prevWindowPath, arrOfPostObjectIds?.length > 0);
 	} catch (error) {
-		alert(error.message);
+		console.error(error);
 		throw error;
 	}
 	

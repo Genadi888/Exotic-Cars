@@ -18,5 +18,7 @@ export function startObservingTheThirdLastCard(ctx, localRenderNew) {
 
 	// Select the elements you want to observe
 	const thirdLastCard = ctx.nestedShadowRoot.querySelector('.card:nth-last-child(3)');
-	observer.observe(thirdLastCard);
+	if (thirdLastCard) {
+		observer.observe(thirdLastCard);
+	}
 }
