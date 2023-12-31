@@ -91,8 +91,8 @@ export async function createPost(post) {
 	return api.post('/functions/createPost', post);
 }
 
-export async function deletePost(postId) {
-	return api.del(`/Posts/${postId}`);
+export async function deletePost(postObjectId) {
+	return api.post(`/functions/deletePost`, { objectId: postObjectId });
 }
 
 export async function editPost(newPost) {
