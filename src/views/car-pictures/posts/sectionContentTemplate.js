@@ -38,7 +38,7 @@ export async function getSectionContentTemplate (getNoPostsTemplate, postsType, 
 				getApproveClickHandler(post.objectId, ctx.nestedShadowRoot.querySelector('section > .approval-btn')),
 				postsType == 'unapproved'
 			)) : 
-			getNoPostsTemplate(postsType !== 'unapproved', ctx)
+			getNoPostsTemplate(postsType !== 'unapproved', ctx, arrOfPostObjectIds?.length > 0)
 		}
 	`
 }

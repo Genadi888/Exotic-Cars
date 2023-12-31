@@ -20,8 +20,6 @@ export async function populatePostsArr (ctx, posts, generatorsObject, postsType,
 				}
 
 				posts.push(...twoPosts);
-			} else {
-				return html`${getNoPostsTemplate(postsType !== 'unapproved', ctx, true)}`
 			}
 		} else {
 			const generatorReturnedObject = await generatorsObject.asyncUnapprovedPostsGenerator.next();
@@ -59,8 +57,6 @@ export async function populatePostsArr (ctx, posts, generatorsObject, postsType,
 				}
 
 				posts.push(...twoPosts);
-			} else {
-				return html`${getNoPostsTemplate(postsType !== 'unapproved', ctx, true)}`
 			}
 		} else {
 			const generatorReturnedObject = await generatorsObject.asyncPostsGenerator.next();
