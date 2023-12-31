@@ -1,6 +1,6 @@
-import { login, resetPassword } from "../api/users.js";
-import { html } from "../lib/lit-html.js";
-import { bindForm } from "../util.js";
+import { login, resetPassword } from "../../api/users.js";
+import { html } from "../../lib/lit-html.js";
+import { bindForm } from "../../util.js";
 
 const loginTemplate = (emailInputHandler, onSubmit, onForgotPasswordClick, resetPass, formInputHandler, error) => html`
 	<link rel="stylesheet" href="/css/login.css">

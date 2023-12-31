@@ -1,5 +1,5 @@
-import { editUser, logout, resetPassword } from "../../api/users.js";
-import { getUsernameInputHandler, bindForm, getEmailInputHandler, encodeImages } from "../../util.js";
+import { editUser, logout, resetPassword } from "../../../api/users.js";
+import { getUsernameInputHandler, bindForm, getEmailInputHandler, encodeImages } from "../../../util.js";
 import { addProfilePicSubmition } from "./profilePicSubmition.js";
 import { editProfileTemplate } from "./template.js";
 

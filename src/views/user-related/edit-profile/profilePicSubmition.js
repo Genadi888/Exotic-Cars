@@ -1,4 +1,4 @@
-import { encodeImages } from "../../util.js";
+import { encodeImages } from "../../../util.js";
 
 export async function addProfilePicSubmition(editImageDiv) {
 	const inputElement = editImageDiv.querySelector('#drop-zone-input');

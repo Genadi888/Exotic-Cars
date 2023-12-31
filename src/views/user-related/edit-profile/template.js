@@ -1,4 +1,4 @@
-import { html } from "../../lib/lit-html.js";
+import { html } from "../../../lib/lit-html.js";
 
 export const editProfileTemplate = (togglePasswordSection, emailInputHandler, usernameInputHandler, editProfileFormInputHandler, onSubmit, errorMsg, user) => html`
 	<link rel="stylesheet" href="/css/edit-profile.css">

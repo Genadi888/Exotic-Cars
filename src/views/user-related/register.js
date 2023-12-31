@@ -1,6 +1,6 @@
-import { register } from "../api/users.js";
-import { html } from "../lib/lit-html.js";
-import { getPasswordInputHandler, getUsernameInputHandler, bindForm, getEmailInputHandler } from "../util.js";
+import { register } from "../../api/users.js";
+import { html } from "../../lib/lit-html.js";
+import { getPasswordInputHandler, getUsernameInputHandler, bindForm, getEmailInputHandler } from "../../util.js";
 
 const registerTemplate = (usernameInputHandler, passwordInputHandler, emailInputHandler, registerFormInputHandler, onSubmit, error) => html`
 	<link rel="stylesheet" href="/css/register.css">
